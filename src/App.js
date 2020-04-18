@@ -1,8 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    fetch("https://earthdash.herokuapp.com").then((response) =>
+      setStatus(response.statusText)
+    );
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,9 +26,10 @@ function App() {
         >
           Learn Data
         </a>
+        <h2>{status.length ? `API status: ${status}` : "Pinging API"}</h2>
       </header>
     </div>
   );
-}
+};
 
 export default App;
