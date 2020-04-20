@@ -12,10 +12,10 @@
 
 🚫Add contributor info below, make sure add images and edit the social links for each member. Add to or delete these place-holders as needed
 
-|                                       [Student 1](https://github.com/)                                        |                                       [Student 2](https://github.com/)                                        |                                       [Student 3](https://github.com/)                                        |                                       [Student 4](https://github.com/)                                        |                                       [Student 5](https://github.com/)                                        |
+|                                       [Student 1](https://github.com/fwesss)                                        |                                       [Student 2](https://github.com/ChristCenteredDev)                                        |                                       [Student 3](https://github.com/NickGallucci)                                        |                                       [Student 4](https://github.com/Stephenfre)                                        |                                       [Student 5](https://github.com/)                                        |
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
-|                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |
-|                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/honda0306)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Mister-Corn)            |          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/NandoTheessen)           |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/wvandolah)             |
+|                      [<img src="https://avatars1.githubusercontent.com/u/10150898?s=400&u=aa205fcb0741fc11eb9625647d817d8fd298c0a6&v=4" width = "200" />](https://github.com/fwesss)                       |                      [<img src="https://avatars0.githubusercontent.com/u/24855472?s=400&u=f1823320cd4d72d36739ee9600c5db25c4e519b5&v=4" width = "200" />](https://github.com/ChristCenteredDev)                       |                      [<img src="https://avatars2.githubusercontent.com/u/33410359?s=400&u=dfc0c070385a0d252185fef7c1cf13bcaf4f3691&v=4" width = "200" />](https://github.com/NickGallucci)                       |                      [<img src="https://avatars2.githubusercontent.com/u/49298939?s=400&u=d95475e4abdb855c09bedbc5a2fded3ec88739b1&v=4" width = "200" />](https://github.com/Stephenfre)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |
+|                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/fwesss)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/ChristCenteredDev)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/NickGallucci)            |          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Stephenfre)           |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/)             |
 | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) |
 
 <br>
@@ -33,17 +33,14 @@
 
 ## Project Overview
 
-1️⃣ [Trello Board](🚫add link to trello board here)
+1️⃣ [Trello Board](https://trello.com/b/5gHETvxv/earth-dashboard)
 
-1️⃣ [Product Canvas](🚫add link to product canvas here)
+1️⃣ [Product Canvas](https://www.notion.so/Earth-Dashboard-f2164d30ed994ecab5894212efcc2000)
 
-1️⃣ [UX Design files](🚫add link to design files here) - 🚫 delete if not applicable
+1️⃣ [UX Design files](https://www.figma.com/file/fgJvqVQEW8c13bPdt109BP/Earth-Dashboard?node-id=418%3A888) 
 
-🚫 Replace lorem ipsum with a description of your project
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+# Project Description
+A realtime/ real world dashboard to teach middle school students the fundamentals of data visualization using real world / realtime earth data pulled and refreshed from a variety of sources.
 
 
 ### 4️⃣ Key Features
@@ -62,10 +59,8 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 
 🚫 Why did you choose this framework?
 
--    point one
--    point two
--    point three
--    point four
+-    React
+-    Redux
 
 🚫List the rest of the front end features and libraries in the same format as the framework above.
 
@@ -75,9 +70,8 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 
 #### 🚫 back end framework goes here
 
--    point one
--    point two
--    point three
+-    NodeJS with Express
+-    Flask
 
 🚫 List the rest of the back end end features and libraries in the same format as the framework above
 
@@ -194,4 +188,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Backend Documentation](🚫_link to your backend readme here_) for details on the backend of our project.
+See [Backend Documentation](https://github.com/Lambda-School-Labs/earth-dashboard-be) for details on the backend of our project.
