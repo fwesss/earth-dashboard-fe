@@ -45,11 +45,9 @@ A realtime/ real world dashboard to teach middle school students the fundamental
 
 ### 4️⃣ Key Features
 
--    feature one
--    feature two
--    feature three
--    feature four
--    feature five
+-    Tutorial to show a user the basics on how to properly use the app.
+-    Multiple lessons for different aspects of planet earth that are interesting and important.
+-    Interactive data visualization within each lesson that users can manipulate themselves to see the direct changes in the visualizations.
 
 ## 1️⃣ Tech Stack
 
@@ -62,18 +60,20 @@ A realtime/ real world dashboard to teach middle school students the fundamental
 -    React
 -    Redux
 
-🚫List the rest of the front end features and libraries in the same format as the framework above.
+🚫 Other front end features and libraries
+
+-    Mapbox Js
+-    D3 Js
 
 #### Front end deployed to `🚫insert service here`
 
-#### [Back end](🚫link to back end repo here) built using:
+#### [Back end](https://github.com/Lambda-School-Labs/earth-dashboard-be) built using:
 
 #### 🚫 back end framework goes here
 
 -    NodeJS with Express
 -    Flask
 
-🚫 List the rest of the back end end features and libraries in the same format as the framework above
 
 # APIs
 
@@ -136,6 +136,10 @@ In order for the app to function correctly, the user must set up their own envir
 # 4️⃣ Testing
 
 🚫Document what you used for testing and why
+
+-    React Testing Library (Integration)
+-    Jest(Unit)
+
 
 # 4️⃣ Installation Instructions
 
