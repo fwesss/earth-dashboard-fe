@@ -146,10 +146,9 @@ const DataProvider = () => {
           marks={marks}
           min={0}
           max={dates.length - 2}
-          valueLabelFormat={(value) => {
-            const date = new Date(dates[value]);
-            return `${date.getMonth() + 1}/${date.getDate()}`;
-          }}
+          valueLabelFormat={(value) =>
+            dates[0] !== null && dates[value].substring(1, 5)
+          }
         />
       </Box>
     </Box>
