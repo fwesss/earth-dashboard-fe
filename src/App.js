@@ -1,6 +1,11 @@
 import React from "react";
-import CasesVis from "./features/visualizations/cases/CasesVis";
+import { Container } from "@material-ui/core";
+import DataProvider from "./features/visualizations/cases/CasesVis";
 
-const App = () => <CasesVis />;
+const App = () => (
+  <Container maxWidth="lg">
+    <DataProvider />
+  </Container>
+);
 
 export default App;
