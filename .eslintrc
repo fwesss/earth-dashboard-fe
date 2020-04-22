@@ -12,7 +12,10 @@
     "react-hooks",
     "jsx-a11y",
     "json-format",
-    "optimize-regex"
+    "optimize-regex",
+    "jest",
+    "jest-formatting",
+    "testing-library",
   ],
   "extends": [
     "eslint:recommended",
@@ -23,6 +26,13 @@
     "plugin:jsx-a11y/recommended",
     "airbnb",
     "airbnb/hooks",
+
+    // testing
+    "plugin:jest/recommended",
+    "plugin:jest/style",
+    "plugin:jest-formatting/recommended",
+    "plugin:testing-library/recommended",
+    "plugin:testing-library/react",
 
     // must be last
     "plugin:prettier/recommended",

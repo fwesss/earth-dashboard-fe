@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import GeoJSON from "geojson";
-import requestCases from "../../../api/cases";
+import api from "../../../api/cases";
 
-const initialState = {
+export const initialState = {
   fetching: false,
   success: null,
   error: null,
@@ -10,7 +10,7 @@ const initialState = {
   dates: [null, null],
 };
 
-const cases = createSlice({
+const casesSlice = createSlice({
   name: "cases",
   initialState,
   reducers: {
@@ -53,16 +53,22 @@ export const {
   fetchingCases,
   fetchCasesSuccess,
   fetchCasesError,
-} = cases.actions;
+} = casesSlice.actions;
 
-export default cases.reducer;
+export default casesSlice.reducer;
+
+export const fetching = (state) => state.cases.fetching;
+export const success = (state) => state.cases.success;
+export const error = (state) => state.cases.error;
+export const cases = (state) => state.cases.cases;
+export const dates = (state) => state.cases.dates;
 
 export const getCases = () => async (dispatch) => {
   dispatch(fetchingCases());
   try {
-    const casesResponse = await requestCases();
+    const casesResponse = await api.requestCases();
     dispatch(fetchCasesSuccess(JSON.stringify(casesResponse)));
-  } catch (error) {
-    dispatch(fetchCasesError(JSON.stringify(error)));
+  } catch (fetchError) {
+    dispatch(fetchCasesError(JSON.stringify(fetchError)));
   }
 };

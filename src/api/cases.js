@@ -6,4 +6,4 @@ const requestCases = async () => {
   return { data, rest };
 };
 
-export default requestCases;
+export default { requestCases };
