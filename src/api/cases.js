@@ -1,9 +1,7 @@
-import axios from "axios";
+import apiFetch from "./utils/apiFetch";
 
 const requestCases = async () => {
-  const { data, ...rest } = await axios.get(
-    "https://earthdash.herokuapp.com/api/cases"
-  );
+  const { data, ...rest } = await apiFetch().get("/cases");
 
   return { data, rest };
 };
