@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import GeoJSON from "geojson";
 import requestCases from "../../../api/cases";
 
 const initialState = {
@@ -6,6 +7,7 @@ const initialState = {
   success: null,
   error: null,
   cases: null,
+  dates: [null, null],
 };
 
 const cases = createSlice({
@@ -28,7 +30,10 @@ const cases = createSlice({
         ...state,
         fetching: false,
         success: rest,
-        cases: data,
+        cases: GeoJSON.parse(data.cases, {
+          Point: ["lat", "lon"],
+        }),
+        dates: data.dates,
         error: null,
       };
     },
