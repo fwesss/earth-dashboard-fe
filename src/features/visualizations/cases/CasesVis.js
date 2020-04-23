@@ -13,6 +13,7 @@ import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { getCases } from "./casesSlice";
+import "mapbox-gl/src/css/mapbox-gl.css";
 
 mapboxgl.accessToken = process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN;
 
@@ -111,14 +112,19 @@ const DataProvider = () => {
   if (fetching) {
     return (
       <Backdrop open invisible>
-        <CircularProgress />
+        <CircularProgress data-testid="progressbar" />
       </Backdrop>
     );
   }
 
   return (
     <Box display="flex" flexDirection="column" overflow="hidden" py={3}>
-      <Typography variant="h4" component="h2" gutterBottom>
+      <Typography
+        aria-label="map-title"
+        variant="h4"
+        component="h2"
+        gutterBottom
+      >
         USA Covid-19 Confirmed Cases Daily Count
       </Typography>
       <CasesVis cases={cases} setMapState={setMapState} />
@@ -132,6 +138,7 @@ const DataProvider = () => {
         </IconButton>
 
         <Slider
+          aria-label="date-filter"
           className={classes.root}
           classes={{
             markLabel: classes.markLabel,
@@ -357,7 +364,14 @@ const CasesVis = ({ cases, setMapState }) => {
     };
   }, [setMapState]);
 
-  return <div ref={mapContainer} style={{ height: "75vh" }} />;
+  return (
+    <div
+      aria-labelledby="map-title"
+      data-testid="map"
+      ref={mapContainer}
+      style={{ height: "75vh" }}
+    />
+  );
 };
 
 export default DataProvider;
