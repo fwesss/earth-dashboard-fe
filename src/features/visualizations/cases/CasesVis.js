@@ -14,8 +14,7 @@ import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { getCases } from "./casesSlice";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoiY3ZhbmNoaWVyaSIsImEiOiJjazkwcTM3bGwwNGU4M2hucGYxNmkydGFzIn0.sDsBLsY2hw-6LPjKzL2ZqA";
+mapboxgl.accessToken = process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN;
 
 const useStyles = makeStyles({
   root: {
@@ -162,7 +161,7 @@ const CasesVis = ({ cases, setMapState }) => {
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
-      style: "mapbox://styles/cvanchieri/ck922oal90bxw1ilzl8opoz7d",
+      style: process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_STYLE,
       center: [-100, 38],
       zoom: 3.5,
     });
