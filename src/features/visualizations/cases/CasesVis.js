@@ -14,6 +14,7 @@ import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { getCases } from "./casesSlice";
 import "mapbox-gl/src/css/mapbox-gl.css";
+import useDebounce from "../../../hooks/useDebounce";
 
 mapboxgl.accessToken = process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN;
 
@@ -31,12 +32,15 @@ const useStyles = makeStyles({
 const DataProvider = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const { dates, cases, fetching } = useSelector((state) => state.casesVis);
+
   const [mapState, setMapState] = useState(null);
   const [dateToFilter, setDateToFilter] = useState({
     date: null,
     sliderValue: null,
   });
+  const debouncedDateToFilter = useDebounce(dateToFilter, 50);
   const [play, setPlay] = useState(false);
 
   useEffect(() => {
@@ -52,9 +56,9 @@ const DataProvider = () => {
     };
 
     if (dateToFilter.date && mapState) {
-      filterBy(dateToFilter.date);
+      filterBy(debouncedDateToFilter.date);
     }
-  }, [mapState, dateToFilter]);
+  }, [mapState, dateToFilter, debouncedDateToFilter]);
 
   useEffect(() => {
     setDateToFilter({
