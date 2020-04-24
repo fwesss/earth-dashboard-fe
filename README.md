@@ -113,16 +113,12 @@ In order for the app to function correctly, the user must set up their own envir
 
 🚫These are just examples, replace them with the specifics for your app
 
-    *  REACT_APP_apiKey - this is your Google API key, which can be generated in the Google Cloud Console
-    *  REACT_APP_authDomain - when you set up your Firebase project, this information will be in the dashboard
-    *  REACT_APP_databaseURL - in the Firebase dashboard
-    *  REACT_APP_projectID - in the Firebase dashboard
-    *  REACT_APP_storageBucket - in the Firebase dashboard
-    *  REACT_APP_messagingSenderId - in the Firebase dashboard
-    *  REACT_APP_stripe_API - this is your public Stripe API key, generated in the Stripe dashboard
-    *  REACT_APP_backendURL - optional for your local development server
-    *  REACT_APP_clientid - this is the Stripe_connect clientID, generated in Stripe_connect settings
-    *  REACT_APP_stripe_plan - this is the ID for a second Stripe subscription plan, generated under Stripe products
+    *  REACT_APP_CONFIRMED_CASES_MAPBOX_STYLE - pulls in styling from a saved
+     mapbox map
+    *  REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN - needed to access mapbox api
+     to serve maps
+     
+     "asdjifo4l;jc89asdfjiopamkl;cs8904hjuipalsdfhu8oahuioH(#*Y$Rpi"
 
 # 5️⃣ Content Licenses
 

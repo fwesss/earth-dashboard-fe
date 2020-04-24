@@ -16,7 +16,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn run lint-staged"
+      "pre-commit": "yarn run lint-staged && secret-shield --check-and-run --config rules.json"
     }
   },
   "lint-staged": {

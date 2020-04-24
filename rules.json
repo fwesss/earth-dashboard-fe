@@ -1,0 +1,40 @@
+{
+  "_info": {
+    "ruleset": "example",
+    "version": "0.0.1",
+    "date": "2018-04-17",
+    "author": "Jerry",
+    "org": "SuperDuper Examples(tm)",
+    "description": "General-purpose example rules"
+  },
+  "_user": {
+    "I can specify": "whatever I want here",
+    "fun": true
+  },
+  "special": {
+    "IgnoreFiles": [
+      "\\/\\.git\\/",
+      "\\/node_modules\\/",
+      "\\.png$"
+    ]
+  },
+  "preprocess": [
+    {
+      "type": "remove",
+      "name": "Ignore URLs",
+      "pattern": "(https?|ftp):\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,11}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)"
+    }
+  ],
+  "regex": {
+    "AWS Client ID": {
+      "pattern": "asdjifo4l;jc89asdfjiopamkl;cs8904hjuipalsdfhu8oahuioH(#*Y$Rpi"
+    }
+  },
+  "entropy": {
+    "High-entropy string": {
+      "percentile": "99.9",
+      "minLength": 32,
+      "maxLength": 256
+    }
+  }
+}
