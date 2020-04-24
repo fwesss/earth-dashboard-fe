@@ -117,8 +117,6 @@ In order for the app to function correctly, the user must set up their own envir
      mapbox map
     *  REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN - needed to access mapbox api
      to serve maps
-     
-     "asdjifo4l;jc89asdfjiopamkl;cs8904hjuipalsdfhu8oahuioH(#*Y$Rpi"
 
 # 5️⃣ Content Licenses
 
