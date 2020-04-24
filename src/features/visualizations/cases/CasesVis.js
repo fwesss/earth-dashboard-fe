@@ -29,24 +29,35 @@ const useStyles = makeStyles({
   },
 });
 
+/*
+ * Filtering and data fetching is done through the DataProvider HOC. It was not broken out
+ * into separate file because it is directly connected to this visualization.
+ */
 const DataProvider = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const { dates, cases, fetching } = useSelector((state) => state.casesReducer);
 
+  // filterBy() requires the map that was constructed in CasesVis so we need to pass it up to the
+  // HOC and store it in local state
   const [mapState, setMapState] = useState(null);
   const [dateToFilter, setDateToFilter] = useState({
     date: null,
     sliderValue: null,
   });
+  // The date filter is debounced so dragging the slider quickly will not trigger multiple layer filter
+  // changes. Filter changes are only registered every 25ms.
   const debouncedDateToFilter = useDebounce(dateToFilter, 25);
   const [play, setPlay] = useState(false);
 
+  // Retrieve the map data on component mount
   useEffect(() => {
     dispatch(getCases());
   }, [dispatch]);
 
+  // Whenver the dateToFilter changes in state, we change the data we are showing by filtering by date
+  // There are separate layers for the circles, labels, and heatmap so we set the filter on each
   useEffect(() => {
     const filterBy = (date) => {
       const filters = ["==", "date", date];
@@ -83,6 +94,7 @@ const DataProvider = () => {
 
     let interval;
 
+    // Move the slider forward one date every 250ms until play=false or we're at the end of the slider
     if (play && dateToFilter.sliderValue < dates.length - 2) {
       interval = setInterval(() => {
         increaseDate();
@@ -104,6 +116,7 @@ const DataProvider = () => {
 
   const valuetext = (value) => `${dates[value]}`;
 
+  // Displaying all dates as marks on the slider will be too crowded so we only display every 7 dates
   const marks = dates
     .map((date, i) => {
       return {
@@ -113,6 +126,7 @@ const DataProvider = () => {
     })
     .filter((_, j) => j % 7 === 0);
 
+  // Display a loading spinner while data is being fetched
   if (fetching) {
     return (
       <Backdrop open invisible>
@@ -156,6 +170,7 @@ const DataProvider = () => {
           marks={marks}
           min={0}
           max={dates.length - 2}
+          // Format the date in the tooltip to MM-dd because the full date does not fit
           valueLabelFormat={(value) =>
             dates[0] !== null && dates[value].substring(1, 5)
           }
@@ -192,7 +207,7 @@ const CasesVis = ({ cases, setMapState }) => {
           source: "confirmed-cases",
           maxzoom: 5,
           paint: {
-            // Increase the heatmap weight based on frequency and property magnitude
+            // Increase the heatmap weight based on number of cases
             "heatmap-weight": [
               "interpolate",
               ["cubic-bezier", 0, 1, 1, 0],
