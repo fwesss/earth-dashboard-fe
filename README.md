@@ -143,16 +143,25 @@ In order for the app to function correctly, the user must set up their own envir
 
 # 4️⃣ Installation Instructions
 
-🚫explain how to install the required dependencies to get this project up and running with yarn and NPM
+ 1. `yarn install`
+ 2. `yarn start`
 
 ## Other Scripts
 
-🚫replace these examples with your own
-
-    * typecheck - runs the TypeScript compiler
     * build - creates a build of the application
+    * eject - copy the configuration files and dependencies into the project so you have full control over them
+    * format - runs prettier against all files not in .gitignore
+    * lint - checks for errors in .js files
+    * lint:fix - checks for errors in .js files and fixs those that can be
+     auto-fixed
+    * prettier: runs prettier
     * start - starts the production server after a build is created
-    * test - runs tests in **tests** directory \* eject - copy the configuration files and dependencies into the project so you have full control over them
+    * test - runs tests in watch mode
+    * test:coverage - runs tests and generates coverage report
+    * validate - runs format, lint, build, and test:coverage. Should be run
+     prior to submitting pull requests to ensure code adheres to project
+      style guidelines, tests pass, and src builds.
+    
 
 # Contributing
 
