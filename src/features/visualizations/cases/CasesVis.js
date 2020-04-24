@@ -33,14 +33,14 @@ const DataProvider = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { dates, cases, fetching } = useSelector((state) => state.casesVis);
+  const { dates, cases, fetching } = useSelector((state) => state.casesReducer);
 
   const [mapState, setMapState] = useState(null);
   const [dateToFilter, setDateToFilter] = useState({
     date: null,
     sliderValue: null,
   });
-  const debouncedDateToFilter = useDebounce(dateToFilter, 50);
+  const debouncedDateToFilter = useDebounce(dateToFilter, 25);
   const [play, setPlay] = useState(false);
 
   useEffect(() => {

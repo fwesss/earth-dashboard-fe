@@ -7,12 +7,11 @@
     "eject": "react-scripts eject",
     "format": "yarn run prettier --write --ignore-path .gitignore",
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
-    "lint:filx": "eslint --ignore-path .gitignore --ext .js,.jsx . --fix",
+    "lint:fix": "eslint --ignore-path .gitignore --ext .js,.jsx . --fix",
     "prettier": "prettier \"**/*.+(js|jsx|json)\"",
     "start": "react-scripts start",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
-    "test:coverage": "yarn run test --coverage",
-    "test:watch": "yarn run test --watch",
+    "test:coverage": "yarn run test --coverage --watchAll=false",
     "validate": "npm-run-all --parallel format lint build test:coverage"
   },
   "husky": {
