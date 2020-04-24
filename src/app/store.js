@@ -1,8 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import casesReducer from "../features/visualizations/cases/casesSlice";
 
-export default configureStore({
-  reducer: {
-    casesVis: casesReducer,
-  },
+export const rootReducer = combineReducers({
+  casesReducer,
 });
+
+const store = configureStore({
+  reducer: rootReducer,
+});
+
+export default store;
