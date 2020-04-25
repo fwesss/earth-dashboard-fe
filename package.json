@@ -22,10 +22,10 @@
   },
   "lint-staged": {
     "**/*.+(js|jsx|json)": [
-      "prettier --write"
+      "yarn run format"
     ],
     "*.+(js|jsx)": [
-      "eslint"
+      "yarn run lint:fix"
     ],
     "package.json": [
       "sort-package-json"
