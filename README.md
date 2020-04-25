@@ -139,6 +139,82 @@ In order for the app to function correctly, the user must set up their own envir
 
  1. `yarn install`
  2. `yarn start`
+ 
+ This repo uses git-secrets to prevent to prevent commiting secrets. After
+  installing packages, install and configure git-secrets:
+  
+## git-secrets Instructions
+### Step 1: Install to system
+#### *nix (Linux/macOS)
+
+```
+git clone https://github.com/awslabs/git-secrets.git
+cd git-secrets
+make install
+```
+
+#### Windows
+
+```
+git clone https://github.com/awslabs/git-secrets.git
+cd git-secrets
+PS > ./install.ps1
+```
+
+#### Homebrew (for macOS users)
+
+`brew install git-secrets`
+
+### Step 2a (DS): Install githooks
+
+```
+cd /path/to/your/repo
+git secrets --install
+git secrets --register-aws
+git secrets --add '^.*pk\..*$'
+git secrets --add '^.*postgres://.*$'
+```
+
+AWS tokens will be found by default.
+
+'^.*pk\..*$' is a regex that matches whole strings that start with 'pk
+.'. This is the basic format of mapbox tokens so those will be found if saved
+ anywhere in the repo.
+ 
+'^.*postgres://.*$' is a regex that matches whole strings that start with
+ 'postgres://' which should take care of Postgres URLs. If you're using
+  separate variables for host, user, password, and database, then those
+   variables will not be detected. Use a URL connection where possible.
+
+### Step 2b (Web): Install githooks
+
+```
+cd /path/to/your/repo
+git secrets --install -f
+git secrets --register-aws
+git secrets --add '^.*pk\..*$'
+git secrets --add '^.*postgres://.*$'
+```
+
+AWS tokens will be found by default.
+
+'^.*pk\..*$' is a regex that matches whole strings that start with 'pk
+.'. This is the basic format of mapbox tokens so those will be found if saved
+ anywhere in the repo.
+ 
+'^.*postgres://.*$' is a regex that matches whole strings that start with
+ 'postgres://' which should take care of Postgres URLs. If you're using
+  separate variables for host, user, password, and database, then those
+   variables will not be detected. Use a URL connection where possible.
+
+### Step 3 (Web): Reinstall husky hooks
+Installing the git-secrets hooks will overwrite those installed by husky so
+ we need to add those back in.
+ 
+Open /path/to/repo/.git/hooks/pre-commit and add the following line at the
+ bottom of the file:
+ `. "$(dirname "$0")/husky.sh"`
+
 
 ## Other Scripts
 
