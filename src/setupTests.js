@@ -1,8 +1,10 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom/extend-expect";
+
+/*
+ * Mocking the Map class and other functions necessary to render mapbox-gl. Jest does not utilize
+ * the dom and there are many functions in mapbox that rely on the dom including Web-GL. We need
+ * to mock these functions to enable the tests to run.
+ */
 
 const mockOn = jest.fn();
 const mockAddLayer = jest.fn();

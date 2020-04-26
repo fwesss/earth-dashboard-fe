@@ -3,7 +3,7 @@ import GeoJSON from "geojson";
 import api from "../../../api/cases";
 
 export const initialState = {
-  fetching: false,
+  fetching: true,
   success: null,
   error: null,
   cases: null,
@@ -30,6 +30,10 @@ const casesSlice = createSlice({
         ...state,
         fetching: false,
         success: rest,
+        /*
+         * Format the data in GeoJSON. We do this one the front end because it lowers the data
+         * sent from the server and parsing JSON is a relatively quick operation.
+         */
         cases: GeoJSON.parse(data.cases, {
           Point: ["lat", "lon"],
         }),
@@ -57,12 +61,14 @@ export const {
 
 export default casesSlice.reducer;
 
+// Export the selectors for ease of testing
 export const fetching = (state) => state.cases.fetching;
 export const success = (state) => state.cases.success;
 export const error = (state) => state.cases.error;
 export const cases = (state) => state.cases.cases;
 export const dates = (state) => state.cases.dates;
 
+// Serializing API response by stringifying it
 export const getCases = () => async (dispatch) => {
   dispatch(fetchingCases());
   try {
