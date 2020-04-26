@@ -18,7 +18,7 @@ const renderWithRedux = (
       reducer: rootReducer,
       preloadedState: initialState,
     }),
-  } = {}
+  }
 ) => {
   return { ...render(<Provider store={store}>{ui}</Provider>), store };
 };
