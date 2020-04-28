@@ -3,7 +3,7 @@ import GeoJSON from "geojson";
 import api from "../../../api/cases";
 
 export const initialState = {
-  fetching: false,
+  fetching: true,
   success: null,
   error: null,
   cases: null,

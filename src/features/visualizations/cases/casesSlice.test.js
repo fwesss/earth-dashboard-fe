@@ -35,14 +35,7 @@ describe("cases slice", () => {
       const payload = {
         rest: 1,
         data: {
-          cases: [
-            {
-              lat: 47.49,
-              lon: -121.83,
-              cases: 1,
-              date: "2020-01-23",
-            },
-          ],
+          cases: [{ lat: 47.49, lon: -121.83, cases: 1, date: "2020-01-23" }],
           dates: ["2020-01-23"],
         },
       };
@@ -58,14 +51,8 @@ describe("cases slice", () => {
       expect(cases(rootState)).toEqual({
         features: [
           {
-            geometry: {
-              coordinates: [-121.83, 47.49],
-              type: "Point",
-            },
-            properties: {
-              cases: 1,
-              date: "2020-01-23",
-            },
+            geometry: { coordinates: [-121.83, 47.49], type: "Point" },
+            properties: { cases: 1, date: "2020-01-23" },
             type: "Feature",
           },
         ],
@@ -98,14 +85,7 @@ const mockStore = configureMockStore([thunk]);
 describe("thunks", () => {
   it("should create both fetchingCases and fetchCasesSuccess when fetching succeeds", async () => {
     const responsePayload = {
-      cases: [
-        {
-          lat: 47.49,
-          lon: -121.83,
-          cases: 1,
-          date: "2020-01-23",
-        },
-      ],
+      cases: [{ lat: 47.49, lon: -121.83, cases: 1, date: "2020-01-23" }],
       dates: ["2020-01-23"],
     };
     const store = mockStore(initialState);

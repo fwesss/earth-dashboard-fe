@@ -117,16 +117,10 @@ In order for the app to function correctly, the user must set up their own envir
 
 🚫These are just examples, replace them with the specifics for your app
 
-    *  REACT_APP_apiKey - this is your Google API key, which can be generated in the Google Cloud Console
-    *  REACT_APP_authDomain - when you set up your Firebase project, this information will be in the dashboard
-    *  REACT_APP_databaseURL - in the Firebase dashboard
-    *  REACT_APP_projectID - in the Firebase dashboard
-    *  REACT_APP_storageBucket - in the Firebase dashboard
-    *  REACT_APP_messagingSenderId - in the Firebase dashboard
-    *  REACT_APP_stripe_API - this is your public Stripe API key, generated in the Stripe dashboard
-    *  REACT_APP_backendURL - optional for your local development server
-    *  REACT_APP_clientid - this is the Stripe_connect clientID, generated in Stripe_connect settings
-    *  REACT_APP_stripe_plan - this is the ID for a second Stripe subscription plan, generated under Stripe products
+    *  REACT_APP_CONFIRMED_CASES_MAPBOX_STYLE - pulls in styling from a saved
+     mapbox map
+    *  REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN - needed to access mapbox api
+     to serve maps
 
 # 5️⃣ Content Licenses
 
@@ -147,16 +141,101 @@ In order for the app to function correctly, the user must set up their own envir
 
 # 4️⃣ Installation Instructions
 
-🚫explain how to install the required dependencies to get this project up and running with yarn and NPM
+ 1. `yarn install`
+ 2. `yarn start`
+ 
+ This repo uses git-secrets to prevent to prevent commiting secrets. After
+  installing packages, install and configure git-secrets:
+  
+## git-secrets Instructions
+### Step 1: Install to system
+#### *nix (Linux/macOS)
+
+```
+git clone https://github.com/awslabs/git-secrets.git
+cd git-secrets
+make install
+```
+
+#### Windows
+
+```
+git clone https://github.com/awslabs/git-secrets.git
+cd git-secrets
+PS > ./install.ps1
+```
+
+#### Homebrew (for macOS users)
+
+`brew install git-secrets`
+
+### Step 2a (DS): Install githooks
+
+```
+cd /path/to/your/repo
+git secrets --install
+git secrets --register-aws
+git secrets --add '^.*pk\..*$'
+git secrets --add '^.*postgres://.*$'
+```
+
+AWS tokens will be found by default.
+
+'^.*pk\..*$' is a regex that matches whole strings that start with 'pk
+.'. This is the basic format of mapbox tokens so those will be found if saved
+ anywhere in the repo.
+ 
+'^.*postgres://.*$' is a regex that matches whole strings that start with
+ 'postgres://' which should take care of Postgres URLs. If you're using
+  separate variables for host, user, password, and database, then those
+   variables will not be detected. Use a URL connection where possible.
+
+### Step 2b (Web): Install githooks
+
+```
+cd /path/to/your/repo
+git secrets --install -f
+git secrets --register-aws
+git secrets --add '^.*pk\..*$'
+git secrets --add '^.*postgres://.*$'
+```
+
+AWS tokens will be found by default.
+
+'^.*pk\..*$' is a regex that matches whole strings that start with 'pk
+.'. This is the basic format of mapbox tokens so those will be found if saved
+ anywhere in the repo.
+ 
+'^.*postgres://.*$' is a regex that matches whole strings that start with
+ 'postgres://' which should take care of Postgres URLs. If you're using
+  separate variables for host, user, password, and database, then those
+   variables will not be detected. Use a URL connection where possible.
+
+### Step 3 (Web): Reinstall husky hooks
+Installing the git-secrets hooks will overwrite those installed by husky so
+ we need to add those back in.
+ 
+Open /path/to/repo/.git/hooks/pre-commit and add the following line at the
+ bottom of the file:
+ `. "$(dirname "$0")/husky.sh"`
+
 
 ## Other Scripts
 
-🚫replace these examples with your own
-
-    * typecheck - runs the TypeScript compiler
     * build - creates a build of the application
+    * eject - copy the configuration files and dependencies into the project so you have full control over them
+    * format - runs prettier against all files not in .gitignore
+    * lint - checks for errors in .js files
+    * lint:fix - checks for errors in .js files and fixs those that can be
+     auto-fixed
+    * prettier: runs prettier
     * start - starts the production server after a build is created
-    * test - runs tests in **tests** directory \* eject - copy the configuration files and dependencies into the project so you have full control over them
+    * test - runs tests in watch mode
+    * test:coverage - runs tests and generates coverage report
+    * validate - runs format, lint, build, and test:coverage. Should be run
+     prior to submitting pull requests to ensure code adheres to project
+      style guidelines, tests pass, and src builds.
+    
 
 # Contributing
 
@@ -188,7 +267,7 @@ Remember that this project is licensed under the MIT license, and by submitting 
 - Update the README.md with details of changes to the interface, including new plist variables, exposed ports, useful file locations and container parameters.
 - Ensure that your code conforms to our existing code conventions and test coverage.
 - Include the relevant issue number, if applicable.
-- You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
+- You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you
 
 ### Attribution
 
