@@ -28,6 +28,14 @@ const theme = createMuiTheme({
       fontSize: "1.75rem",
       lineHeight: 1.1,
     },
+    body1: {
+      fontSize: "1.25rem",
+      lineHeight: 1.1,
+    },
+    body2: {
+      fontSize: "1.25rem",
+      lineHeight: 1.1,
+    },
   },
   breakpoints: {
     values: {
