@@ -13,14 +13,14 @@ const useStyles = makeStyles({
   headingTextBar: {
     position: "absolute",
     display: "block",
-    marginTop: "-10.5em",
+    marginTop: "-6.75em",
     zIndex: -1,
     left: "50%",
     marginLeft: "-262px",
 
     "@media (max-width:1440px)": {
       width: "350px",
-      marginTop: "-7.4em",
+      marginTop: "-5.75em",
       marginLeft: "-175px",
     },
   },
@@ -31,14 +31,14 @@ const useStyles = makeStyles({
   subHeadingTextBar: {
     position: "absolute",
     display: "block",
-    marginTop: "-12.8em",
+    marginTop: "-8em",
     zIndex: -1,
     left: "50%",
     marginLeft: "-427.5px",
 
     "@media (max-width:1440px)": {
       width: "600px",
-      marginTop: "-9.14em",
+      marginTop: "-7em",
       marginLeft: "-300px",
     },
   },
