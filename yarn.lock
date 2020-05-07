@@ -9832,6 +9832,11 @@ react-app-polyfill@^1.0.6:
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
 
+react-cool-img@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/react-cool-img/-/react-cool-img-1.1.5.tgz#8ff8a6a9aaccf2446df9fc284ab01f976c6c039b"
+  integrity sha512-5+cXPj0s70j28yCZhBODd87JUrnSPjMJ8bqFrrWji/+2EXMmw1SWbRi1TaI1nKcYsmWRliM2E7bts8MjZ0GTqQ==
+
 react-dev-utils@^10.2.1:
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-10.2.1.tgz#f6de325ae25fa4d546d09df4bb1befdc6dd19c19"

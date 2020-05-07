@@ -5,7 +5,6 @@ import {
   Box,
   Slider,
   Typography,
-  Backdrop,
   CircularProgress,
   IconButton,
 } from "@material-ui/core";
@@ -45,26 +44,23 @@ const DataProvider = () => {
 
   // Display a loading spinner while data is being fetched
   if (fetching) {
-    return (
-      <Backdrop open invisible>
-        <CircularProgress data-testid="progressbar" />
-      </Backdrop>
-    );
+    return <CircularProgress data-testid="progressbar" />;
   }
 
   return (
-    <Box display="flex" flexDirection="column" overflow="hidden" py={3}>
+    <>
       <Typography
         aria-label="map-title"
         variant="h4"
         component="h2"
+        align="center"
         gutterBottom
       >
-        USA Covid-19 Confirmed Cases Daily Count
+        Explore COVID-19 Confirmed Cases in the US
       </Typography>
       <CasesVis cases={cases} setMapState={setMapState} />
 
-      <Box display="flex" mx={2} my={4} alignItems="center">
+      <Box display="flex" mx={2} my={4} alignItems="center" width="90%">
         <IconButton onClick={() => setPlay(true)} aria-label="play">
           <PlayCircleFilledIcon fontSize="large" />
         </IconButton>
@@ -74,7 +70,7 @@ const DataProvider = () => {
 
         <DateSlider mapState={mapState} play={play} setPlay={setPlay} />
       </Box>
-    </Box>
+    </>
   );
 };
 
@@ -110,7 +106,7 @@ const CasesVis = ({ cases, setMapState }) => {
       aria-labelledby="map-title"
       data-testid="map"
       ref={mapContainer}
-      style={{ height: "75vh" }}
+      style={{ height: "75vh", width: "100%" }}
     />
   );
 };
