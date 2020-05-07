@@ -4,6 +4,7 @@ import theme from "./app/theme";
 import CasesVis from "./features/visualizations/cases/CasesVis";
 import Header from "./features/landing/header/Header";
 import BlurbSection from "./features/landing/blurbs/BlurbSection";
+import Bubbles from "./features/visualizations/bubbles/BubblesVis";
 
 const App = () => (
   <ThemeProvider theme={theme}>
@@ -13,12 +14,24 @@ const App = () => (
       <BlurbSection />
       <Box
         display="flex"
+        justifyContent="center"
+        alignItems="center"
+        width="95%"
+        mx="auto"
+      >
+        <Bubbles />
+      </Box>
+      <Box
+        display="flex"
         flexDirection="column"
-        overflow="hidden"
-        py={3}
         justifyContent="center"
         alignItems="center"
         height="90vh"
+        width="95%"
+        mt={10}
+        py={3}
+        mx="auto"
+        overflow="hidden"
       >
         <CasesVis />
       </Box>
