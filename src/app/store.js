@@ -1,9 +1,10 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import casesReducer from "../features/visualizations/cases/casesSlice";
-import racingReducer from "../features/visualizations/cases/Racing-Chart/RacingSlice";
+import bubblesReducer from "../features/visualizations/bubbles/bubblesSlice";
 
 export const rootReducer = combineReducers({
     casesReducer,
+    bubblesReducer,
     racingReducer
 });
 
