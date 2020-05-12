@@ -5,6 +5,8 @@ import CasesVis from "./features/visualizations/cases/CasesVis";
 import Header from "./features/landing/header/Header";
 import BlurbSection from "./features/landing/blurbs/BlurbSection";
 import Bubbles from "./features/visualizations/bubbles/BubblesVis";
+import BeforeFooter from "./features/landing/footer/BeforeFooter";
+import Footer from "./features/landing/footer/Footer";
 
 const App = () => (
   <ThemeProvider theme={theme}>
@@ -35,6 +37,8 @@ const App = () => (
       >
         <CasesVis />
       </Box>
+      <BeforeFooter />
+      <Footer />
     </Container>
   </ThemeProvider>
 );
