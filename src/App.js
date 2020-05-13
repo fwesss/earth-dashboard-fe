@@ -7,13 +7,13 @@ import BlurbSection from "./features/landing/blurbs/BlurbSection";
 import Bubbles from "./features/visualizations/bubbles/BubblesVis";
 import BeforeFooter from "./features/landing/footer/BeforeFooter";
 import Footer from "./features/landing/footer/Footer";
-import RacingData from "./features/visualizations/Racing-Chart/RacingData";
+import RacingData from "./features/visualizations/cases/Racing-Chart/RacingData";
 
 const App = () => (
     <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth="xl" disableGutters data-testid="app">
-            {/* <Header /> */}
+            <Header />
             <BlurbSection />
             <Box
                 display="flex"
@@ -22,7 +22,7 @@ const App = () => (
                 width="95%"
                 mx="auto"
             >
-                {/* <Bubbles /> */}
+                <Bubbles />
             </Box>
             <Box
                 display="flex"
