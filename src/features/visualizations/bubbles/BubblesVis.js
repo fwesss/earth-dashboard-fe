@@ -23,11 +23,11 @@ const useStyles = makeStyles({
     marginTop: "5rem",
 
     "@media (min-width:720px)": {
-      marginLeft: "-14rem",
+      marginLeft: "-24rem",
     },
 
     "@media (min-width:1440px)": {
-      marginLeft: "-22rem",
+      marginLeft: "-36rem",
     },
   },
   explanation: {
@@ -50,7 +50,7 @@ const Bubbles = () => {
   const [opacity, setOpacity] = useState(0);
 
   // set the dimensions and margins of the graph
-  const width = useWindowSize().width * 0.8;
+  const width = useWindowSize().width * 0.7;
   const height = 460;
 
   // Retrieve the bubbles data on component mount
