@@ -127,7 +127,7 @@ const AirVis = () => {
             width={width}
             height={height}
             theme={VictoryTheme.material}
-            data={airQuality.map((x) => ({ ...x, label: x.y }))}
+            data={airQuality}
             interpolation="monotoneX"
             scale={{ x: "time", y: "linear" }}
             standalone={false}
@@ -177,7 +177,7 @@ const AirVis = () => {
             width={width}
             height={height}
             theme={VictoryTheme.material}
-            data={cases.map((x) => ({ ...x, label: "yo" }))}
+            data={cases}
             interpolation="monotoneX"
             scale={{ x: "time", y: "linear" }}
             standalone={false}
