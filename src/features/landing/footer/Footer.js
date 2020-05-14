@@ -121,8 +121,6 @@ const Footer = () => {
                 href="https://www.who.int/"
                 className={classes.buttons}
                 style={{ color: "white" }}
-                // href="#what-is-earth-dashboard"
-                variant="h4"
                 component="p"
               >
                 World Health <br /> Organization: Who
@@ -134,12 +132,7 @@ const Footer = () => {
               style={{ color: "white", width: "45%" }}
               href="https://www.cdc.gov/coronavirus/2019-ncov/index.html"
             >
-              <Button
-                className={classes.buttons}
-                // href="#what-is-earth-dashboard"
-                variant="h4"
-                component="p"
-              >
+              <Button className={classes.buttons} component="p">
                 CDC
               </Button>
             </a>

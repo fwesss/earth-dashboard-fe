@@ -57,7 +57,7 @@ const Header = () => {
   return (
     <Box className={classes.headerBackground} pt={6}>
       <Box ml={9}>
-        <Logo alt="Earth Dashboard logo" title="Earth Dashboard" />
+        <Logo alt="Planet Data logo" title="Planet Data" />
       </Box>
       <Box display="flex" ml={3} mt={16} pb={6}>
         <Box width="60%">
@@ -70,7 +70,7 @@ const Header = () => {
           width="40%"
         >
           <Typography variant="h1" className={classes.welcomeHeading}>
-            Welcome to Earth Dashboard
+            Welcome to Planet Data
           </Typography>
           <Typography
             variant="h4"
@@ -102,7 +102,7 @@ const Header = () => {
             mr={10}
           >
             <Button
-              href="#what-is-earth-dashboard"
+              href="#what-is-planet-data"
               className={classes.button}
               classes={{ text: classes.buttonText }}
             >

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { format } from "date-fns";
 import mapboxgl from "mapbox-gl";
 import {
   Box,
@@ -24,8 +25,8 @@ const useStyles = makeStyles({
     marginRight: "3rem",
   },
   markLabel: {
-    transform: "rotate(-45deg)",
-    bottom: "-120px",
+    transform: "translate(-20px, 20px) rotate(90deg)",
+    fontSize: 14,
   },
 });
 
@@ -44,7 +45,7 @@ const DataProvider = () => {
 
   // Display a loading spinner while data is being fetched
   if (fetching) {
-    return <CircularProgress data-testid="progressbar" />;
+    return <CircularProgress datatest-id="progressbar" />;
   }
 
   return (
@@ -173,12 +174,19 @@ const DateSlider = ({ mapState, play, setPlay }) => {
       onChangeCommitted={() => setPlay(false)}
       // Displaying all dates as marks on the slider will be too crowded so we only display every 7 dates
       marks={dates
-        .map((date, i) => ({ value: i, label: date }))
+        .map((date, i) => ({
+          value: i,
+          label: format(
+            new Date(date.replace(/-/g, "/").substring(1)),
+            "M/d/yy"
+          ),
+        }))
         .filter((_, j) => j % 7 === 0)}
       max={dates.length - 2}
       // Format the date in the tooltip to MM-dd because the full date does not fit
       valueLabelFormat={(value) =>
-        dates[0] !== null && dates[value].substring(1, 5)
+        dates[0] !== null &&
+        format(new Date(dates[value].replace(/-/g, "/").substring(1)), "M/d")
       }
       valueLabelDisplay="auto"
     />
