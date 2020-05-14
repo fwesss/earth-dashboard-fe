@@ -65,12 +65,12 @@ const BlurbSection = () => {
   return (
     <>
       <Typography
-        id="what-is-earth-dashboard"
+        id="what-is-planet-data"
         className={classes.headingText}
         variant="h2"
         align="center"
       >
-        What is Earth Dashboard?
+        What is Planet Data?
       </Typography>
       <svg
         className={classes.headingTextBar}
@@ -88,12 +88,12 @@ const BlurbSection = () => {
       </svg>
 
       <Box display="flex" justifyContent="space-around">
-        <Blurb id={1}>Earth Dashboard is an interactive playground</Blurb>
+        <Blurb id={1}>Planet Data is an interactive playground</Blurb>
         <Blurb id={2}>
-          Earth Dashboard is a learning tool for data visualization.
+          Planet Data is a learning tool for data visualization.
         </Blurb>
         <Blurb id={3}>
-          Earth Dashboard lets you immerse yourself in real-time data.
+          Planet Data lets you immerse yourself in real-time data.
         </Blurb>
       </Box>
       <Typography

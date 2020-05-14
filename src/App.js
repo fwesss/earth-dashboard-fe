@@ -5,6 +5,7 @@ import CasesVis from "./features/visualizations/cases/CasesVis";
 import Header from "./features/landing/header/Header";
 import BlurbSection from "./features/landing/blurbs/BlurbSection";
 import Bubbles from "./features/visualizations/bubbles/BubblesVis";
+import Air from "./features/visualizations/air/AirVis";
 import BeforeFooter from "./features/landing/footer/BeforeFooter";
 import Footer from "./features/landing/footer/Footer";
 
@@ -19,9 +20,21 @@ const App = () => (
         justifyContent="center"
         alignItems="center"
         width="95%"
+        height={800}
         mx="auto"
       >
         <Bubbles />
+      </Box>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        width="95%"
+        height={650}
+        mx="auto"
+      >
+        <Air />
       </Box>
       <Box
         display="flex"
