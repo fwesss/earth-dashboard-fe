@@ -1,9 +1,9 @@
 import apiFetch from "./utils/apiFetch";
 
 const requestCases = async () => {
-    const { data, ...rest } = await apiFetch().get("/cases");
+  const { data, ...rest } = await apiFetch().get("/cases");
 
-    return { data, rest };
+  return { data, rest };
 };
 
 export default { requestCases };

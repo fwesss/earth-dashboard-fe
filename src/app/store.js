@@ -4,13 +4,13 @@ import bubblesReducer from "../features/visualizations/bubbles/bubblesSlice";
 import racingReducer from "../features/visualizations/Racing-Chart/RacingSlice";
 
 export const rootReducer = combineReducers({
-    casesReducer,
-    bubblesReducer,
-    racingReducer
+  casesReducer,
+  bubblesReducer,
+  racingReducer,
 });
 
 const store = configureStore({
-    reducer: rootReducer,
+  reducer: rootReducer,
 });
 
 export default store;
