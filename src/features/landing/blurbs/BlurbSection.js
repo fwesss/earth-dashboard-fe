@@ -16,12 +16,12 @@ const useStyles = makeStyles({
     marginTop: "-6.75em",
     zIndex: -1,
     left: "50%",
-    marginLeft: "-262px",
+    marginLeft: "-200px",
 
     "@media (max-width:1440px)": {
-      width: "350px",
+      width: "280px",
       marginTop: "-5.75em",
-      marginLeft: "-175px",
+      marginLeft: "-140px",
     },
   },
   subHeadingText: {
@@ -74,7 +74,7 @@ const BlurbSection = () => {
       </Typography>
       <svg
         className={classes.headingTextBar}
-        width="524"
+        width="400"
         height="22"
         viewBox="0 0 524 22"
         fill="none"

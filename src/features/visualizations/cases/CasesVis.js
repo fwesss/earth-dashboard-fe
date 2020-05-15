@@ -2,13 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
 import mapboxgl from "mapbox-gl";
-import {
-  Box,
-  Slider,
-  Typography,
-  CircularProgress,
-  IconButton,
-} from "@material-ui/core";
+import { Box, Slider, CircularProgress, IconButton } from "@material-ui/core";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -16,6 +10,8 @@ import { getCases } from "./casesSlice";
 import "mapbox-gl/src/css/mapbox-gl.css";
 import useDebounce from "../../../hooks/useDebounce";
 import { heatmap, circles, labels } from "./layers.json";
+import VisExplanation from "../VisExplanation";
+import VisTitle from "../VisTitle";
 
 mapboxgl.accessToken = process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN;
 
@@ -49,16 +45,10 @@ const DataProvider = () => {
   }
 
   return (
-    <>
-      <Typography
-        aria-label="map-title"
-        variant="h4"
-        component="h2"
-        align="center"
-        gutterBottom
-      >
+    <Box display="flex" flexDirection="column" justifyContent="center">
+      <VisTitle aria-label="map-title" variant="h4" component="h2">
         Explore COVID-19 Confirmed Cases in the US
-      </Typography>
+      </VisTitle>
       <CasesVis cases={cases} setMapState={setMapState} />
 
       <Box display="flex" mx={2} my={4} alignItems="center" width="90%">
@@ -71,7 +61,19 @@ const DataProvider = () => {
 
         <DateSlider mapState={mapState} play={play} setPlay={setPlay} />
       </Box>
-    </>
+      <VisExplanation>
+        A heatmap is a visual representation of data that uses a method of
+        color-coding to represent the different data values. Data which includes
+        latitude and longitude values (coordinates for mapping associated with
+        the data) is great to use with a heatmap. The data for daily new
+        COVID-19 confirmed cases includes latitude and longitude values which
+        allows us to visually see where and how the COVID-19 virus is spreading
+        throughout the United States and where the most and least impacted areas
+        are. Here in this heatmap we can see over-time how much more New York
+        and the general east coast have been affected by the virus compared to
+        California and the west coast.
+      </VisExplanation>
+    </Box>
   );
 };
 
