@@ -14,6 +14,8 @@ import {
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { getSummary } from "./bubblesSlice";
 import useWindowSize from "../../../hooks/useWindowSize";
+import VisExplanation from "../VisExplanation";
+import VisTitle from "../VisTitle";
 
 const useStyles = makeStyles({
   factCard: {
@@ -29,11 +31,6 @@ const useStyles = makeStyles({
     "@media (min-width:1440px)": {
       marginLeft: "-36rem",
     },
-  },
-  explanation: {
-    width: "75%",
-    padding: "2em 2em 3em",
-    margin: "0 auto",
   },
 });
 
@@ -191,18 +188,13 @@ const Bubbles = () => {
   }
 
   return (
-    <Box display="flex" flexDirection="column" mt={10} overflow="hidden">
-      <Typography variant="h4" component="h2" align="center">
+    <Box display="flex" flexDirection="column" overflow="hidden">
+      <VisTitle variant="h4" component="h2" subtitled>
         Biases in Bubbles:
-      </Typography>
-      <Typography
-        variant="h5"
-        component="span"
-        align="center"
-        aria-label="bubbles-title"
-      >
+      </VisTitle>
+      <VisTitle variant="h5" component="span" aria-label="bubbles-title">
         The Spread of COVID-19: Confirmed Cases vs Population
-      </Typography>
+      </VisTitle>
       <Box display="flex" justifyContent="center">
         <Card className={classes.factCard} style={{ opacity }}>
           <CardContent>
@@ -225,12 +217,13 @@ const Bubbles = () => {
           data-testid="bubbles"
         />
       </Box>
-      <Typography className={classes.explanation}>
+      <VisExplanation>
         One goal of data visualization is to communicate information that
         accounts for both accuracy and depth. In this case, we have a high level
-        of accuracy, but no accounting for the different populations of each
-        country.
-      </Typography>
+        of accuracy, but no accounting for the vastly different populations of
+        each country. We can see that the US bubble is far larger than the Italy
+        bubble, but of course the United States has a much larger population.
+      </VisExplanation>
     </Box>
   );
 };
