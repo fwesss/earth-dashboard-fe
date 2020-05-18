@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CircularProgress, Typography } from "@material-ui/core";
+import { CircularProgress, Box, useTheme } from "@material-ui/core";
 import { VictoryLine, VictoryAxis, VictoryLabel, VictoryTheme } from "victory";
 import { format } from "date-fns";
 import { getAirQuality } from "./airSlice";
 import useWindowSize from "../../../hooks/useWindowSize";
+import VisTitle from "../VisTitle";
+import Blurb from "../../landing/blurbs/Blurb";
 
 const AirVis = () => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const { dates, airQuality, cases, fetching } = useSelector(
     (state) => state.airReducer
@@ -33,12 +36,17 @@ const AirVis = () => {
   }
 
   return (
-    <>
-      <Typography variant="h4" component="h2" align="center">
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <VisTitle variant="h4" component="h2">
         {
           "Mean Particulate Matter < 2.5 microns vs. Confirmed cases of COVID-19"
         }
-      </Typography>
+      </VisTitle>
       <svg width={width + 100} height={height}>
         <g transform="translate(54, -20)">
           <VictoryAxis
@@ -87,13 +95,13 @@ const AirVis = () => {
             orientation="left"
             standalone={false}
             style={{
-              axis: { stroke: "#3EB6B4" },
+              axis: { stroke: theme.palette.primary.main },
               tickLabels: {
-                fill: "#3EB6B4",
+                fill: theme.palette.primary.main,
                 fontSize: 16,
               },
               axisLabel: {
-                fill: "#22625C",
+                fill: theme.palette.primary.contrastText,
                 fontSize: 22,
               },
             }}
@@ -191,7 +199,29 @@ const AirVis = () => {
           />
         </g>
       </svg>
-    </>
+      <Box display="flex" justifyContent="space-around" flexWrap="wrap">
+        <Blurb width="40%" my={10}>
+          The term “PM 2.5” refers to atmospheric particulate matter that have a
+          diameter of less than 2.5 micrometers, which is about 3% the diameter
+          of a human hair.
+        </Blurb>
+        <Blurb width="40%" my={10}>
+          Guidelines from the World Health Organization (WHO) stipulate that the
+          average PM 2.5 should not exceed 10 μg/m³ over the course of a year,
+          and 25 μg/m³ over a 24-hour period.
+        </Blurb>
+        <Blurb width="40%">
+          During quarantine in Glendora, CA, the PM 2.5 never exceeded the
+          stipulated level of 25 μg/m³, but it did routinely before the
+          lockdown.
+        </Blurb>
+        <Blurb width="40%">
+          Even during quarantine, the average PM 2.5 was 10.3 μg/m³, making it
+          unlikely that Glendora County will hit their target of less than 10
+          μg/m³ on average over the course of a year.
+        </Blurb>
+      </Box>
+    </Box>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, useTheme } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles({
@@ -11,18 +11,20 @@ const useStyles = makeStyles({
   },
 });
 
-const Blurb = ({ children, id }) => {
+const Blurb = ({ children, id, width = "27%", my = 0 }) => {
   const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <Box
       data-testid={`blurb${id}`}
       display="flex"
       alignItems="center"
-      border="2px solid #3EB6B4"
+      border={`2px solid ${theme.palette.primary.main}`}
       borderRadius="20px"
-      width="27%"
+      width={width}
       height={190}
+      my={my}
     >
       <Typography
         variant="h6"

@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Button } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Img from "react-cool-img";
 import EarthImg from "./earthImg.svg";
 
 const useStyles = makeStyles({
@@ -96,7 +97,11 @@ const Footer = () => {
     return (
         <Box className={classes.Background}>
             <Box className={classes.footerBackground}>
-                <img className={classes.backgroungImg} src={EarthImg} alt="" />
+                <Img
+                    src={EarthImg}
+                    className={classes.backgroungImg}
+                    alt="Eastern United States lights from space"
+                />
                 <Box className={classes.infoBox} />
                 <Box className={classes.infoText}>
                     <Typography
