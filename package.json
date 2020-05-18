@@ -8,7 +8,7 @@
     "format": "yarn run prettier --write --ignore-path .gitignore",
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx .",
     "lint:fix": "eslint --ignore-path .gitignore --ext .js,.jsx . --fix",
-    "prettier": "prettier \"**/*.+(js|jsx|json)\"",
+    "prettier": "prettier \"**/*.+(js|jsx|json|md)\"",
     "start": "react-scripts start",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "test:CI": "CI=true yarn run test --coverage --watchAll=false || true",
@@ -21,7 +21,7 @@
     }
   },
   "lint-staged": {
-    "**/*.+(js|jsx|json)": [
+    "**/*.+(js|jsx|json|md)": [
       "yarn run format"
     ],
     "*.+(js|jsx)": [

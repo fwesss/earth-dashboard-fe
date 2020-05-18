@@ -8,7 +8,7 @@ const useStyles = makeStyles({
   },
 });
 
-const VisTitle = ({ children, variant, component, subtitled }) => {
+const VisTitle = ({ children, variant, component, subtitled = false }) => {
   const classes = useStyles();
 
   return (

@@ -46,7 +46,12 @@ const DataProvider = () => {
 
   return (
     <Box display="flex" flexDirection="column" justifyContent="center">
-      <VisTitle aria-label="map-title" variant="h4" component="h2">
+      <VisTitle
+        id="map-title"
+        aria-label="map-title"
+        variant="h4"
+        component="h2"
+      >
         Explore COVID-19 Confirmed Cases in the US
       </VisTitle>
       <CasesVis cases={cases} setMapState={setMapState} />

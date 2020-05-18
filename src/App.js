@@ -2,10 +2,10 @@ import React from "react";
 import { ThemeProvider, CssBaseline, Container, Box } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import theme from "./app/theme";
-import CasesVis from "./features/visualizations/cases/CasesVis";
 import Header from "./features/landing/header/Header";
 import BlurbSection from "./features/landing/blurbs/BlurbSection";
 import Bubbles from "./features/visualizations/bubbles/BubblesVis";
+import Cases from "./features/visualizations/cases/CasesVis";
 import Air from "./features/visualizations/air/AirVis";
 import BeforeFooter from "./features/landing/footer/BeforeFooter";
 import Footer from "./features/landing/footer/Footer";
@@ -14,8 +14,8 @@ const App = () => {
   const { fetching: fetchingBubbles } = useSelector(
     (state) => state.bubblesReducer
   );
-  const { fetching: fetchingMap } = useSelector((state) => state.airReducer);
-  const { fetching: fetchingAir } = useSelector((state) => state.casesReducer);
+  const { fetching: fetchingAir } = useSelector((state) => state.airReducer);
+  const { fetching: fetchingMap } = useSelector((state) => state.casesReducer);
 
   return (
     <ThemeProvider theme={theme}>
@@ -55,7 +55,7 @@ const App = () => {
           borderRight={0}
           borderColor={theme.palette.divider}
         >
-          <CasesVis />
+          <Cases />
         </Box>
         <Box
           display="flex"

@@ -192,7 +192,12 @@ const Bubbles = () => {
       <VisTitle variant="h4" component="h2" subtitled>
         Biases in Bubbles:
       </VisTitle>
-      <VisTitle variant="h5" component="span" aria-label="bubbles-title">
+      <VisTitle
+        id="bubbles-title"
+        variant="h5"
+        component="span"
+        aria-label="bubbles-title"
+      >
         The Spread of COVID-19: Confirmed Cases vs Population
       </VisTitle>
       <Box display="flex" justifyContent="center">
