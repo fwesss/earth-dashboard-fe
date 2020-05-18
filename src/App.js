@@ -45,6 +45,22 @@ const App = () => {
                     flexDirection="column"
                     justifyContent="center"
                     alignItems="center"
+                    width="95%"
+                    mx="auto"
+                    py={5}
+                    border={3}
+                    borderTop={0}
+                    borderLeft={0}
+                    borderRight={0}
+                    borderColor={theme.palette.divider}
+                >
+                    <RacingData />
+                </Box>
+                <Box
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="center"
                     height={fetchingMap && 1210}
                     width="95%"
                     mx="auto"

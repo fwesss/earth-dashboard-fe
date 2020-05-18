@@ -104,7 +104,7 @@ function RacingBarChart({ data }) {
 
     return (
         <div className={classes.Wrapper} ref={wrapperRef}>
-            <svg ref={svgRef} style={{ height: "100%", width: "67%", marginLeft: '15.5rem' }}>
+            <svg ref={svgRef} style={{ height: "100%", width: "77%", marginLeft: '12.5rem' }}>
                 <g className="x-axis" />
             </svg>
         </div>

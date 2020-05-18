@@ -11,6 +11,7 @@ import {
     Typography,
 } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import VisExplanation from "../VisExplanation";
 
 const useStyles = makeStyles({
     ChartBox: {
@@ -24,24 +25,22 @@ const useStyles = makeStyles({
 
     titleText: {
         textAlign: 'center',
-        padding: '2rem'
-    },
-    headText: {
-        // marginTop: '3.75rem',
-        paddingBottom: "30px",
-        color: "Black",
+        padding: '.7rem'
     },
 
-    midText: {
-        paddingBottom: "30px",
-        color: "Black",
+    explanation: {
+        width: "75%",
+        paddingBottom: "4rem",
+        margin: "1rem auto 0",
     },
+
     buttons: {
         height: "2.5rem",
         width: "10rem",
         fontSize: "12px",
         backgroundColor: "#3EB6B4",
         borderRadius: "60px",
+        marginTop: '.5rem',
         color: "white",
     },
 });
@@ -91,7 +90,7 @@ function RacingData() {
     return (
         <Box className={classes.ChartBox}>
             <Box className={classes.titleText}>
-                <Typography variant='h1'>
+                <Typography variant="h4" component="h2" style={{ paddingTop: '1rem' }}>
                     Explore COVID-19 Case Rates by Country
                 </Typography>
                 <Typography varient='h5'>
@@ -101,6 +100,13 @@ function RacingData() {
             <Button className={classes.buttons} type="button" onClick={() => setStart(!start)}>
                 {start ? "Stop the race" : "Start the race!"}
             </Button>
+            <Typography className={classes.explanation}>
+                Even the most basic graphs like a bar chart can be engaging and interesting with the right set up and data.
+                Time-series data (data that has a date and/or time associated to it) allows us to see changes that happen over-time.
+                Here we are able to see the total death counts for the world countries that have the highest totals in a basic bar graph,
+                because we have time-series data we are able to
+                put the data in an animation from the very first day a COVID-19 death was confirmed through the present day.
+            </Typography>
         </Box>
     );
 }
