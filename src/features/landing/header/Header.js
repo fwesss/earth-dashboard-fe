@@ -108,7 +108,9 @@ const Header = () => {
             >
               Learn More
             </Button>
-            <Arrow />
+            <Button href="#what-is-planet-data">
+              <Arrow />
+            </Button>
           </Box>
         </Box>
       </Box>
