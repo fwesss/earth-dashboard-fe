@@ -3,9 +3,9 @@
 
 # Title of project goes here
 
-You can find the deployed project at [🚫Planet Data](🚫https://www.planetdata.world).
+You can find the deployed project at [Planet Data](https://www.planetdata.world).
 
-## 4️⃣ Contributors
+## Contributors
 
 |                                                           [Westley Feller](https://github.com/fwesss)                                                           |                                                         [Nicholas Gallucci](https://github.com/NickGallucci)                                                          |                                                          [Stephen Freeman](https://github.com/Stephenfre)                                                           |
 | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -44,32 +44,18 @@ A realtime real world dashboard to teach middle school students the fundamentals
 
 #### React
 
-🚫 Why did you choose this framework?
+Why did you choose this framework?
 ???????????????????????????????????
 
 - Mapbox Js
 - D3 Js
 - Redux with Redux Toolkit
 
-#### Front end deployed to `🚫insert service here`
+#### Front end deployed to AWS Amplify
 
-#### [Back end](https://github.com/Lambda-School-Labs/earth-dashboard-be) built using 🚫NodeJS and Express
+#### [Back end](https://github.com/Lambda-School-Labs/earth-dashboard-be) built using NodeJS and Express
 
-# APIs
-
-## 3️⃣ Misc API here
-
-🚫Replace text below with a description of the API
-
-When you do it your way you can go anywhere you choose. Let your heart take you to wherever you want to be. If I paint something, I don't want to have to explain what it is. A tree needs to be your friend if you're going to paint him. That's a son of a gun of a cloud. Even the worst thing we can do here is good.
-
-## 3️⃣ Misc API here
-
-🚫Replace text below with a description of the API
-
-Volunteering your time; it pays you and your whole community fantastic dividends. Maybe there's a happy little waterfall happening over here. You can spend all day playing with mountains. We don't have to be committed. We are just playing here. You have freedom here. The only guide is your heart. It's cold, but it's beautiful.
-
-# 3️⃣ Environment Variables
+# Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables. There should be a .env file containing the following:
 
