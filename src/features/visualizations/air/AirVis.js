@@ -41,6 +41,7 @@ const AirVis = () => {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
+      data-testid="airQuality"
     >
       <VisTitle variant="h4" component="h2">
         {

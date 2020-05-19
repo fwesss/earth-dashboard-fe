@@ -41,7 +41,7 @@ const DataProvider = () => {
 
   // Display a loading spinner while data is being fetched
   if (fetching) {
-    return <CircularProgress datatest-id="progressbar" />;
+    return <CircularProgress data-testid="progressbar" />;
   }
 
   return (
@@ -160,7 +160,7 @@ const DateSlider = ({ mapState, play, setPlay }) => {
             date: dates[dateToFilter.sliderValue + 1],
             sliderValue: dateToFilter.sliderValue + 1,
           }),
-        250
+        25000 / dates.length
       );
     }
     return () => clearInterval(interval);
@@ -184,7 +184,11 @@ const DateSlider = ({ mapState, play, setPlay }) => {
         .map((date, i) => ({
           value: i,
           label: format(
-            new Date(date.replace(/-/g, "/").substring(1)),
+            new Date(
+              `20${date.substring(6)}`,
+              date.substring(0, 2) - 1,
+              date.substring(3, 5)
+            ),
             "M/d/yy"
           ),
         }))
@@ -192,8 +196,14 @@ const DateSlider = ({ mapState, play, setPlay }) => {
       max={dates.length - 2}
       // Format the date in the tooltip to MM-dd because the full date does not fit
       valueLabelFormat={(value) =>
-        dates[0] !== null &&
-        format(new Date(dates[value].replace(/-/g, "/").substring(1)), "M/d")
+        format(
+          new Date(
+            `20${dates[value].substring(6)}`,
+            dates[value].substring(0, 2) - 1,
+            dates[value].substring(3, 5)
+          ),
+          "M/d"
+        )
       }
       valueLabelDisplay="auto"
     />

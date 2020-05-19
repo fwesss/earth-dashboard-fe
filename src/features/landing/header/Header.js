@@ -9,111 +9,111 @@ import rectangle from "./rectangle.svg";
 import earth from "./earth.webp";
 
 const useStyles = makeStyles({
-    headerBackground: {
-        backgroundImage: `url(${rectangle})`,
-        backgroundRepeat: "no-repeat",
-    },
-    welcomeHeading: {
-        marginTop: "0.5em",
-        marginBottom: "1.125em",
-        marginLeft: "-2.5em",
+  headerBackground: {
+    backgroundImage: `url(${rectangle})`,
+    backgroundRepeat: "no-repeat",
+  },
+  welcomeHeading: {
+    marginTop: "0.5em",
+    marginBottom: "1.125em",
+    marginLeft: "-2.5em",
 
-        color: "#FFFFFF",
-    },
-    welcomeHook: {
-        paddingLeft: "0.5em",
-        marginRight: "1em",
+    color: "#FFFFFF",
+  },
+  welcomeHook: {
+    paddingLeft: "0.5em",
+    marginRight: "1em",
 
-        color: "#FFFFFF",
-    },
-    welcomeHookSmall: {
-        marginTop: "1.375em",
-        marginRight: "1.75em",
-        paddingLeft: "1em",
+    color: "#FFFFFF",
+  },
+  welcomeHookSmall: {
+    marginTop: "1.375em",
+    marginRight: "1.75em",
+    paddingLeft: "1em",
 
-        color: "#FFFFFF",
-        fontWeight: 300,
-    },
-    button: {
-        marginTop: "2.25em",
-        marginBottom: "1.2em",
-    },
-    buttonText: {
-        paddingTop: "1em",
-        paddingBottom: "1em",
+    color: "#FFFFFF",
+    fontWeight: 300,
+  },
+  button: {
+    marginTop: "2.25em",
+    marginBottom: "1.2em",
+  },
+  buttonText: {
+    paddingTop: "1em",
+    paddingBottom: "1em",
 
-        color: "#FFFFFF",
-        fontSize: "1.5rem",
-        fontWeight: 500,
-        letterSpacing: "0.75px",
-        lineHeight: "1rem",
-        textTransform: "capitalize",
-    },
+    color: "#FFFFFF",
+    fontSize: "1.5rem",
+    fontWeight: 500,
+    letterSpacing: "0.75px",
+    lineHeight: "1rem",
+    textTransform: "capitalize",
+  },
 });
 
 const Header = () => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    return (
-        <Box className={classes.headerBackground} pt={6}>
-            <Box ml={9}>
-                <Logo alt="Planet Data logo" title="Planet Data" />
-            </Box>
-            <Box display="flex" ml={3} mt={16} pb={6}>
-                <Box width="60%">
-                    <Img src={earth} alt="Earth from space" lazy={false} width="100%" />
-                </Box>
-                <Box
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    width="40%"
-                >
-                    <Typography variant="h1" className={classes.welcomeHeading}>
-                        Welcome to Planet Data
-          </Typography>
-                    <Typography
-                        variant="h4"
-                        component="p"
-                        className={classes.welcomeHook}
-                    >
-                        Are you interested in learning about the Earth?
-          </Typography>
-                    <Typography
-                        variant="h4"
-                        component="p"
-                        className={classes.welcomeHook}
-                    >
-                        What about what is happening around the world?
-          </Typography>
-                    <Typography
-                        variant="h5"
-                        component="p"
-                        className={classes.welcomeHookSmall}
-                    >
-                        What better way than to experience your learning through visuals and
-                        real-time data?
-          </Typography>
-                    <Box
-                        display="flex"
-                        flexDirection="column"
-                        alignItems="center"
-                        width="12em"
-                        mr={10}
-                    >
-                        <Button
-                            href="#what-is-planet-data"
-                            className={classes.button}
-                            classes={{ text: classes.buttonText }}
-                        >
-                            Learn More
-            </Button>
-                        <Arrow />
-                    </Box>
-                </Box>
-            </Box>
+  return (
+    <Box className={classes.headerBackground} pt={6}>
+      <Box ml={9}>
+        <Logo alt="Planet Data logo" title="Planet Data" />
+      </Box>
+      <Box display="flex" ml={3} mt={16} pb={6}>
+        <Box width="60%">
+          <Img src={earth} alt="Earth from space" lazy={false} width="100%" />
         </Box>
-    );
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          width="40%"
+        >
+          <Typography variant="h1" className={classes.welcomeHeading}>
+            Welcome to Planet Data
+          </Typography>
+          <Typography
+            variant="h4"
+            component="p"
+            className={classes.welcomeHook}
+          >
+            Are you interested in learning about the Earth?
+          </Typography>
+          <Typography
+            variant="h4"
+            component="p"
+            className={classes.welcomeHook}
+          >
+            What about what is happening around the world?
+          </Typography>
+          <Typography
+            variant="h5"
+            component="p"
+            className={classes.welcomeHookSmall}
+          >
+            What better way than to experience your learning through visuals and
+            real-time data?
+          </Typography>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            width="12em"
+            mr={10}
+          >
+            <Button
+              href="#what-is-planet-data"
+              className={classes.button}
+              classes={{ text: classes.buttonText }}
+            >
+              Learn More
+            </Button>
+            <Arrow />
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  );
 };
 
 export default Header;
