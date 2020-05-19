@@ -49,6 +49,7 @@ function RacingData() {
     const dispatch = useDispatch();
     const { deaths, fetching } = useSelector((state) => state.racingReducer);
     const [start, setStart] = useState(false);
+    const [reset, setReset] = useState(null);
     const [data, setData] = useState(null);
     const [dateToFilter, setDateToFilter] = useState(null);
     const classes = useStyles();;
@@ -87,6 +88,7 @@ function RacingData() {
         dispatch(getConfirmedCases());
     }, [dispatch]);
 
+
     return (
         <Box className={classes.ChartBox}>
             <Box className={classes.titleText}>
@@ -100,6 +102,9 @@ function RacingData() {
             <Button className={classes.buttons} type="button" onClick={() => setStart(!start)}>
                 {start ? "Stop the race" : "Start the race!"}
             </Button>
+            {/* <Button className={classes.buttons} type="button" onClick={() => setStart(!start)}>
+                Reset race
+            </Button> */}
             <Typography className={classes.explanation}>
                 Even the most basic graphs like a bar chart can be engaging and interesting with the right set up and data.
                 Time-series data (data that has a date and/or time associated to it) allows us to see changes that happen over-time.

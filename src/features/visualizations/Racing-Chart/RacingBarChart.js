@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import * as moment from 'moment'
 import {
     select, scaleBand, scaleLinear, max, scaleOrdinal,
     schemeTableau10, axisBottom
@@ -19,7 +20,7 @@ const useStyles = makeStyles({
     }
 });
 
-function RacingBarChart({ data }) {
+function RacingBarChart({ data, date }) {
     const svgRef = useRef();
     const wrapperRef = useRef();
     const dimensions = useResizeObserver(wrapperRef);
@@ -27,6 +28,9 @@ function RacingBarChart({ data }) {
 
 
 
+
+    // const yourDate = new Date(date)
+    // const NewDate = moment(yourDate, 'DD-MM-YYYY')
 
     // will be called initially and on every data change
     useEffect(() => {
@@ -48,7 +52,7 @@ function RacingBarChart({ data }) {
                 .range([0, barSize * data.length]); // [0, 200]
 
             const xScale = scaleLinear()
-                .domain([0, 85000]) // [0, 65 (example)]
+                .domain([0, 90000]) // [0, 65 (example)]
                 .range([0, 1000]); // [0, 400 (example)]
 
 
@@ -93,18 +97,26 @@ function RacingBarChart({ data }) {
                 )
                 .text((entry) => `${entry.name} ${entry.deaths}`)
                 .attr("class", "label")
+                .style("font-size", "17px")
                 .attr("x", 10)
                 .transition()
                 .attr(
                     "y",
                     (entry, index) => yScale(index) + yScale.bandwidth() / 2 + 5
                 );
+
+            // svg
+            //     .selectAll('.date')
+            //     .data(date)
+            //     .text((entry) => `${entry.date}`)
+            //     .style("font-size", "17px")
         }
     }, [data, dimensions]);
 
     return (
         <div className={classes.Wrapper} ref={wrapperRef}>
             <svg ref={svgRef} style={{ height: "100%", width: "77%", marginLeft: '12.5rem' }}>
+                {/* <g className=".date" /> */}
                 <g className="x-axis" />
             </svg>
         </div>
