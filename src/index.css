@@ -1,3 +1,11 @@
 html {
   scroll-behavior: smooth;
 }
+
+.draggable {
+    cursor: grab;
+}
+
+.draggable:active {
+    cursor: grabbing;
+}
