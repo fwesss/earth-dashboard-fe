@@ -11,13 +11,14 @@
     "prettier": "prettier \"**/*.+(js|jsx|json|md)\"",
     "start": "react-scripts start",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
-    "test:CI": "CI=true yarn run test --coverage --watchAll=false || true",
-    "test:coverage": "yarn run test --coverage --watchAll=false",
-    "validate": "npm-run-all --parallel format lint build test:coverage"
+    "test:CI": "CI=true yarn run test --coverage --env=jest-environment-jsdom-sixteen --watchAll=false || true",
+    "test:coverage": "yarn run test --coverage --env=jest-environment-jsdom-sixteen --watchAll=false",
+    "validate": "npm-run-all --parallel format lint:fix build test:coverage"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn run validate"
     }
   },
   "lint-staged": {
@@ -72,6 +73,7 @@
     "react-ga": "^2.7.0",
     "react-redux": "^7.2.0",
     "react-scripts": "^3.4.1",
+    "resize-observer-polyfill": "^1.5.1",
     "victory": "^34.2.2"
   },
   "devDependencies": {

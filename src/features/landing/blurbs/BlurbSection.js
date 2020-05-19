@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import axios from "axios";
+import { useSelector } from "react-redux";
 import Blurb from "./Blurb";
 import { ReactComponent as Arrow } from "../arrow.svg";
 
@@ -52,15 +52,7 @@ const useStyles = makeStyles({
 
 const BlurbSection = () => {
   const classes = useStyles();
-  const [confirmedCases, setConfirmedCases] = useState(0);
-
-  useEffect(() => {
-    axios
-      .get("https://api.covid19api.com/summary")
-      .then((response) =>
-        setConfirmedCases(response.data.Global.TotalConfirmed.toLocaleString())
-      );
-  }, []);
+  const { summary, fetching } = useSelector((state) => state.bubblesReducer);
 
   return (
     <>
@@ -124,7 +116,18 @@ const BlurbSection = () => {
           spotted on empty streets.
         </Blurb>
         <Blurb id={5}>
-          There are <strong>{confirmedCases} confirmed COVID-19 cases</strong>{" "}
+          There are{" "}
+          <strong>
+            {!fetching &&
+              summary
+                .reduce(
+                  (accumulator, currentValue) =>
+                    accumulator + currentValue.totalConfirmed,
+                  0
+                )
+                .toLocaleString()}{" "}
+            confirmed COVID-19 cases
+          </strong>{" "}
           world-wide.
         </Blurb>
         <Blurb id={6}>
