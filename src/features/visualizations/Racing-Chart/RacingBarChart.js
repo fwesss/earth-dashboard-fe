@@ -20,14 +20,46 @@ const useStyles = makeStyles({
     }
 });
 
-function RacingBarChart({ data, date }) {
+function RacingBarChart({ data }) {
     const svgRef = useRef();
+    const svgNew = useRef();
     const wrapperRef = useRef();
     const dimensions = useResizeObserver(wrapperRef);
     const classes = useStyles()
 
 
 
+    useEffect(() => {
+        if (data) {
+            const newSvg = select(svgNew.current);
+            if (!dimensions) return;
+
+            // const xData = axisBottom(xScale)
+
+
+            newSvg
+                .selectAll(".label")
+                .data(data, (entry) => entry.name)
+                .join((enter) =>
+                    enter
+                        .append("text")
+                        .attr(
+                            "y"
+                        )
+                )
+                .text((entry) => `${entry.name}`)
+                .attr("class", "label")
+                .style("font-size", "17px")
+                .attr("x", 10)
+            // .transition()
+            // .attr(
+            //     "y",
+            //     (entry, index) => yScale(index) + yScale.bandwidth() / 2 + 5
+            // );
+
+        }
+
+    })
 
     // const yourDate = new Date(date)
     // const NewDate = moment(yourDate, 'DD-MM-YYYY')
@@ -64,6 +96,21 @@ function RacingBarChart({ data, date }) {
                 .style("transform", "translateY(500px)")
                 .call(xAxis)
                 .select('.domain').remove();
+
+            // svg
+            //     .selectAll(".date")
+            //     .append("date")
+            //     .enter()
+            //     .data(data)
+            //     .attr("x", 10)
+            //     .attr("y", 0)
+            //     .attr("class", "date")
+            //     .attr("text-anchor", "middle")
+            //     .style("font-size", "16px")
+            //     // .style("text-decoration", "underline")
+            //     // .style("transform", "translateY(150px)")
+            //     .call(xData)
+            //     .text((entry) => `${entry.date}`)
 
 
 
@@ -105,18 +152,14 @@ function RacingBarChart({ data, date }) {
                     (entry, index) => yScale(index) + yScale.bandwidth() / 2 + 5
                 );
 
-            // svg
-            //     .selectAll('.date')
-            //     .data(date)
-            //     .text((entry) => `${entry.date}`)
-            //     .style("font-size", "17px")
+
         }
     }, [data, dimensions]);
 
     return (
         <div className={classes.Wrapper} ref={wrapperRef}>
+            <svg ref={svgNew} style={{ height: "10%", width: "77%" }}></svg>
             <svg ref={svgRef} style={{ height: "100%", width: "77%", marginLeft: '12.5rem' }}>
-                {/* <g className=".date" /> */}
                 <g className="x-axis" />
             </svg>
         </div>

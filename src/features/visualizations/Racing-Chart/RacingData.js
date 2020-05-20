@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { add, compareAsc, parseISO } from "date-fns";
 import RacingBarChart from "./RacingBarChart";
 import useInterval from "../../../hooks/useInterval";
-import { getConfirmedCases } from "./RacingSlice";
+import { getConfirmedCases, resetStateHandler } from "./RacingSlice";
 import {
     CircularProgress,
     Box,
@@ -11,7 +11,6 @@ import {
     Typography,
 } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import VisExplanation from "../VisExplanation";
 
 const useStyles = makeStyles({
     ChartBox: {
@@ -32,6 +31,12 @@ const useStyles = makeStyles({
         width: "75%",
         paddingBottom: "4rem",
         margin: "1rem auto 0",
+    },
+
+    buttonBox: {
+        display: 'flex',
+        justifyContent: 'space-around',
+        width: '30%'
     },
 
     buttons: {
@@ -88,6 +93,11 @@ function RacingData() {
         dispatch(getConfirmedCases());
     }, [dispatch]);
 
+    const handleClick = (e) => {
+        e.preventDefault();
+        dispatch(resetStateHandler())
+    }
+
 
     return (
         <Box className={classes.ChartBox}>
@@ -99,12 +109,14 @@ function RacingData() {
                     Confirmed deaths (Covid-19)</Typography>
             </Box>
             <RacingBarChart data={!fetching && data} />
-            <Button className={classes.buttons} type="button" onClick={() => setStart(!start)}>
-                {start ? "Stop the race" : "Start the race!"}
+            <Box className={classes.buttonBox}>
+                <Button className={classes.buttons} type="button" onClick={() => setStart(!start)}>
+                    {start ? "Stop the race" : "Start the race!"}
+                </Button>
+                <Button className={classes.buttons} type="button" onClick={e => handleClick(e)}>
+                    Reset race
             </Button>
-            {/* <Button className={classes.buttons} type="button" onClick={() => setStart(!start)}>
-                Reset race
-            </Button> */}
+            </Box>
             <Typography className={classes.explanation}>
                 Even the most basic graphs like a bar chart can be engaging and interesting with the right set up and data.
                 Time-series data (data that has a date and/or time associated to it) allows us to see changes that happen over-time.
