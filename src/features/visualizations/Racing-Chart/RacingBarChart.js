@@ -27,41 +27,6 @@ function RacingBarChart({ data }) {
 
 
 
-    useEffect(() => {
-        if (data) {
-            const newSvg = select(svgNew.current);
-            if (!dimensions) return;
-
-            // const xData = axisBottom(xScale)
-
-
-            newSvg
-                .selectAll(".label")
-                .data(data, (entry) => entry.name)
-                .join((enter) =>
-                    enter
-                        .append("text")
-                        .attr(
-                            "y"
-                        )
-                )
-                .text((entry) => `${entry.name}`)
-                .attr("class", "label")
-                .style("font-size", "17px")
-                .attr("x", 10)
-            // .transition()
-            // .attr(
-            //     "y",
-            //     (entry, index) => yScale(index) + yScale.bandwidth() / 2 + 5
-            // );
-
-        }
-
-    })
-
-    // const yourDate = new Date(date)
-    // const NewDate = moment(yourDate, 'DD-MM-YYYY')
-
     // will be called initially and on every data change
     useEffect(() => {
         if (data) {
@@ -156,7 +121,6 @@ function RacingBarChart({ data }) {
 
     return (
         <div className={classes.Wrapper} ref={wrapperRef}>
-            <svg ref={svgNew} style={{ height: "10%", width: "77%" }}></svg>
             <svg ref={svgRef} style={{ height: "100%", width: "77%", marginLeft: '12.5rem' }}>
                 <g className="x-axis" />
             </svg>

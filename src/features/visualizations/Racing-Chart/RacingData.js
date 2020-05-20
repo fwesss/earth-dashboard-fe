@@ -6,13 +6,6 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import RacingBarChart from "./RacingBarChart";
 import useInterval from "../../../hooks/useInterval";
 import { getConfirmedCases, resetStateHandler } from "./RacingSlice";
-import {
-    CircularProgress,
-    Box,
-    Button,
-    Typography,
-} from "@material-ui/core";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles({
     ChartBox: {
