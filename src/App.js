@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { ThemeProvider, CssBaseline, Container, Box } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import ReactGa from "react-ga";
 import theme from "./app/theme";
 import Header from "./features/landing/header/Header";
 import BlurbSection from "./features/landing/blurbs/BlurbSection";
@@ -9,22 +10,20 @@ import Cases from "./features/visualizations/cases/CasesVis";
 import Air from "./features/visualizations/air/AirVis";
 import BeforeFooter from "./features/landing/footer/BeforeFooter";
 import Footer from "./features/landing/footer/Footer";
-import RacingData from "./features/visualizations/Racing-Chart/RacingData";
-import ReactGa from 'react-ga';
 
 const App = () => {
-    const { fetching: fetchingBubbles } = useSelector(
-        (state) => state.bubblesReducer
-    );
-    const { fetching: fetchingAir } = useSelector((state) => state.airReducer);
-    const { fetching: fetchingMap } = useSelector((state) => state.casesReducer);
-    
-    useEffect(() => {
-        //initializes the ID
-        ReactGa.initialize('UA-164495836-1')
-        //reports page views
-        ReactGa.pageview('/')
-    }, [])
+  const { fetching: fetchingBubbles } = useSelector(
+    (state) => state.bubblesReducer
+  );
+  const { fetching: fetchingAir } = useSelector((state) => state.airReducer);
+  const { fetching: fetchingMap } = useSelector((state) => state.casesReducer);
+
+  useEffect(() => {
+    // initializes the ID
+    ReactGa.initialize(process.env.REACT_APP_TRACKING_ID, { testMode: true });
+    // reports page views
+    ReactGa.pageview("/");
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

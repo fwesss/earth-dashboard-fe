@@ -132,7 +132,7 @@ const Bubbles = () => {
         .data(data)
         .enter()
         .append("circle")
-        .attr("class", "node")
+        .attr("class", `node draggable`)
         .attr("r", (d) => size(d.totalConfirmed))
         .attr("cx", width / 2)
         .attr("cy", height / 2)
