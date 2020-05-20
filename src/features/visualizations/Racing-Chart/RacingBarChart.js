@@ -1,23 +1,21 @@
 import React, { useRef, useEffect } from "react";
 import * as moment from 'moment'
 import {
-    select, scaleBand, scaleLinear, max, scaleOrdinal,
-    schemeTableau10, axisBottom
+    select,
+    scaleBand,
+    scaleLinear,
+    scaleOrdinal,
+    schemeTableau10,
+    axisBottom,
 } from "d3";
-import useResizeObserver from "./useResizeObserver";
-import {
-    CircularProgress,
-    Box,
-    Button,
-    Typography,
-} from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import useResizeObserver from "./useResizeObserver";
 
 const useStyles = makeStyles({
     Wrapper: {
-        height: '70vh',
-        width: "100%"
-    }
+        height: "70vh",
+        width: "100%",
+    },
 });
 
 function RacingBarChart({ data }) {

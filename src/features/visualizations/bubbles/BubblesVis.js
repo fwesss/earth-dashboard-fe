@@ -126,15 +126,17 @@ const Bubbles = () => {
 
       // Initialize the circle: all located at the center of the svg area
       const node = svg
+        .attr("data-testid", "svg")
         .append("g")
         .selectAll("circle")
         .data(data)
         .enter()
         .append("circle")
-        .attr("class", "node")
+        .attr("class", `node draggable`)
         .attr("r", (d) => size(d.totalConfirmed))
         .attr("cx", width / 2)
         .attr("cy", height / 2)
+        .attr("data-testid", (d) => d.country)
         .style("fill", (d) => color(d.country))
         .style("fill-opacity", 0.8)
         .attr("stroke", "black")

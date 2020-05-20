@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { add, compareAsc, parseISO } from "date-fns";
+import { Box, Button, Typography } from "@material-ui/core";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import RacingBarChart from "./RacingBarChart";
 import useInterval from "../../../hooks/useInterval";
 import { getConfirmedCases, resetStateHandler } from "./RacingSlice";
@@ -14,7 +16,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles({
     ChartBox: {
-        height: '100vh',
+        height: "100vh",
         width: "100%",
         display: "flex",
         justifyContent: "center",
