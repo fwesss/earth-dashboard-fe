@@ -20,7 +20,7 @@ const App = () => {
 
   useEffect(() => {
     // initializes the ID
-    ReactGa.initialize(process.env.REACT_APP_TRACKING_ID);
+    ReactGa.initialize(process.env.REACT_APP_TRACKING_ID, { testMode: true });
     // reports page views
     ReactGa.pageview("/");
   }, []);
