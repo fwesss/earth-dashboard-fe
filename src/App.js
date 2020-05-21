@@ -16,6 +16,9 @@ const App = () => {
   const { fetching: fetchingBubbles } = useSelector(
     (state) => state.bubblesReducer
   );
+  const { fetching: fetchingRacing } = useSelector(
+    (state) => state.racingReducer
+  );
   const { fetching: fetchingAir } = useSelector((state) => state.airReducer);
   const { fetching: fetchingMap } = useSelector((state) => state.casesReducer);
 
@@ -58,6 +61,7 @@ const App = () => {
           justifyContent="center"
           alignItems="center"
           width="95%"
+          height={fetchingRacing && 885}
           mx="auto"
           py={5}
           border={3}
