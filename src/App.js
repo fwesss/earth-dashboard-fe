@@ -8,6 +8,7 @@ import BlurbSection from "./features/landing/blurbs/BlurbSection";
 import Bubbles from "./features/visualizations/bubbles/BubblesVis";
 import Cases from "./features/visualizations/cases/CasesVis";
 import Air from "./features/visualizations/air/AirVis";
+import RacingData from "./features/visualizations/Racing-Chart/RacingData";
 import BeforeFooter from "./features/landing/footer/BeforeFooter";
 import Footer from "./features/landing/footer/Footer";
 
@@ -50,6 +51,22 @@ const App = () => {
           borderColor={theme.palette.divider}
         >
           <Bubbles />
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          width="95%"
+          mx="auto"
+          py={5}
+          border={3}
+          borderTop={0}
+          borderLeft={0}
+          borderRight={0}
+          borderColor={theme.palette.divider}
+        >
+          <RacingData />
         </Box>
         <Box
           display="flex"

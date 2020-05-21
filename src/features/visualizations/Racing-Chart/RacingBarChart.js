@@ -8,7 +8,7 @@ import {
   axisBottom,
 } from "d3";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import useResizeObserver from "./useResizeObserver";
+import useResizeObserver from "../../../hooks/useResizeObserver";
 
 const useStyles = makeStyles({
   Wrapper: {
@@ -41,7 +41,7 @@ function RacingBarChart({ data }) {
         .range([0, barSize * data.length]); // [0, 200]
 
       const xScale = scaleLinear()
-        .domain([0, 85000]) // [0, 65 (example)]
+        .domain([0, 90000]) // [0, 65 (example)]
         .range([0, 1000]); // [0, 400 (example)]
 
       const xAxis = axisBottom(xScale).tickSize(-1000).ticks(7);
@@ -83,6 +83,7 @@ function RacingBarChart({ data }) {
         )
         .text((entry) => `${entry.name} ${entry.deaths}`)
         .attr("class", "label")
+        .style("font-size", "17px")
         .attr("x", 10)
         .transition()
         .attr(
@@ -96,7 +97,7 @@ function RacingBarChart({ data }) {
     <div className={classes.Wrapper} ref={wrapperRef}>
       <svg
         ref={svgRef}
-        style={{ height: "100%", width: "67%", marginLeft: "15.5rem" }}
+        style={{ height: "100%", width: "77%", marginLeft: "12.5rem" }}
       >
         <g className="x-axis" />
       </svg>
