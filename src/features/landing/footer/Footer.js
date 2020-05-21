@@ -84,6 +84,7 @@ const useStyles = makeStyles({
     height: "10%",
     background: "white",
     paddingTop: "3rem",
+    paddingBottom: "2rem",
   },
 
   tag: {
@@ -152,7 +153,7 @@ const Footer = () => {
           <a
             className={classes.tag}
             style={{ color: "black" }}
-            href="#what-is-earth-dashboard"
+            href="#what-is-planet-data"
           >
             Back To Top
           </a>
