@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { add, getDayOfYear, parseISO } from "date-fns";
 import { Box, Button, Typography } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import ReactGa from "react-ga";
 import RacingBarChart from "./RacingBarChart";
 import useInterval from "../../../hooks/useInterval";
 import { getConfirmedCases } from "./RacingSlice";
@@ -125,7 +126,10 @@ function RacingData() {
         <Button
           className={classes.buttons}
           type="button"
-          onClick={() => setStart(!start)}
+          onClick={() => {
+            ReactGa.event({ category: "Racing", action: "Animation played" });
+            setStart(!start);
+          }}
         >
           {start ? "Stop the race" : "Start the race!"}
         </Button>
