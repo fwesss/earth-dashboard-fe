@@ -12,7 +12,7 @@ import useResizeObserver from "../../../hooks/useResizeObserver";
 
 const useStyles = makeStyles({
   Wrapper: {
-    height: "70vh",
+    height: 535,
     width: "100%",
   },
 });

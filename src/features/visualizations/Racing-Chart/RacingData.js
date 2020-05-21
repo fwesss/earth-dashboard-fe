@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { add, getDayOfYear, parseISO } from "date-fns";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Button, Typography, CircularProgress } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import ReactGa from "react-ga";
 import RacingBarChart from "./RacingBarChart";
@@ -10,8 +10,6 @@ import { getConfirmedCases } from "./RacingSlice";
 
 const useStyles = makeStyles({
   ChartBox: {
-    height: "100vh",
-    width: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -46,7 +44,7 @@ const useStyles = makeStyles({
   },
 });
 
-function RacingData() {
+const RacingData = () => {
   const dispatch = useDispatch();
   const { deaths, fetching } = useSelector((state) => state.racingReducer);
   const [start, setStart] = useState(false);
@@ -113,6 +111,11 @@ function RacingData() {
     setDateToFilter(new Date(deaths[0].date));
   };
 
+  // Display a loading spinner while data is being fetched
+  if (fetching) {
+    return <CircularProgress data-testid="progressbar" />;
+  }
+
   return (
     <Box className={classes.ChartBox}>
       <Box className={classes.titleText}>
@@ -127,7 +130,9 @@ function RacingData() {
           className={classes.buttons}
           type="button"
           onClick={() => {
-            ReactGa.event({ category: "Racing", action: "Animation played" });
+            if (!start) {
+              ReactGa.event({ category: "Racing", action: "Animation played" });
+            }
             setStart(!start);
           }}
         >
@@ -149,6 +154,6 @@ function RacingData() {
       </Typography>
     </Box>
   );
-}
+};
 
 export default RacingData;

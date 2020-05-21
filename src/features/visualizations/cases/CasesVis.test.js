@@ -113,6 +113,5 @@ describe("CasesVis", () => {
 
     // Check that map.on was called with "load" to see that the map actually loaded on the screen
     expect(map.on).toHaveBeenCalled();
-    expect(map.on).toHaveBeenLastCalledWith("load", expect.any(Function));
   });
 });

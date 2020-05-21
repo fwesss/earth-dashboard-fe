@@ -92,7 +92,8 @@ const CasesVis = ({ cases, setMapState }) => {
       container: mapContainer.current,
       style: process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_STYLE,
       center: [-100, 38],
-      zoom: 3.5,
+      zoom: 3.75,
+      minZoom: 3.5,
     });
 
     map.on("load", () => {
@@ -105,6 +106,17 @@ const CasesVis = ({ cases, setMapState }) => {
         .addLayer(heatmap, "waterway-label")
         .addLayer(circles, "waterway-label")
         .addLayer(labels);
+    });
+
+    map.on("wheel", (event) => {
+      if (
+        event.originalEvent.ctrlKey ||
+        event.originalEvent.metaKey ||
+        event.originalEvent.altKey
+      ) {
+        return;
+      }
+      event.preventDefault();
     });
 
     return () => map.remove();
