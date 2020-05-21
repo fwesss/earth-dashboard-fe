@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as d3 from "d3";
+import ReactGa from "react-ga";
 import {
   CircularProgress,
   Box,
@@ -120,6 +121,7 @@ const Bubbles = () => {
         if (!d3.event.active) {
           simulation.alphaTarget(0.03);
         }
+        ReactGa.event({ category: "Bubbles", action: "Bubble dragged" });
         d.fx = null;
         d.fy = null;
       };

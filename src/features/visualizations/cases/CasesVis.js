@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
+import ReactGa from "react-ga";
 import mapboxgl from "mapbox-gl";
 import { Box, Slider, CircularProgress, IconButton } from "@material-ui/core";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
@@ -173,9 +174,10 @@ const DateSlider = ({ mapState, play, setPlay }) => {
       classes={{ markLabel: classes.markLabel }}
       value={dateToFilter.sliderValue}
       getAriaValueText={(value) => `${dates[value]}`}
-      onChange={(event, newValue) =>
-        setDateToFilter({ date: dates[newValue], sliderValue: newValue })
-      }
+      onChange={(event, newValue) => {
+        ReactGa.event({ category: "Heatmap", action: "Filter changed" });
+        setDateToFilter({ date: dates[newValue], sliderValue: newValue });
+      }}
       // onChangeCommtted fires whenever a "click up" on the slider occurs. If the animation is playing and the
       // user clicks or drags to a different date manually, the animation should stop
       onChangeCommitted={() => setPlay(false)}
