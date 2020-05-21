@@ -68,7 +68,6 @@ function RacingData() {
     }
   }, [deaths]);
 
-  // eslint-disable-next-line consistent-return
   useInterval(() => {
     if (start) {
       setData(
@@ -88,7 +87,8 @@ function RacingData() {
         getDayOfYear(parseISO(deaths[deaths.length - 1].date)) ===
         getDayOfYear(dateToFilter)
       ) {
-        return setStart(false);
+        setDateToFilter(new Date(deaths[0].date));
+        setStart(false);
       }
     }
   }, 200);
