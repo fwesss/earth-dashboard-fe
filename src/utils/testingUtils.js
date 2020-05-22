@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
-import { rootReducer } from "../app/store";
+import rootReducer from "../app/rootReducer";
 
 /*
  * Renders component with a custom initialState. Functions the same as render from react-testing-library

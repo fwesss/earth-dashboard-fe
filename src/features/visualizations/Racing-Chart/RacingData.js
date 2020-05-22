@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { add, getDayOfYear, parseISO } from "date-fns";
 import { Box, Button, Typography, CircularProgress } from "@material-ui/core";
@@ -52,20 +52,24 @@ const RacingData = () => {
   const [dateToFilter, setDateToFilter] = useState(null);
   const classes = useStyles();
 
-  useEffect(() => {
-    if (deaths !== null) {
-      setData(
-        deaths
-          .map((x) => ({
-            name: x.country,
-            deaths: x.deaths,
-            date: x.date,
-          }))
-          .filter((x) => x.date === deaths[0].date)
-      );
-      setDateToFilter(new Date(deaths[0].date));
-    }
+  const reset = useCallback(() => {
+    setData(
+      deaths
+        .map((x) => ({
+          name: x.country,
+          deaths: x.deaths,
+          date: x.date,
+        }))
+        .filter((x) => x.date === deaths[0].date)
+    );
+    setDateToFilter(new Date(deaths[0].date));
   }, [deaths]);
+
+  useEffect(() => {
+    if (deaths) {
+      reset();
+    }
+  }, [deaths, reset]);
 
   useInterval(() => {
     if (start) {
@@ -96,21 +100,6 @@ const RacingData = () => {
     dispatch(getConfirmedCases());
   }, [dispatch]);
 
-  const handleReset = (e) => {
-    e.preventDefault();
-    setStart(false);
-    setData(
-      deaths
-        .map((x) => ({
-          name: x.country,
-          deaths: x.deaths,
-          date: x.date,
-        }))
-        .filter((x) => x.date === deaths[0].date)
-    );
-    setDateToFilter(new Date(deaths[0].date));
-  };
-
   // Display a loading spinner while data is being fetched
   if (fetching) {
     return <CircularProgress data-testid="progressbar" />;
@@ -138,7 +127,7 @@ const RacingData = () => {
         >
           {start ? "Stop the race" : "Start the race!"}
         </Button>
-        <Button className={classes.buttons} type="button" onClick={handleReset}>
+        <Button className={classes.buttons} type="button" onClick={reset}>
           Reset race
         </Button>
       </Box>

@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import { ThemeProvider, CssBaseline, Container, Box } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import ReactGa from "react-ga";
-import theme from "./app/theme";
-import Header from "./features/landing/header/Header";
-import BlurbSection from "./features/landing/blurbs/BlurbSection";
-import Bubbles from "./features/visualizations/bubbles/BubblesVis";
-import Cases from "./features/visualizations/cases/CasesVis";
-import Air from "./features/visualizations/air/AirVis";
-import RacingData from "./features/visualizations/Racing-Chart/RacingData";
-import BeforeFooter from "./features/landing/footer/BeforeFooter";
-import Footer from "./features/landing/footer/Footer";
+import theme from "./theme";
+import Header from "../features/landing/header/Header";
+import BlurbSection from "../features/landing/blurbs/BlurbSection";
+import Bubbles from "../features/visualizations/bubbles/BubblesVis";
+import Cases from "../features/visualizations/cases/CasesVis";
+import Air from "../features/visualizations/air/AirVis";
+import RacingData from "../features/visualizations/Racing-Chart/RacingData";
+import BeforeFooter from "../features/landing/footer/BeforeFooter";
+import Footer from "../features/landing/footer/Footer";
 
 const App = () => {
   const { fetching: fetchingBubbles } = useSelector(
@@ -44,7 +44,7 @@ const App = () => {
           justifyContent="center"
           alignItems="center"
           width="95%"
-          height={fetchingBubbles && 760}
+          height={fetchingBubbles ? 760 : "auto"}
           mx="auto"
           py={5}
           border={3}
@@ -61,7 +61,7 @@ const App = () => {
           justifyContent="center"
           alignItems="center"
           width="95%"
-          height={fetchingRacing && 885}
+          height={fetchingRacing ? 885 : "auto"}
           mx="auto"
           py={5}
           border={3}
@@ -77,7 +77,7 @@ const App = () => {
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
-          height={fetchingMap && 1210}
+          height={fetchingMap ? 1210 : "auto"}
           width="95%"
           mx="auto"
           py={5}
@@ -96,7 +96,7 @@ const App = () => {
           justifyContent="center"
           alignItems="center"
           width="95%"
-          height={fetchingAir && 1250}
+          height={fetchingAir ? 1250 : "auto"}
           mx="auto"
           py={5}
         >

@@ -16,7 +16,7 @@ const VisTitle = ({ children, variant, component, subtitled = false }) => {
       variant={variant}
       component={component}
       align="center"
-      className={!subtitled && classes.title}
+      className={!subtitled ? classes.title : null}
     >
       {children}
     </Typography>

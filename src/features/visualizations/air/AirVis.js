@@ -111,26 +111,6 @@ const AirVis = () => {
             label="Daily Mean PM2.5 Concentration"
           />
 
-          {/* Annotation line */}
-          <VictoryLine
-            width={width}
-            height={height}
-            theme={VictoryTheme.material}
-            data={formattedDates.map((date) => ({ x: date, y: 16 }))}
-            scale={{ x: "time", y: "linear" }}
-            standalone={false}
-            domain={{
-              x: [formattedDates[0], formattedDates[formattedDates.length - 1]],
-              y: [
-                Math.min(...airQuality.map((x) => x.y)),
-                Math.max(...airQuality.map((x) => x.y)),
-              ],
-            }}
-            style={{
-              data: { stroke: "#4A5F70", strokeWidth: 3.5 },
-            }}
-          />
-
           {/* dataset one */}
           <VictoryLine
             width={width}
@@ -171,7 +151,7 @@ const AirVis = () => {
                 fontSize: 16,
               },
               axisLabel: {
-                fill: "#7A4D06",
+                fill: theme.palette.primary.contrastText,
                 fontSize: 22,
               },
             }}
