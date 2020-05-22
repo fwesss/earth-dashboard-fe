@@ -21,8 +21,10 @@ const AirVis = () => {
 
   // Retrieve the air quality data on component mount
   useEffect(() => {
-    dispatch(getAirQuality());
-  }, [dispatch]);
+    if (!cases || !dates) {
+      dispatch(getAirQuality());
+    }
+  }, [cases, dates, dispatch]);
 
   useEffect(() => {
     if (dates !== null) {

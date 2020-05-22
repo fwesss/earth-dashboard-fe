@@ -37,8 +37,10 @@ const DataProvider = () => {
 
   // Retrieve the map data on component mount
   useEffect(() => {
-    dispatch(getCases());
-  }, [dispatch]);
+    if (!cases) {
+      dispatch(getCases());
+    }
+  }, [cases, dispatch]);
 
   // Display a loading spinner while data is being fetched
   if (fetching) {

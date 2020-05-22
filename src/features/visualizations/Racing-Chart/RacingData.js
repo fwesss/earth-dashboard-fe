@@ -97,8 +97,10 @@ const RacingData = () => {
   }, 200);
 
   useEffect(() => {
-    dispatch(getConfirmedCases());
-  }, [dispatch]);
+    if (!deaths) {
+      dispatch(getConfirmedCases());
+    }
+  }, [deaths, dispatch]);
 
   // Display a loading spinner while data is being fetched
   if (fetching) {

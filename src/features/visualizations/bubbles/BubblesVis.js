@@ -63,8 +63,10 @@ const Bubbles = () => {
 
   // Retrieve the bubbles data on component mount
   useEffect(() => {
-    dispatch(getSummary());
-  }, [dispatch]);
+    if (!summary) {
+      dispatch(getSummary());
+    }
+  }, [dispatch, summary]);
 
   useEffect(() => {
     if (!fetching && data === null) {
