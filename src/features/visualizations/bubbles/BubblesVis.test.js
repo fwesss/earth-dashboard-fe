@@ -23,9 +23,6 @@ describe("BubblesVis", () => {
       },
     });
 
-    // Loading spinner appears on the screen while map is loading
-    expect(getByTestId("progressbar")).toBeInTheDocument();
-
     // Once loaded, the title appears
     await waitFor(() => getByText(/the spread of covid-19/i));
 
