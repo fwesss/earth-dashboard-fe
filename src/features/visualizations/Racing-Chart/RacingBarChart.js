@@ -56,7 +56,7 @@ function RacingBarChart({ data }) {
       // draw the bars
       svg
         .selectAll(".bar")
-        .data(data, (entry) => entry.name)
+        .data(data, (entry) => entry.country)
         .join((enter) =>
           enter.append("rect").attr("y", (entry, index) => yScale(index))
         )
@@ -72,7 +72,7 @@ function RacingBarChart({ data }) {
       // draw the labels
       svg
         .selectAll(".label")
-        .data(data, (entry) => entry.name)
+        .data(data, (entry) => entry.country)
         .join((enter) =>
           enter
             .append("text")
@@ -82,7 +82,7 @@ function RacingBarChart({ data }) {
             )
         )
         .text(
-          (entry) => `${entry.name} ${Number(entry.deaths).toLocaleString()}`
+          (entry) => `${entry.country} ${Number(entry.deaths).toLocaleString()}`
         )
         .attr("class", "label")
         .style("font-size", "17px")
