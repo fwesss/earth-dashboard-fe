@@ -49,7 +49,9 @@ const useStyles = makeStyles({
 const Bubbles = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { summary, fetching } = useSelector((state) => state.bubblesReducer);
+  const { summary, fetching, error } = useSelector(
+    (state) => state.bubblesReducer
+  );
   const [data, setData] = useState(null);
   const [tooltipData, setTooltipData] = useState({
     country: null,
@@ -67,6 +69,12 @@ const Bubbles = () => {
       dispatch(getSummary());
     }
   }, [dispatch, summary]);
+
+  useEffect(() => {
+    if (error) {
+      throw new Error("Could not retrieve data for visualization");
+    }
+  }, [error]);
 
   useEffect(() => {
     if (!fetching && data === null) {
@@ -110,7 +118,7 @@ const Bubbles = () => {
           "collide",
           forceCollide()
             .strength(0.2)
-            .radius((d) => size(d.totalConfirmed) + 3)
+            .radius((d) => size(d.totalconfirmed) + 3)
             .iterations(1)
         ); // Force that avoids circle overlapping
 
@@ -143,7 +151,7 @@ const Bubbles = () => {
         .enter()
         .append("circle")
         .attr("class", `node draggable`)
-        .attr("r", (d) => size(d.totalConfirmed))
+        .attr("r", (d) => size(d.totalconfirmed))
         .attr("cx", width / 2)
         .attr("cy", height / 2)
         .attr("data-testid", (d) => d.country)
@@ -154,7 +162,7 @@ const Bubbles = () => {
         .on("mousemove", (d) =>
           setTooltipData({
             country: d.country,
-            cases: d.totalConfirmed.toLocaleString(),
+            cases: d.totalconfirmed.toLocaleString(),
           })
         )
         .on("mouseover", () => setOpacity(1))
@@ -175,16 +183,16 @@ const Bubbles = () => {
               "cx",
               (d) =>
                 (d.x = Math.max(
-                  size(d.totalConfirmed),
-                  Math.min(width - size(d.totalConfirmed), d.x)
+                  size(d.totalconfirmed),
+                  Math.min(width - size(d.totalconfirmed), d.x)
                 ))
             )
             .attr(
               "cy",
               (d) =>
                 (d.y = Math.max(
-                  size(d.totalConfirmed),
-                  Math.min(height - size(d.totalConfirmed), d.y)
+                  size(d.totalconfirmed),
+                  Math.min(height - size(d.totalconfirmed), d.y)
                 ))
             )
         );

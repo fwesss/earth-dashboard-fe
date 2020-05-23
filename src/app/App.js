@@ -11,6 +11,7 @@ import Air from "../features/visualizations/air/AirVis";
 import RacingData from "../features/visualizations/Racing-Chart/RacingData";
 import BeforeFooter from "../features/landing/footer/BeforeFooter";
 import Footer from "../features/landing/footer/Footer";
+import ErrorBoundary from "./error/ErrorBoundary";
 
 const App = () => {
   const { fetching: fetchingBubbles } = useSelector(
@@ -39,69 +40,81 @@ const App = () => {
       <Container maxWidth="xl" disableGutters data-testid="app">
         <Header />
         <BlurbSection />
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          width="95%"
-          height={fetchingBubbles ? 760 : "auto"}
-          mx="auto"
-          py={5}
-          border={3}
-          borderTop={0}
-          borderLeft={0}
-          borderRight={0}
-          borderColor={theme.palette.divider}
-        >
-          <Bubbles />
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          width="95%"
-          height={fetchingRacing ? 885 : "auto"}
-          mx="auto"
-          py={5}
-          border={3}
-          borderTop={0}
-          borderLeft={0}
-          borderRight={0}
-          borderColor={theme.palette.divider}
-        >
-          <RacingData />
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          height={fetchingMap ? 1210 : "auto"}
-          width="95%"
-          mx="auto"
-          py={5}
-          overflow="hidden"
-          border={3}
-          borderTop={0}
-          borderLeft={0}
-          borderRight={0}
-          borderColor={theme.palette.divider}
-        >
-          <Cases />
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          width="95%"
-          height={fetchingAir ? 1250 : "auto"}
-          mx="auto"
-          py={5}
-        >
-          <Air />
-        </Box>
+        <ErrorBoundary type="visualization">
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            width="95%"
+            height={fetchingBubbles ? 760 : "auto"}
+            mx="auto"
+            py={5}
+            border={3}
+            borderTop={0}
+            borderLeft={0}
+            borderRight={0}
+            borderColor={theme.palette.divider}
+          >
+            <Bubbles />
+          </Box>
+        </ErrorBoundary>
+
+        <ErrorBoundary type="visualization">
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            width="95%"
+            height={fetchingRacing ? 885 : "auto"}
+            mx="auto"
+            py={5}
+            border={3}
+            borderTop={0}
+            borderLeft={0}
+            borderRight={0}
+            borderColor={theme.palette.divider}
+          >
+            <RacingData />
+          </Box>
+        </ErrorBoundary>
+
+        <ErrorBoundary type="visualization">
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            height={fetchingMap ? 1210 : "auto"}
+            width="95%"
+            mx="auto"
+            py={5}
+            overflow="hidden"
+            border={3}
+            borderTop={0}
+            borderLeft={0}
+            borderRight={0}
+            borderColor={theme.palette.divider}
+          >
+            <Cases />
+          </Box>
+        </ErrorBoundary>
+
+        <ErrorBoundary type="visualization">
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            width="95%"
+            height={fetchingAir ? 1250 : "auto"}
+            mx="auto"
+            py={5}
+          >
+            <Air />
+          </Box>
+        </ErrorBoundary>
+
         <BeforeFooter />
         <Footer />
       </Container>

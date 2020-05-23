@@ -52,7 +52,7 @@ const useStyles = makeStyles({
 
 const BlurbSection = () => {
   const classes = useStyles();
-  const { summary, fetching } = useSelector((state) => state.bubblesReducer);
+  const { summary } = useSelector((state) => state.bubblesReducer);
 
   return (
     <>
@@ -118,14 +118,15 @@ const BlurbSection = () => {
         <Blurb id={5}>
           There are{" "}
           <strong>
-            {!fetching &&
-              summary
-                .reduce(
-                  (accumulator, currentValue) =>
-                    accumulator + currentValue.totalConfirmed,
-                  0
-                )
-                .toLocaleString()}{" "}
+            {summary
+              ? summary
+                  .reduce(
+                    (accumulator, currentValue) =>
+                      accumulator + currentValue.totalConfirmed,
+                    0
+                  )
+                  .toLocaleString()
+              : "calculating..."}{" "}
             confirmed COVID-19 cases
           </strong>{" "}
           world-wide.

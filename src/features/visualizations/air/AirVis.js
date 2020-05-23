@@ -11,7 +11,7 @@ import Blurb from "../../landing/blurbs/Blurb";
 const AirVis = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { dates, airQuality, cases, fetching } = useSelector(
+  const { dates, airQuality, cases, fetching, error } = useSelector(
     (state) => state.airReducer
   );
   const [formattedDates, setFormattedDates] = useState([new Date()]);
@@ -25,6 +25,12 @@ const AirVis = () => {
       dispatch(getAirQuality());
     }
   }, [cases, dates, dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      throw new Error("Could not retrieve data for visualization");
+    }
+  }, [error]);
 
   useEffect(() => {
     if (dates !== null) {
