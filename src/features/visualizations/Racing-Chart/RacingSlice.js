@@ -28,7 +28,14 @@ const RacingSlice = createSlice({
         ...state,
         fetching: false,
         success: rest,
-        deaths: data,
+        deaths: data.map((x) => ({
+          ...x,
+          date: new Date(
+            x.date.substring(0, 4),
+            x.date.substring(5, 7) - 1,
+            x.date.substring(8, 10)
+          ),
+        })),
         error: null,
       };
     },

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { add, getDayOfYear, parseISO } from "date-fns";
+import { add, getDayOfYear } from "date-fns";
 import { Box, Button, Typography, CircularProgress } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import ReactGa from "react-ga";
@@ -46,44 +46,36 @@ const useStyles = makeStyles({
 
 const RacingData = () => {
   const dispatch = useDispatch();
-  const { deaths, fetching } = useSelector((state) => state.racingReducer);
+  const { deaths, fetching, error } = useSelector(
+    (state) => state.racingReducer
+  );
   const [start, setStart] = useState(false);
   const [data, setData] = useState(null);
   const [dateToFilter, setDateToFilter] = useState(null);
   const classes = useStyles();
 
-  useEffect(() => {
-    if (deaths !== null) {
-      setData(
-        deaths
-          .map((x) => ({
-            name: x.country,
-            deaths: x.deaths,
-            date: x.date,
-          }))
-          .filter((x) => x.date === deaths[0].date)
-      );
-      setDateToFilter(new Date(deaths[0].date));
-    }
+  const reset = useCallback(() => {
+    setData(deaths.filter((x) => x.date === deaths[0].date));
+    setDateToFilter(new Date(deaths[0].date));
   }, [deaths]);
+
+  useEffect(() => {
+    if (deaths) {
+      reset();
+    }
+  }, [deaths, reset]);
 
   useInterval(() => {
     if (start) {
       setData(
-        deaths
-          .map((x) => ({
-            name: x.country,
-            deaths: x.deaths,
-            date: x.date,
-          }))
-          .filter(
-            (x) => getDayOfYear(parseISO(x.date)) === getDayOfYear(dateToFilter)
-          )
+        deaths.filter(
+          (x) => getDayOfYear(x.date) === getDayOfYear(dateToFilter)
+        )
       );
       setDateToFilter(add(dateToFilter, { days: 1 }));
 
       if (
-        getDayOfYear(parseISO(deaths[deaths.length - 1].date)) ===
+        getDayOfYear(deaths[deaths.length - 1].date) ===
         getDayOfYear(dateToFilter)
       ) {
         setDateToFilter(new Date(deaths[0].date));
@@ -93,23 +85,16 @@ const RacingData = () => {
   }, 200);
 
   useEffect(() => {
-    dispatch(getConfirmedCases());
-  }, [dispatch]);
+    if (!deaths) {
+      dispatch(getConfirmedCases());
+    }
+  }, [deaths, dispatch]);
 
-  const handleReset = (e) => {
-    e.preventDefault();
-    setStart(false);
-    setData(
-      deaths
-        .map((x) => ({
-          name: x.country,
-          deaths: x.deaths,
-          date: x.date,
-        }))
-        .filter((x) => x.date === deaths[0].date)
-    );
-    setDateToFilter(new Date(deaths[0].date));
-  };
+  useEffect(() => {
+    if (error) {
+      throw new Error("Could not retrieve data for visualization");
+    }
+  }, [error]);
 
   // Display a loading spinner while data is being fetched
   if (fetching) {
@@ -138,7 +123,7 @@ const RacingData = () => {
         >
           {start ? "Stop the race" : "Start the race!"}
         </Button>
-        <Button className={classes.buttons} type="button" onClick={handleReset}>
+        <Button className={classes.buttons} type="button" onClick={reset}>
           Reset race
         </Button>
       </Box>

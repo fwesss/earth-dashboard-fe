@@ -11,11 +11,11 @@ describe("BlurbSection", () => {
           summary: [
             {
               country: "Algeria",
-              totalConfirmed: 7019,
+              totalconfirmed: 7019,
             },
             {
               country: "Andorra",
-              totalConfirmed: 761,
+              totalconfirmed: 761,
             },
           ],
         },

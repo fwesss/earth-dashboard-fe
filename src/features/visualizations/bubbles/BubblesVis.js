@@ -3,7 +3,18 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as d3 from "d3";
+import {
+  select,
+  schemeSet3,
+  scaleOrdinal,
+  scaleLinear,
+  forceManyBody,
+  event,
+  forceSimulation,
+  forceCenter,
+  forceCollide,
+  drag,
+} from "d3";
 import ReactGa from "react-ga";
 import {
   CircularProgress,
@@ -38,9 +49,10 @@ const useStyles = makeStyles({
 const Bubbles = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { summary, fetching } = useSelector((state) => state.bubblesReducer);
+  const { summary, fetching, error } = useSelector(
+    (state) => state.bubblesReducer
+  );
   const [data, setData] = useState(null);
-  const [drawn, setDrawn] = useState(false);
   const [tooltipData, setTooltipData] = useState({
     country: null,
     cases: null,
@@ -53,8 +65,16 @@ const Bubbles = () => {
 
   // Retrieve the bubbles data on component mount
   useEffect(() => {
-    dispatch(getSummary());
-  }, [dispatch]);
+    if (!summary) {
+      dispatch(getSummary());
+    }
+  }, [dispatch, summary]);
+
+  useEffect(() => {
+    if (error) {
+      throw new Error("Could not retrieve data for visualization");
+    }
+  }, [error]);
 
   useEffect(() => {
     if (!fetching && data === null) {
@@ -72,53 +92,49 @@ const Bubbles = () => {
   }, [summary, fetching, data]);
 
   useEffect(() => {
-    if (data !== null && !drawn) {
+    if (data) {
       // append the svg object to the body of the page
-      const svg = d3
-        .select("#bubble")
+      const svg = select("#bubble")
         .append("svg")
         .attr("width", width)
         .attr("height", height);
 
       // Color palette for continents?
-      const color = d3.scaleOrdinal().range(d3.schemeTableau10);
+      const color = scaleOrdinal().range(schemeSet3);
 
       // Size scale for countries
-      const size = d3.scaleLinear().domain([0, 800000]).range([7, 75]); // circle will be between 7 and 55 px wide
+      const size = scaleLinear().domain([0, 800000]).range([7, 75]); // circle will be between 7 and 55 px wide
 
       // Features of the forces applied to the nodes:
-      const simulation = d3
-        .forceSimulation()
+      const simulation = forceSimulation()
         .force(
           "center",
-          d3
-            .forceCenter()
+          forceCenter()
             .x(width / 2)
             .y(height / 2)
         ) // Attraction to the center of the svg area
-        .force("charge", d3.forceManyBody().strength(0.1)) // Nodes are attracted one each other of value is > 0
+        .force("charge", forceManyBody().strength(0.1)) // Nodes are attracted one each other of value is > 0
         .force(
           "collide",
-          d3
-            .forceCollide()
+          forceCollide()
             .strength(0.2)
-            .radius((d) => size(d.totalConfirmed) + 3)
+            .radius((d) => size(d.totalconfirmed) + 3)
             .iterations(1)
         ); // Force that avoids circle overlapping
 
       const dragStarted = (d) => {
-        if (!d3.event.active) {
+        if (!event.active) {
           simulation.alphaTarget(0.03).restart();
         }
         d.fx = d.x;
         d.fy = d.y;
       };
       const dragged = (d) => {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
+        d.fx = event.x;
+        d.fy = event.y;
       };
       const dragEnded = (d) => {
-        if (!d3.event.active) {
+        if (!event.active) {
           simulation.alphaTarget(0.03);
         }
         ReactGa.event({ category: "Bubbles", action: "Bubble dragged" });
@@ -135,7 +151,7 @@ const Bubbles = () => {
         .enter()
         .append("circle")
         .attr("class", `node draggable`)
-        .attr("r", (d) => size(d.totalConfirmed))
+        .attr("r", (d) => size(d.totalconfirmed))
         .attr("cx", width / 2)
         .attr("cy", height / 2)
         .attr("data-testid", (d) => d.country)
@@ -146,13 +162,12 @@ const Bubbles = () => {
         .on("mousemove", (d) =>
           setTooltipData({
             country: d.country,
-            cases: d.totalConfirmed.toLocaleString(),
+            cases: d.totalconfirmed.toLocaleString(),
           })
         )
         .on("mouseover", () => setOpacity(1))
         .call(
-          d3
-            .drag() // call specific function when circle is dragged
+          drag() // call specific function when circle is dragged
             .on("start", dragStarted)
             .on("drag", dragged)
             .on("end", dragEnded)
@@ -168,23 +183,21 @@ const Bubbles = () => {
               "cx",
               (d) =>
                 (d.x = Math.max(
-                  size(d.totalConfirmed),
-                  Math.min(width - size(d.totalConfirmed), d.x)
+                  size(d.totalconfirmed),
+                  Math.min(width - size(d.totalconfirmed), d.x)
                 ))
             )
             .attr(
               "cy",
               (d) =>
                 (d.y = Math.max(
-                  size(d.totalConfirmed),
-                  Math.min(height - size(d.totalConfirmed), d.y)
+                  size(d.totalconfirmed),
+                  Math.min(height - size(d.totalconfirmed), d.y)
                 ))
             )
         );
-
-      setDrawn(true);
     }
-  }, [width, drawn, data]);
+  }, [data, width]);
 
   // Display a loading spinner while data is being fetched
   if (fetching) {
