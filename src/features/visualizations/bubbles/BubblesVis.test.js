@@ -12,11 +12,11 @@ describe("BubblesVis", () => {
           summary: [
             {
               country: "United States",
-              totalConfirmed: 1234567,
+              totalconfirmed: 1234567,
             },
             {
               country: "Spain",
-              totalConfirmed: 65768,
+              totalconfirmed: 65768,
             },
           ],
         },

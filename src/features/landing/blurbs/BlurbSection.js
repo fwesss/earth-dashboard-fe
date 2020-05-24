@@ -122,7 +122,7 @@ const BlurbSection = () => {
               ? summary
                   .reduce(
                     (accumulator, currentValue) =>
-                      accumulator + currentValue.totalConfirmed,
+                      accumulator + currentValue.totalconfirmed,
                     0
                   )
                   .toLocaleString()
