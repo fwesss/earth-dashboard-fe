@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ThemeProvider, CssBaseline, Container, Box } from "@material-ui/core";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useSelector } from "react-redux";
 import ReactGa from "react-ga";
-import theme from "./theme";
+import theme from "./theme/theme";
 import Header from "../features/landing/header/Header";
 import BlurbSection from "../features/landing/blurbs/BlurbSection";
 import Bubbles from "../features/visualizations/bubbles/BubblesVis";
@@ -12,8 +13,18 @@ import RacingData from "../features/visualizations/Racing-Chart/RacingData";
 import BeforeFooter from "../features/landing/footer/BeforeFooter";
 import Footer from "../features/landing/footer/Footer";
 import ErrorBoundary from "./error/ErrorBoundary";
+import ColorModeToggle from "./theme/ColorMode";
 
 const App = () => {
+  const { darkMode } = useSelector((state) => state.themeReducer);
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", `${prefersDarkMode}`);
+  }, [prefersDarkMode]);
+
+  const preferredTheme = useMemo(() => theme(darkMode), [darkMode]);
+
   const { fetching: fetchingBubbles } = useSelector(
     (state) => state.bubblesReducer
   );
@@ -35,9 +46,10 @@ const App = () => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={preferredTheme}>
       <CssBaseline />
-      <Container maxWidth="xl" disableGutters data-testid="app">
+      <Container data-testid="app">
+        <ColorModeToggle />
         <Header />
         <BlurbSection />
         <ErrorBoundary type="visualization">
@@ -53,7 +65,7 @@ const App = () => {
             borderTop={0}
             borderLeft={0}
             borderRight={0}
-            borderColor={theme.palette.divider}
+            borderColor={preferredTheme.palette.divider}
           >
             <Bubbles />
           </Box>
@@ -73,7 +85,7 @@ const App = () => {
             borderTop={0}
             borderLeft={0}
             borderRight={0}
-            borderColor={theme.palette.divider}
+            borderColor={preferredTheme.palette.divider}
           >
             <RacingData />
           </Box>
@@ -94,7 +106,7 @@ const App = () => {
             borderTop={0}
             borderLeft={0}
             borderRight={0}
-            borderColor={theme.palette.divider}
+            borderColor={preferredTheme.palette.divider}
           >
             <Cases />
           </Box>

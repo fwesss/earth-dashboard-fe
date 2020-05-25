@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Box, Typography } from "@material-ui/core";
-import theme from "../theme";
+import theme from "../theme/theme";
 import { ReactComponent as Error } from "./error.svg";
 
 class ErrorBoundary extends Component {
