@@ -4,7 +4,7 @@ import {
   scaleBand,
   scaleLinear,
   scaleOrdinal,
-  schemeTableau10,
+  schemeSet3,
   axisBottom,
 } from "d3";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -30,7 +30,7 @@ function RacingBarChart({ data }) {
       if (!dimensions) return;
 
       const barSize = 25;
-      const color = scaleOrdinal().range(schemeTableau10);
+      const color = scaleOrdinal().range(schemeSet3);
 
       // sorting the data
       data.sort((a, b) => b.deaths - a.deaths);
@@ -56,7 +56,7 @@ function RacingBarChart({ data }) {
       // draw the bars
       svg
         .selectAll(".bar")
-        .data(data, (entry) => entry.name)
+        .data(data, (entry) => entry.country)
         .join((enter) =>
           enter.append("rect").attr("y", (entry, index) => yScale(index))
         )
@@ -72,7 +72,7 @@ function RacingBarChart({ data }) {
       // draw the labels
       svg
         .selectAll(".label")
-        .data(data, (entry) => entry.name)
+        .data(data, (entry) => entry.country)
         .join((enter) =>
           enter
             .append("text")
@@ -81,7 +81,9 @@ function RacingBarChart({ data }) {
               (entry, index) => yScale(index) + yScale.bandwidth() / 2 + 5
             )
         )
-        .text((entry) => `${entry.name} ${entry.deaths}`)
+        .text(
+          (entry) => `${entry.country} ${Number(entry.deaths).toLocaleString()}`
+        )
         .attr("class", "label")
         .style("font-size", "17px")
         .attr("x", 10)

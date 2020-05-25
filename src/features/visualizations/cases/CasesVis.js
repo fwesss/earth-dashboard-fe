@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 
 const DataProvider = () => {
   const dispatch = useDispatch();
-  const { cases, fetching } = useSelector((state) => state.casesReducer);
+  const { cases, fetching, error } = useSelector((state) => state.casesReducer);
   // filterBy() requires the map that was constructed in CasesVis so we need to pass it up to the
   // HOC and store it in local state
   const [mapState, setMapState] = useState(null);
@@ -37,8 +37,16 @@ const DataProvider = () => {
 
   // Retrieve the map data on component mount
   useEffect(() => {
-    dispatch(getCases());
-  }, [dispatch]);
+    if (!cases) {
+      dispatch(getCases());
+    }
+  }, [cases, dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      throw new Error("Could not retrieve data for visualization");
+    }
+  }, [error]);
 
   // Display a loading spinner while data is being fetched
   if (fetching) {

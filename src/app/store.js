@@ -1,18 +1,22 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import casesReducer from "../features/visualizations/cases/casesSlice";
-import bubblesReducer from "../features/visualizations/bubbles/bubblesSlice";
-import racingReducer from "../features/visualizations/Racing-Chart/RacingSlice";
-import airReducer from "../features/visualizations/air/airSlice";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import rootReducer from "./rootReducer";
 
-export const rootReducer = combineReducers({
-  casesReducer,
-  bubblesReducer,
-  racingReducer,
-  airReducer,
+const customizedMiddleware = getDefaultMiddleware({
+  serializableCheck: false,
+  immutableCheck: false,
 });
 
 const store = configureStore({
   reducer: rootReducer,
+  middleware: customizedMiddleware,
 });
+
+if (process.env.NODE_ENV === "development" && module.hot) {
+  module.hot.accept("./rootReducer", () => {
+    // eslint-disable-next-line global-require
+    const newRootReducer = require("./rootReducer").default;
+    store.replaceReducer(newRootReducer);
+  });
+}
 
 export default store;
