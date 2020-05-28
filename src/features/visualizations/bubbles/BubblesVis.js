@@ -28,6 +28,7 @@ import { getSummary } from "./bubblesSlice";
 import useWindowSize from "../../../hooks/useWindowSize";
 import VisExplanation from "../VisExplanation";
 import VisTitle from "../VisTitle";
+import withErrorBoundary from "../../../app/error/ErrorBoundary";
 
 const useStyles = makeStyles({
   factCard: {
@@ -218,7 +219,7 @@ const Bubbles = () => {
         The Spread of COVID-19: Confirmed Cases vs Population
       </VisTitle>
       <Box display="flex" justifyContent="center">
-        <Card className={classes.factCard} style={{ opacity }}>
+        <Card raised className={classes.factCard} style={{ opacity }}>
           <CardContent>
             <Typography variant="body2" component="p">
               {tooltipData.country}
@@ -250,4 +251,4 @@ const Bubbles = () => {
   );
 };
 
-export default Bubbles;
+export default withErrorBoundary(Bubbles, "visualization");
