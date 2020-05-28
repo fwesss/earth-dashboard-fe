@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress, Box, useTheme } from "@material-ui/core";
 import { VictoryLine, VictoryAxis, VictoryLabel, VictoryTheme } from "victory";
 import { format } from "date-fns";
+import { schemeSet3 } from "d3";
 import { getAirQuality } from "./airSlice";
 import useWindowSize from "../../../hooks/useWindowSize";
 import VisTitle from "../VisTitle";
 import Blurb from "../../landing/blurbs/Blurb";
+import withErrorBoundary from "../../../app/error/ErrorBoundary";
 
 const AirVis = () => {
   const theme = useTheme();
@@ -65,13 +67,17 @@ const AirVis = () => {
             scale="time"
             standalone={false}
             style={{
-              axis: { stroke: "#4A5F70", strokeWidth: 1 },
+              axis: { stroke: theme.palette.text.primary, strokeWidth: 1 },
               ticks: {
-                stroke: "#4A5F70",
+                stroke: theme.palette.text.primary,
               },
               tickLabels: {
-                fill: "#4A5F70",
+                fill: theme.palette.text.primary,
                 fontSize: 14,
+              },
+              grid: {
+                fill: theme.palette.text.hint,
+                stroke: theme.palette.text.hint,
               },
             }}
             tickValues={formattedDates}
@@ -104,14 +110,18 @@ const AirVis = () => {
             orientation="left"
             standalone={false}
             style={{
-              axis: { stroke: theme.palette.primary.main },
+              axis: { stroke: schemeSet3[0] },
               tickLabels: {
-                fill: theme.palette.primary.main,
+                fill: schemeSet3[0],
                 fontSize: 16,
               },
               axisLabel: {
-                fill: theme.palette.primary.contrastText,
+                fill: theme.palette.text.primary,
                 fontSize: 22,
+              },
+              grid: {
+                fill: theme.palette.text.hint,
+                stroke: theme.palette.text.hint,
               },
             }}
             axisLabelComponent={<VictoryLabel dy={-60} />}
@@ -129,7 +139,7 @@ const AirVis = () => {
             scale={{ x: "time", y: "linear" }}
             standalone={false}
             style={{
-              data: { stroke: "#3EB6B4", strokeWidth: 4.5 },
+              data: { stroke: schemeSet3[0], strokeWidth: 4.5 },
             }}
             animate={{
               duration: 2000,
@@ -153,14 +163,18 @@ const AirVis = () => {
             orientation="right"
             standalone={false}
             style={{
-              axis: { stroke: "#F3B041" },
+              axis: { stroke: schemeSet3[3] },
               tickLabels: {
-                fill: "#F3B041",
+                fill: schemeSet3[3],
                 fontSize: 16,
               },
               axisLabel: {
-                fill: theme.palette.primary.contrastText,
+                fill: theme.palette.text.primary,
                 fontSize: 22,
+              },
+              grid: {
+                fill: theme.palette.divider,
+                stroke: theme.palette.divider,
               },
             }}
             tickFormat={(tick) => (tick > 999 ? `${tick / 1000}k` : tick)}
@@ -179,7 +193,7 @@ const AirVis = () => {
             scale={{ x: "time", y: "linear" }}
             standalone={false}
             style={{
-              data: { stroke: "#F3B041", strokeWidth: 4.5 },
+              data: { stroke: schemeSet3[3], strokeWidth: 4.5 },
             }}
             animate={{
               duration: 2000,
@@ -189,29 +203,29 @@ const AirVis = () => {
         </g>
       </svg>
       <Box display="flex" justifyContent="space-around" flexWrap="wrap">
-        <Blurb width="40%" my={10}>
+        <Blurb maxWidth={14}>
           The term “PM 2.5” refers to atmospheric particulate matter that have a
           diameter of less than 2.5 micrometers, which is about 3% the diameter
           of a human hair.
         </Blurb>
-        <Blurb width="40%" my={10}>
+        <Blurb maxWidth={14}>
           Guidelines from the World Health Organization (WHO) stipulate that the
           average PM 2.5 should not exceed 10 μg/m³ over the course of a year,
           and 25 μg/m³ over a 24-hour period.
         </Blurb>
-        <Blurb width="40%">
+        <Blurb maxWidth={14}>
           During quarantine in Glendora, CA, the PM 2.5 never exceeded the
           stipulated level of 25 μg/m³, but it did routinely before the
           lockdown.
         </Blurb>
-        <Blurb width="40%">
+        <Blurb maxWidth={14}>
           Even during quarantine, the average PM 2.5 was 10.3 μg/m³, making it
-          unlikely that Glendora County will hit their target of less than 10
-          μg/m³ on average over the course of a year.
+          unlikely that Glendora will hit their target of less than 10 μg/m³ on
+          average over the course of a year.
         </Blurb>
       </Box>
     </Box>
   );
 };
 
-export default AirVis;
+export default withErrorBoundary(AirVis, "visualization");
