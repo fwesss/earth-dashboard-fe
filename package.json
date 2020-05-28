@@ -72,6 +72,7 @@
     "react-cool-img": "^1.1.5",
     "react-dom": "^16.13.1",
     "react-ga": "^2.7.0",
+    "react-globe.gl": "^2.8.1",
     "react-redux": "^7.2.0",
     "react-scripts": "^3.4.1",
     "resize-observer-polyfill": "^1.5.1",
