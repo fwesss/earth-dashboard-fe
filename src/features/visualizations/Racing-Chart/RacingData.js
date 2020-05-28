@@ -1,48 +1,15 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { add, getDayOfYear } from "date-fns";
-import { Box, Button, Typography, CircularProgress } from "@material-ui/core";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import { Box, Button, CircularProgress, makeStyles } from "@material-ui/core";
 import ReactGa from "react-ga";
+import useTheme from "@material-ui/core/styles/useTheme";
 import RacingBarChart from "./RacingBarChart";
 import useInterval from "../../../hooks/useInterval";
 import { getConfirmedCases } from "./RacingSlice";
-
-const useStyles = makeStyles({
-  ChartBox: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-  },
-
-  titleText: {
-    textAlign: "center",
-    padding: ".7rem",
-  },
-
-  explanation: {
-    width: "75%",
-    paddingBottom: "4rem",
-    margin: "1rem auto 0",
-  },
-
-  buttonBox: {
-    display: "flex",
-    justifyContent: "space-around",
-    width: "30%",
-  },
-
-  buttons: {
-    height: "2.5rem",
-    width: "10rem",
-    fontSize: "12px",
-    backgroundColor: "#3EB6B4",
-    borderRadius: "60px",
-    marginTop: ".5rem",
-    color: "white",
-  },
-});
+import VisExplanation from "../VisExplanation";
+import VisTitle from "../VisTitle";
+import withErrorBoundary from "../../../app/error/ErrorBoundary";
 
 const RacingData = () => {
   const dispatch = useDispatch();
@@ -52,6 +19,14 @@ const RacingData = () => {
   const [start, setStart] = useState(false);
   const [data, setData] = useState(null);
   const [dateToFilter, setDateToFilter] = useState(null);
+  const theme = useTheme();
+
+  const useStyles = makeStyles({
+    button: {
+      margin: theme.spacing(2),
+    },
+  });
+
   const classes = useStyles();
 
   const reset = useCallback(() => {
@@ -102,32 +77,55 @@ const RacingData = () => {
   }
 
   return (
-    <Box className={classes.ChartBox}>
-      <Box className={classes.titleText}>
-        <Typography variant="h4" component="h2" style={{ paddingTop: "1rem" }}>
+    <Box
+      display="flex"
+      justifyContent="center"
+      flexDirection="column"
+      alignItems="center"
+    >
+      <Box display="flex" flexDirection="column" overflow="hidden">
+        <VisTitle variant="h4" component="h2" subtitled>
           Explore COVID-19 Case Rates by Country
-        </Typography>
-        <Typography varient="h5">Confirmed deaths (Covid-19)</Typography>
+        </VisTitle>
+        <VisTitle
+          id="racing-title"
+          variant="h5"
+          component="span"
+          aria-label="racing-title"
+        >
+          Confirmed deaths (Covid-19)
+        </VisTitle>
       </Box>
-      <RacingBarChart data={!fetching && data} />
-      <Box className={classes.buttonBox}>
+      {data && <RacingBarChart data={data} />}
+      <Box display="flex" justifyContent="space-around" flexWrap="wrap">
         <Button
-          className={classes.buttons}
+          className={classes.button}
+          variant="contained"
+          color="primary"
           type="button"
           onClick={() => {
             if (!start) {
-              ReactGa.event({ category: "Racing", action: "Animation played" });
+              ReactGa.event({
+                category: "Racing",
+                action: "Animation played",
+              });
             }
             setStart(!start);
           }}
         >
           {start ? "Stop the race" : "Start the race!"}
         </Button>
-        <Button className={classes.buttons} type="button" onClick={reset}>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          type="button"
+          onClick={reset}
+        >
           Reset race
         </Button>
       </Box>
-      <Typography className={classes.explanation}>
+      <VisExplanation>
         Even the most basic graphs like a bar chart can be engaging and
         interesting with the right set up and data. Time-series data (data that
         has a date and/or time associated to it) allows us to see changes that
@@ -136,9 +134,9 @@ const RacingData = () => {
         because we have time-series data we are able to put the data in an
         animation from the very first day a COVID-19 death was confirmed through
         the present day.
-      </Typography>
+      </VisExplanation>
     </Box>
   );
 };
 
-export default RacingData;
+export default withErrorBoundary(RacingData, "visualization");
