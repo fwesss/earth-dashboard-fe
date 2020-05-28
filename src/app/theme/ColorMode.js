@@ -19,6 +19,11 @@ export default () => {
 
   const classes = useStyles();
 
+  /*
+   * Clicking on the color mode icon sets the darkMode flag in Redux and saves that variable to localStorage.
+   * Their preference will persist between site visits.
+   */
+
   return (
     <>
       {darkMode ? (

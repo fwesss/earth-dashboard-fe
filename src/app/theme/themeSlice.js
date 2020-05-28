@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
+  /*
+   * If there is a color preference stored in localStorage from a previous visit,
+   * use that value. Otherwise, default to a light theme.
+   */
   darkMode: JSON.parse(localStorage.getItem("darkMode"))
     ? JSON.parse(localStorage.getItem("darkMode"))
     : false,
