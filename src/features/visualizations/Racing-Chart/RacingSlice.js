@@ -28,7 +28,14 @@ const RacingSlice = createSlice({
                 ...state,
                 fetching: false,
                 success: rest,
-                deaths: data,
+                deaths: data.map((x) => ({
+                    ...x,
+                    date: new Date(
+                        x.date.substring(0, 4),
+                        x.date.substring(5, 7) - 1,
+                        x.date.substring(8, 10)
+                    ),
+                })),
                 error: null,
             };
         },
@@ -41,15 +48,6 @@ const RacingSlice = createSlice({
                 success: null,
             };
         },
-
-        resetState(state) {
-            return {
-                ...state,
-                fetching: true,
-                success: null,
-                error: null,
-            };
-        },
     },
 });
 
@@ -57,7 +55,6 @@ export const {
     fetchingDeathCases,
     fetchDeathCasesSuccess,
     fetchDeathCasesError,
-    resetState,
 } = RacingSlice.actions;
 
 export default RacingSlice.reducer;
@@ -77,8 +74,4 @@ export const getConfirmedCases = () => async (dispatch) => {
     } catch (fetchError) {
         dispatch(fetchDeathCasesError(JSON.stringify(fetchError)));
     }
-};
-
-export const resetStateHandler = () => async (dispatch) => {
-    dispatch(resetState());
 };

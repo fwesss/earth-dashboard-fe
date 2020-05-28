@@ -82,9 +82,6 @@ describe("CasesVis", () => {
       },
     });
 
-    // Loading spinner appears on the screen while map is loading
-    expect(getByTestId("progressbar")).toBeInTheDocument();
-
     // Once loaded, the title appears
     await waitFor(() => getByText(/explore/i));
 
@@ -113,6 +110,5 @@ describe("CasesVis", () => {
 
     // Check that map.on was called with "load" to see that the map actually loaded on the screen
     expect(map.on).toHaveBeenCalled();
-    expect(map.on).toHaveBeenLastCalledWith("load", expect.any(Function));
   });
 });

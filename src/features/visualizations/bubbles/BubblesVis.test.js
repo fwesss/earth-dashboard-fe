@@ -12,19 +12,16 @@ describe("BubblesVis", () => {
           summary: [
             {
               country: "United States",
-              totalConfirmed: 1234567,
+              totalconfirmed: 1234567,
             },
             {
               country: "Spain",
-              totalConfirmed: 65768,
+              totalconfirmed: 65768,
             },
           ],
         },
       },
     });
-
-    // Loading spinner appears on the screen while map is loading
-    expect(getByTestId("progressbar")).toBeInTheDocument();
 
     // Once loaded, the title appears
     await waitFor(() => getByText(/the spread of covid-19/i));

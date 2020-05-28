@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
+import ReactGa from "react-ga";
 import mapboxgl from "mapbox-gl";
 import { Box, Slider, CircularProgress, IconButton } from "@material-ui/core";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
@@ -28,7 +29,7 @@ const useStyles = makeStyles({
 
 const DataProvider = () => {
   const dispatch = useDispatch();
-  const { cases, fetching } = useSelector((state) => state.casesReducer);
+  const { cases, fetching, error } = useSelector((state) => state.casesReducer);
   // filterBy() requires the map that was constructed in CasesVis so we need to pass it up to the
   // HOC and store it in local state
   const [mapState, setMapState] = useState(null);
@@ -36,8 +37,16 @@ const DataProvider = () => {
 
   // Retrieve the map data on component mount
   useEffect(() => {
-    dispatch(getCases());
-  }, [dispatch]);
+    if (!cases) {
+      dispatch(getCases());
+    }
+  }, [cases, dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      throw new Error("Could not retrieve data for visualization");
+    }
+  }, [error]);
 
   // Display a loading spinner while data is being fetched
   if (fetching) {
@@ -91,7 +100,8 @@ const CasesVis = ({ cases, setMapState }) => {
       container: mapContainer.current,
       style: process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_STYLE,
       center: [-100, 38],
-      zoom: 3.5,
+      zoom: 3.75,
+      minZoom: 3.5,
     });
 
     map.on("load", () => {
@@ -104,6 +114,17 @@ const CasesVis = ({ cases, setMapState }) => {
         .addLayer(heatmap, "waterway-label")
         .addLayer(circles, "waterway-label")
         .addLayer(labels);
+    });
+
+    map.on("wheel", (event) => {
+      if (
+        event.originalEvent.ctrlKey ||
+        event.originalEvent.metaKey ||
+        event.originalEvent.altKey
+      ) {
+        return;
+      }
+      event.preventDefault();
     });
 
     return () => map.remove();
@@ -173,9 +194,10 @@ const DateSlider = ({ mapState, play, setPlay }) => {
       classes={{ markLabel: classes.markLabel }}
       value={dateToFilter.sliderValue}
       getAriaValueText={(value) => `${dates[value]}`}
-      onChange={(event, newValue) =>
-        setDateToFilter({ date: dates[newValue], sliderValue: newValue })
-      }
+      onChange={(event, newValue) => {
+        ReactGa.event({ category: "Heatmap", action: "Filter changed" });
+        setDateToFilter({ date: dates[newValue], sliderValue: newValue });
+      }}
       // onChangeCommtted fires whenever a "click up" on the slider occurs. If the animation is playing and the
       // user clicks or drags to a different date manually, the animation should stop
       onChangeCommitted={() => setPlay(false)}

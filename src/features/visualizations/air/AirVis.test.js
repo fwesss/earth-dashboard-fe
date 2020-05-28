@@ -34,9 +34,6 @@ describe("AirVis", () => {
       },
     });
 
-    // Loading spinner appears on the screen while map is loading
-    expect(getByTestId("progressbar")).toBeInTheDocument();
-
     // Once loaded, the title appears
     await waitFor(() => getByText(/mean particulate matter/i));
 
