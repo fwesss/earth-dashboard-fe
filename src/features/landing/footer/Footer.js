@@ -1,162 +1,122 @@
 import React from "react";
-import { Box, Typography, Button } from "@material-ui/core";
+import { Box, Link, Typography, Button, useTheme } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Img from "react-cool-img";
 import EarthImg from "./earthImg.svg";
-
-const useStyles = makeStyles({
-  Background: {
-    width: "100%",
-    display: "flex",
-    height: "100vh",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-  },
-
-  footerBackground: {
-    background: "white",
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    textAlign: "center",
-    height: "100vh",
-  },
-
-  infoBox: {
-    position: "relative",
-    borderRadius: "10px",
-    background: "white",
-    height: "52%",
-    width: "40%",
-    opacity: 0.8,
-  },
-
-  infoText: {
-    display: "flex",
-    flexDirection: "column",
-    // textAlign: 'center',
-    position: "absolute",
-    // padding: '100px',
-    // marginLeft: '25px',
-    // marginTop: '18px',
-  },
-
-  backgroungImg: {
-    height: "95%",
-    width: "100%",
-    position: "absolute",
-    paddingTop: "30px",
-  },
-
-  headText: {
-    // marginTop: '3.75rem',
-    paddingBottom: "30px",
-    color: "Black",
-  },
-
-  midText: {
-    paddingBottom: "30px",
-    color: "Black",
-  },
-
-  buttonsBox: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "space-around",
-  },
-
-  buttons: {
-    fontSize: "12px",
-    backgroundColor: "#3EB6B4",
-    borderRadius: "60px",
-    height: "100%",
-    width: "100%",
-    color: "white",
-  },
-
-  bottomBox: {
-    width: "90%",
-    display: "flex",
-    justifyContent: "flex-end",
-    height: "10%",
-    background: "white",
-    paddingTop: "3rem",
-    paddingBottom: "2rem",
-  },
-
-  tag: {
-    textDecoration: "none",
-  },
-});
+import useWindowSize from "../../../hooks/useWindowSize";
 
 const Footer = () => {
+  const theme = useTheme();
+  const { width, height } = useWindowSize();
+
+  const useStyles = makeStyles({
+    infoBox: {
+      opacity: 0.8,
+    },
+
+    text: {
+      color: theme.palette.common.black,
+    },
+
+    button: {
+      width: theme.spacing(11),
+      margin: theme.spacing(2),
+    },
+  });
+
   const classes = useStyles();
 
   return (
-    <Box className={classes.Background}>
-      <Box className={classes.footerBackground}>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      flexDirection="column"
+    >
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="column"
+        textAlign="center"
+      >
         <Img
+          width={width * 0.95}
+          height={height * 0.95}
           src={EarthImg}
-          className={classes.backgroungImg}
           alt="Eastern United States lights from space"
         />
-        <Box className={classes.infoBox} />
-        <Box className={classes.infoText}>
+        <Box
+          position="absolute"
+          borderRadius={theme.shape.borderRadius}
+          bgcolor={theme.palette.common.white}
+          height="52vh"
+          minWidth="470px"
+          width="40vw"
+          className={classes.infoBox}
+        />
+        <Box position="absolute">
           <Typography
-            className={classes.headText}
-            pt="8"
-            variant="h5"
+            gutterBottom
+            className={classes.text}
+            variant="h4"
             component="p"
           >
             Want to learn more about <br /> Covid-19?
           </Typography>
 
-          <Typography className={classes.midText} variant="h6" component="p">
+          <Typography
+            gutterBottom
+            className={classes.text}
+            variant="h5"
+            component="p"
+          >
             Check out the resources below.
           </Typography>
-          <Box className={classes.buttonsBox}>
-            <a
-              className={classes.tag}
-              style={{ color: "white", width: "45%" }}
+          <Box
+            mt={theme.spacing(2)}
+            display="flex"
+            justifyContent="space-around"
+            flexWrap="wrap"
+          >
+            <Button
+              size="small"
+              className={classes.button}
+              variant="contained"
+              color="primary"
               href="https://www.who.int/"
             >
-              <Button
-                href="https://www.who.int/"
-                className={classes.buttons}
-                style={{ color: "white" }}
-                component="p"
-              >
-                World Health <br /> Organization: Who
-              </Button>
-            </a>
+              World Health <br /> Organization: Who
+            </Button>
 
-            <a
-              className={classes.tag}
-              style={{ color: "white", width: "45%" }}
+            <Button
+              size="small"
+              className={classes.button}
+              variant="contained"
+              color="primary"
               href="https://www.cdc.gov/coronavirus/2019-ncov/index.html"
             >
-              <Button className={classes.buttons} component="p">
-                CDC
-              </Button>
-            </a>
+              CDC
+            </Button>
           </Box>
         </Box>
       </Box>
-      <Box className={classes.bottomBox}>
+      <Box
+        width="90%"
+        height="10%"
+        display="flex"
+        justifyContent="flex-end"
+        pt={theme.spacing(2)}
+        pb={theme.spacing(1)}
+      >
         <Typography component="p" style={{ paddingRight: "35%" }}>
           &#169; PlanetData 2020
         </Typography>
-        <Typography component="p">
-          <a
-            className={classes.tag}
-            style={{ color: "black" }}
-            href="#what-is-planet-data"
-          >
+
+        <Typography>
+          <Link color="textPrimary" href="#what-is-planet-data">
             Back To Top
-          </a>
+          </Link>
         </Typography>
       </Box>
     </Box>
