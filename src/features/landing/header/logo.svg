@@ -12,7 +12,7 @@
   <path d="m49.632999,28.509899c0.135002,-0.112999 0.240002,-0.153999 0.240002,-0.153999c-1.037003,-1.677 -0.658001,0.74 -0.658001,0.74c0.067001,-0.159 0.146,-0.281 0.227001,-0.383999c0.055,0.716 -0.117001,1.782999 -1.235001,2.796999c-0.000999,0 2.396999,-0.903999 1.425999,-2.999001z" fill="white" id="path84"/>
   <path d="m31.332001,15.955c0.522999,-1.226 -1.121,-2.622 -1.121,-2.622c0.211,2.947001 0.601999,3.847 1.121,2.622z" fill="white" id="path86"/>
   <path d="m29.288,16.1161c0,0 0.851,-0.126 0.610001,-1.204c0,0 -0.610001,0.061 -0.610001,1.204z" fill="white" id="path88"/>
-  <text font-weight="bold" font-size="36px" font-family="Roboto" fill="#ffffff" xml:space="preserve" x="69.999924" y="40.975868" id="text102">
+  <text font-weight="normal" font-size="48px" font-family="PT Sans Caption" fill="#ffffff" xml:space="preserve" x="69.999924" y="40.975868" id="text102">
    <tspan x="69.999924" y="40.975868" id="tspan104">Planet Data</tspan>
   </text>
 </svg>

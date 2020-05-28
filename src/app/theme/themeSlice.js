@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const initialState = {
   darkMode: JSON.parse(localStorage.getItem("darkMode"))
     ? JSON.parse(localStorage.getItem("darkMode"))
-    : null,
+    : false,
 };
 
 const themeSlice = createSlice({
