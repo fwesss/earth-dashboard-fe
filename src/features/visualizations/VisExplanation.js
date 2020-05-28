@@ -4,7 +4,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles({
   explanation: {
-    width: "75%",
+    maxWidth: "35em",
     paddingBottom: "1rem",
     margin: "2em auto 0",
   },
