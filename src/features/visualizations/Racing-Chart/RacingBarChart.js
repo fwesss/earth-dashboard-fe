@@ -1,109 +1,79 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import {
-  select,
-  scaleBand,
-  scaleLinear,
-  scaleOrdinal,
-  schemeSet3,
-  axisBottom,
-} from "d3";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import useResizeObserver from "../../../hooks/useResizeObserver";
-
-const useStyles = makeStyles({
-  Wrapper: {
-    height: 535,
-    width: "100%",
-  },
-});
+  VictoryChart,
+  VictoryTheme,
+  VictoryLegend,
+  VictoryAxis,
+  VictoryBar,
+} from "victory";
+import { format } from "date-fns";
+import useTheme from "@material-ui/core/styles/useTheme";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 function RacingBarChart({ data }) {
-  const svgRef = useRef();
-  const wrapperRef = useRef();
-  const dimensions = useResizeObserver(wrapperRef);
-  const classes = useStyles();
-
-  // will be called initially and on every data change
-  useEffect(() => {
-    if (data) {
-      const svg = select(svgRef.current);
-      if (!dimensions) return;
-
-      const barSize = 25;
-      const color = scaleOrdinal().range(schemeSet3);
-
-      // sorting the data
-      data.sort((a, b) => b.deaths - a.deaths);
-
-      const yScale = scaleBand()
-        .paddingInner(0.1)
-        .domain(data.map((deaths, index) => index)) // [0,1,2,3,4,5]
-        .range([0, barSize * data.length]); // [0, 200]
-
-      const xScale = scaleLinear()
-        .domain([0, 90000]) // [0, 65 (example)]
-        .range([0, 1000]); // [0, 400 (example)]
-
-      const xAxis = axisBottom(xScale).tickSize(-1000).ticks(7);
-
-      svg
-        .select(".x-axis")
-        .style("transform", "translateY(500px)")
-        .call(xAxis)
-        .select(".domain")
-        .remove();
-
-      // draw the bars
-      svg
-        .selectAll(".bar")
-        .data(data, (entry) => entry.country)
-        .join((enter) =>
-          enter.append("rect").attr("y", (entry, index) => yScale(index))
-        )
-        // .attr("fill", (d) => color(d.deaths)
-        .style("fill", (d) => color(d.deaths))
-        .attr("class", "bar")
-        .attr("x", 0)
-        .attr("height", yScale.bandwidth())
-        .transition()
-        .attr("width", (entry) => xScale(entry.deaths))
-        .attr("y", (entry, index) => yScale(index));
-
-      // draw the labels
-      svg
-        .selectAll(".label")
-        .data(data, (entry) => entry.country)
-        .join((enter) =>
-          enter
-            .append("text")
-            .attr(
-              "y",
-              (entry, index) => yScale(index) + yScale.bandwidth() / 2 + 5
-            )
-        )
-        .text(
-          (entry) => `${entry.country} ${Number(entry.deaths).toLocaleString()}`
-        )
-        .attr("class", "label")
-        .style("font-size", "17px")
-        .attr("x", 10)
-        .transition()
-        .attr(
-          "y",
-          (entry, index) => yScale(index) + yScale.bandwidth() / 2 + 5
-        );
-    }
-  }, [data, dimensions]);
+  const theme = useTheme();
+  const [width, height] = [useWindowSize().width * 0.8, 800];
 
   return (
-    <div className={classes.Wrapper} ref={wrapperRef}>
-      <svg
-        ref={svgRef}
-        style={{ height: "100%", width: "77%", marginLeft: "12.5rem" }}
-      >
-        <g className="x-axis" />
-      </svg>
-    </div>
+    <VictoryChart
+      width={width}
+      height={height}
+      domainPadding={{ x: 20, y: 300 }}
+      theme={VictoryTheme.material}
+    >
+      <VictoryLegend
+        x={width * 0.6}
+        y={height * 0.7}
+        data={[
+          {
+            name: format(data[0].date, "M/d/yy"),
+            symbol: { fill: "transparent" },
+          },
+        ]}
+        style={{
+          labels: {
+            fontSize: 48,
+            fill: theme.palette.text.secondary,
+          },
+        }}
+      />
+      <VictoryBar
+        horizontal
+        barWidth={30}
+        data={data}
+        x="country"
+        y="deaths"
+        sortKey="deaths"
+        labels={({ datum }) =>
+          `${datum.country} ${Math.round(
+            Number(datum.deaths)
+          ).toLocaleString()}`
+        }
+        style={{
+          data: {
+            fill: ({ datum }) => datum.color,
+          },
+          labels: {
+            fontSize: 20,
+            fill: theme.palette.text.primary,
+            padding: 10,
+          },
+        }}
+      />
+      <VictoryAxis
+        dependentAxis
+        style={{
+          tickLabels: {
+            fill: theme.palette.text.primary,
+            fontSize: 20,
+          },
+          grid: {
+            fill: theme.palette.divider,
+            stroke: theme.palette.divider,
+          },
+        }}
+      />
+    </VictoryChart>
   );
 }
 

@@ -1,41 +1,30 @@
 import React from "react";
-import { Box, Typography, useTheme } from "@material-ui/core";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import { makeStyles, useTheme } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles({
-  blurbText: {
-    paddingLeft: "0.625em",
-    paddingRight: "0.625em",
-
-    fontWeight: 300,
-  },
-});
-
-const Blurb = ({ children, id, width = "27%", my = 0 }) => {
-  const classes = useStyles();
+export default ({ children, id, maxWidth = 13 }) => {
   const theme = useTheme();
+  const useStyles = makeStyles({
+    card: {
+      margin: theme.spacing(6),
+      maxWidth: theme.spacing(maxWidth),
+      display: "flex",
+      alignItems: "center",
+      borderTop: `6px ${theme.palette.secondary.main} solid`,
+    },
+  });
+
+  const classes = useStyles();
 
   return (
-    <Box
-      data-testid={`blurb${id}`}
-      display="flex"
-      alignItems="center"
-      border={`2px solid ${theme.palette.primary.main}`}
-      borderRadius="20px"
-      width={width}
-      height={190}
-      my={my}
-    >
-      <Typography
-        variant="h6"
-        component="p"
-        className={classes.blurbText}
-        align="center"
-      >
-        {children}
-      </Typography>
-    </Box>
+    <Card data-testid={`blurb${id}`} raised className={classes.card}>
+      <CardContent>
+        <Typography variant="h6" component="p" align="center">
+          {children}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
-
-export default Blurb;

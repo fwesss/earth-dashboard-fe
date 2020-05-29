@@ -12,18 +12,14 @@ const mockAddControl = jest.fn();
 const mockRemove = jest.fn();
 const mockAddSource = jest.fn();
 
-jest.mock("mapbox-gl", () => {
-  return {
-    GeolocateControl: jest.fn(),
-    Map: jest.fn().mockImplementation(() => {
-      return {
-        on: mockOn,
-        addLayer: mockAddLayer,
-        addControl: mockAddControl,
-        remove: mockRemove,
-        addSource: mockAddSource,
-      };
-    }),
-    NavigationControl: jest.fn(),
-  };
-});
+jest.mock("mapbox-gl", () => ({
+  GeolocateControl: jest.fn(),
+  Map: jest.fn().mockImplementation(() => ({
+    on: mockOn,
+    addLayer: mockAddLayer,
+    addControl: mockAddControl,
+    remove: mockRemove,
+    addSource: mockAddSource,
+  })),
+  NavigationControl: jest.fn(),
+}));

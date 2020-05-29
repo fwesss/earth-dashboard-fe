@@ -13,6 +13,8 @@ import useDebounce from "../../../hooks/useDebounce";
 import { heatmap, circles, labels } from "./layers.json";
 import VisExplanation from "../VisExplanation";
 import VisTitle from "../VisTitle";
+import useWindowSize from "../../../hooks/useWindowSize";
+import withErrorBoundary from "../../../app/error/ErrorBoundary";
 
 mapboxgl.accessToken = process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN;
 
@@ -24,6 +26,7 @@ const useStyles = makeStyles({
   markLabel: {
     transform: "translate(-20px, 20px) rotate(90deg)",
     fontSize: 14,
+    fontFamily: "Roboto",
   },
 });
 
@@ -34,6 +37,7 @@ const DataProvider = () => {
   // HOC and store it in local state
   const [mapState, setMapState] = useState(null);
   const [play, setPlay] = useState(false);
+  const width = useWindowSize().width * 0.8;
 
   // Retrieve the map data on component mount
   useEffect(() => {
@@ -54,7 +58,12 @@ const DataProvider = () => {
   }
 
   return (
-    <Box display="flex" flexDirection="column" justifyContent="center">
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      width={width}
+    >
       <VisTitle
         id="map-title"
         aria-label="map-title"
@@ -95,10 +104,16 @@ const CasesVis = ({ cases, setMapState }) => {
   const mapContainer = useRef(null);
   const initialData = useRef(cases);
 
+  const { darkMode } = useSelector((state) => state.themeReducer);
+  const [lightStyle, darkStyle] = [
+    process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_STYLE,
+    process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_STYLE_DARK,
+  ];
+
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
-      style: process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_STYLE,
+      style: darkMode ? darkStyle : lightStyle,
       center: [-100, 38],
       zoom: 3.75,
       minZoom: 3.5,
@@ -128,7 +143,7 @@ const CasesVis = ({ cases, setMapState }) => {
     });
 
     return () => map.remove();
-  }, [setMapState]);
+  }, [darkMode, darkStyle, lightStyle, setMapState]);
 
   return (
     <div
@@ -232,4 +247,4 @@ const DateSlider = ({ mapState, play, setPlay }) => {
   );
 };
 
-export default DataProvider;
+export default withErrorBoundary(DataProvider, "visualization");
