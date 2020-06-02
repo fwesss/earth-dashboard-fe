@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { Component } from "react";
 import NavBar from "../navbar/NavBar";
 import DashBoardSec from "../../app/DashBoardSection";
 import SimpleBar from "simplebar-react";
