@@ -10,7 +10,7 @@ import Air from "../features/visualizations/air/AirVis";
 import RacingData from "../features/visualizations/Racing-Chart/RacingData";
 import ErrorBoundary from "./error/ErrorBoundary";
 
-const DashBoardSec = (props) => {
+const DashBoardSec = ({ header, bubbleChart, racingChart, heatMap, airQuality }) => {
     const { fetching: fetchingBubbles } = useSelector(
         (state) => state.bubblesReducer
     );
@@ -31,15 +31,13 @@ const DashBoardSec = (props) => {
         ReactGa.pageview("/");
     }, []);
 
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Container maxWidth="xl" disableGutters data-testid="app">
-                {props.header ? (
-                    <Header />
-                ) :
-                    null}
-                {props.bubbleChart ? (
+                {header ? <Header /> : null}
+                {bubbleChart ? (
                     <ErrorBoundary type="visualization">
                         <Box
                             display="flex"
@@ -59,7 +57,7 @@ const DashBoardSec = (props) => {
                         </Box>
                     </ErrorBoundary>
                 ) : null}
-                {props.racingChart ? (
+                {racingChart ? (
                     <ErrorBoundary type="visualization">
                         <Box
                             display="flex"
@@ -81,7 +79,7 @@ const DashBoardSec = (props) => {
                     </ErrorBoundary>
                 ) : null}
 
-                {props.heatMap ? (
+                {heatMap ? (
                     <ErrorBoundary type="visualization">
                         <Box
                             display="flex"
@@ -104,7 +102,7 @@ const DashBoardSec = (props) => {
                     </ErrorBoundary>
                 ) : null}
 
-                {props.airQuality ? (
+                {airQuality ? (
                     <ErrorBoundary type="visualization">
                         <Box
                             display="flex"

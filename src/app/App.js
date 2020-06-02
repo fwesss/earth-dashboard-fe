@@ -1,10 +1,9 @@
 import React from "react";
-import { ThemeProvider, CssBaseline, Container, Box } from "@material-ui/core";
+import { ThemeProvider, CssBaseline, Container } from "@material-ui/core";
 import theme from "./theme";
 import DashBoard from "../features/dashboard/DashBoard";
 
-const App = (props) => {
-
+const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
