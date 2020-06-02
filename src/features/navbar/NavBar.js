@@ -1,85 +1,203 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import Button from '@material-ui/core/Button';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import { makeStyles } from '@material-ui/core/styles';
+import { Box, Typography, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Collapse from '@material-ui/core/Collapse';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import { ReactComponent as Logo } from "../landing/header/logo.svg";
+import "./navBar.css"
 
+
+const useStyles = makeStyles({
+
+
+    parentFont: {
+        // paddingLeft: '3rem',
+        fontSize: '25px',
+        color: 'white',
+
+    },
+    childFont: {
+        paddingLeft: '1rem',
+        fontSize: '22px',
+        color: 'white',
+
+    },
+    nested: {
+        paddingLeft: '3rem',
+        fontSize: '19px',
+        color: 'black',
+        opacity: '0.4'
+
+    },
+    navBar: {
+        position: "relative",
+        height: '100vh',
+        width: '23%',
+        background: '#4A5F70'
+    },
+
+});
 
 function NavBar(props) {
     const history = useHistory();
-    // const classes = useStyles();
+    const classes = useStyles();
     const [open, setOpen] = useState(false);
-    const anchorRef = useRef(null)
+    const [openCovid, setOpenCovid] = useState(false);
+    const [openDeforestation, setOpenDeforestation] = useState(false);
 
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen)
+
+    const handleClick = () => {
+        setOpen(!open);
     };
 
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-            return;
-        }
-
-        setOpen(false);
+    const handleClickCovid = () => {
+        setOpenCovid(!openCovid);
     };
 
-    function handleListKeyDown(event) {
-        if (event.key === 'Tab') {
-            event.preventDefault();
-            setOpen(false);
-        }
-    }
-
-    // return focus to the button when we transitioned from !open -> open
-    const prevOpen = React.useRef(open);
-    useEffect(() => {
-        if (prevOpen.current === true && open === false) {
-            anchorRef.current.focus();
-        }
-
-        prevOpen.current = open;
-    }, [open]);
+    const handleClickDeforestation = () => {
+        setOpenDeforestation(!openDeforestation);
+    };
 
 
     return (
-        <div>
-            <div className={props.bubbleChart ? 'active' : ''} onClick={e => { e.preventDefault(); props.setBubbleChart(); history.push('/'); }}>Home</div>
+
+        <div className={classes.navBar} style={{ cursor: 'pointer' }}>
+            <Box m={1} p={2}>
+                <Logo alt="Planet Data logo" title="Planet Data" />
+            </Box>
+            <ListItem
+                className={props.headers ? "active" : ""}
+                onClick={(e) => {
+                    e.preventDefault();
+                    props.setHeader();
+                    history.push("/");
+                }}
+            >
+                <Typography className={classes.parentFont}>
+                    Home
+                </Typography>
+            </ListItem>
             <div>
-                <Button
-                    ref={anchorRef}
-                    aria-controls={open ? 'menu-list-grow' : undefined}
-                    aria-haspopup="true"
-                    onClick={handleToggle}
-                >
-                    Toggle Menu Grow
-                </Button>
-                <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                    {({ TransitionProps, placement }) => (
-                        <Grow
-                            {...TransitionProps}
-                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                        >
-                            <Paper>
-                                <ClickAwayListener onClickAway={handleClose}>
-                                    <MenuList>
-                                        <MenuItem className={props.bubbleChart ? 'active' : ''} onClick={e => { e.preventDefault(); props.setBubbleChart(); history.push('/bubbles'); }}>Bubble Chart</MenuItem>
-                                        <MenuItem className={props.racingChart ? 'active' : ''} onClick={e => { e.preventDefault(); props.setRacingChart(); history.push('/racingchart'); }}>Racing Chart</MenuItem>
-                                        <MenuItem className={props.heatMap ? 'active' : ''} onClick={e => { e.preventDefault(); props.setHeatMap(); history.push('/heatmap'); }}>Heat Map</MenuItem>
-                                        <MenuItem className={props.airQuality ? 'active' : ''} onClick={e => { e.preventDefault(); props.setAirChart(); history.push('/airquality'); }}>Air Quality</MenuItem>
-                                    </MenuList>
-                                </ClickAwayListener>
-                            </Paper>
-                        </Grow>
-                    )}
-                </Popper>
+                <ListItem button onClick={handleClick}>
+                    <Typography className={classes.parentFont}>
+                        What's Happening
+                    </Typography>
+                    {open ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                    <ListItem button onClick={handleClickCovid}>
+                        <Typography className={classes.childFont}>
+                            Covid-19
+                    </Typography>
+                        {openCovid ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={openCovid} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            <ListItem
+                                className={props.bubbleChart ? "active" : ""}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    props.setBubbleChart();
+                                    history.push("/bubbles");
+                                }}
+                            >
+                                <Typography className={classes.nested}>
+                                    Bubble Chart
+                            </Typography>
+                            </ListItem>
+
+                            <ListItem
+                                className={props.racingChart ? "active" : ""}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    props.setRacingChart();
+                                    history.push("/racingchart");
+                                }}
+                            >
+                                <Typography className={classes.nested}>
+                                    Racing Chart
+                            </Typography>
+                            </ListItem>
+
+                            <ListItem
+                                className={props.heatMap ? "active" : ""}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    props.setHeatMap();
+                                    history.push("/heatmap");
+                                }}
+                            >
+                                <Typography className={classes.nested}>
+                                    Heat Map
+                            </Typography>
+                            </ListItem>
+
+                            <ListItem
+                                className={props.airQuality ? "active" : ""}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    props.setAirChart();
+                                    history.push("/airquality");
+                                }}
+                            >
+                                <Typography className={classes.nested}>
+                                    Air Quality
+                            </Typography>
+                            </ListItem>
+                        </List>
+                    </Collapse>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                        <ListItem button onClick={handleClickDeforestation}>
+                            <Typography className={classes.childFont}>
+                                Deforestation
+                    </Typography>
+                            {openDeforestation ? <ExpandLess /> : <ExpandMore />}
+                        </ListItem>
+                        <Collapse in={openDeforestation} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                <ListItem
+                                    className={"newVis"}
+                                >
+                                    <Typography className={classes.nested}>
+                                        Vis 1
+                            </Typography>
+                                </ListItem>
+
+                                <ListItem
+                                    className={"newVis"}
+                                >
+                                    <Typography className={classes.nested}>
+                                        Vis 2
+                            </Typography>
+                                </ListItem>
+
+                                <ListItem
+                                    className={"newVis"}
+                                >
+                                    <Typography className={classes.nested}>
+                                        Vis 3
+                            </Typography>
+                                </ListItem>
+
+                                <ListItem
+                                    className={"newVis"}
+                                >
+                                    <Typography className={classes.nested}>
+                                        Vis 4
+                            </Typography>
+                                </ListItem>
+                            </List>
+                        </Collapse>
+                    </Collapse>
+                </Collapse>
             </div>
-        </div>
-    )
+        </div >
+    );
 }
 
-export default NavBar
+export default NavBar;

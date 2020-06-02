@@ -4,15 +4,11 @@ import { useSelector } from "react-redux";
 import ReactGa from "react-ga";
 import theme from "./theme";
 import Header from "../features/landing/header/Header";
-import BlurbSection from "../features/landing/blurbs/BlurbSection";
 import Bubbles from "../features/visualizations/bubbles/BubblesVis";
 import Cases from "../features/visualizations/cases/CasesVis";
 import Air from "../features/visualizations/air/AirVis";
 import RacingData from "../features/visualizations/Racing-Chart/RacingData";
-import BeforeFooter from "../features/landing/footer/BeforeFooter";
-import Footer from "../features/landing/footer/Footer";
 import ErrorBoundary from "./error/ErrorBoundary";
-import DashBoard from "../features/dashboard/DashBoard";
 
 const DashBoardSec = (props) => {
     const { fetching: fetchingBubbles } = useSelector(
@@ -39,15 +35,11 @@ const DashBoardSec = (props) => {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Container maxWidth="xl" disableGutters data-testid="app">
-                {props.header
-                    ?
+                {props.header ? (
                     <Header />
-                    // <BlurbSection />
-                    :
-                    null
-                }
-                {props.bubbleChart
-                    ?
+                ) :
+                    null}
+                {props.bubbleChart ? (
                     <ErrorBoundary type="visualization">
                         <Box
                             display="flex"
@@ -66,11 +58,8 @@ const DashBoardSec = (props) => {
                             <Bubbles />
                         </Box>
                     </ErrorBoundary>
-                    :
-                    null
-                }
-                {props.racingChart
-                    ?
+                ) : null}
+                {props.racingChart ? (
                     <ErrorBoundary type="visualization">
                         <Box
                             display="flex"
@@ -90,12 +79,9 @@ const DashBoardSec = (props) => {
                             <RacingData />
                         </Box>
                     </ErrorBoundary>
-                    :
-                    null
-                }
+                ) : null}
 
-                {props.heatMap
-                    ?
+                {props.heatMap ? (
                     <ErrorBoundary type="visualization">
                         <Box
                             display="flex"
@@ -116,12 +102,9 @@ const DashBoardSec = (props) => {
                             <Cases />
                         </Box>
                     </ErrorBoundary>
-                    :
-                    null
-                }
+                ) : null}
 
-                {props.airQuality
-                    ?
+                {props.airQuality ? (
                     <ErrorBoundary type="visualization">
                         <Box
                             display="flex"
@@ -136,10 +119,7 @@ const DashBoardSec = (props) => {
                             <Air />
                         </Box>
                     </ErrorBoundary>
-                    :
-                    null
-
-                }
+                ) : null}
             </Container>
         </ThemeProvider>
     );

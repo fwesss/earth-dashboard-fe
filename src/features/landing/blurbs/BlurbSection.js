@@ -152,7 +152,6 @@ const BlurbSection = () => {
         >
           Let&apos;s play around with some visuals
         </Typography>
-        <Arrow />
       </Box>
     </>
   );
