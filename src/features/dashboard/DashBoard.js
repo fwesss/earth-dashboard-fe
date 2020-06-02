@@ -16,6 +16,15 @@ class DashBoard extends Component {
         };
     }
 
+    setHeader = () => {
+        this.setState({
+            header: true,
+            bubbleChart: false,
+            racingChart: false,
+            heatMap: false,
+            airQuality: false,
+        });
+    };
     setBubbleChart = () => {
         this.setState({
             header: false,
