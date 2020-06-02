@@ -35,9 +35,18 @@ const useStyles = makeStyles({
     },
 });
 
-
-
-function NavBar({ header, bubbleChart, racingChart, heatMap, airQuality, setHeader, setBubbleChart, setRacingChart, setHeatMap, setAirChart }) {
+function NavBar({
+    header,
+    bubbleChart,
+    racingChart,
+    heatMap,
+    airQuality,
+    setHeader,
+    setBubbleChart,
+    setRacingChart,
+    setHeatMap,
+    setAirChart,
+}) {
     const history = useHistory();
     const classes = useStyles();
     const [open, setOpen] = useState(false);
@@ -74,7 +83,7 @@ function NavBar({ header, bubbleChart, racingChart, heatMap, airQuality, setHead
             <div>
                 <ListItem button onClick={handleClick}>
                     <Typography className={classes.parentFont}>
-                        What's Happening
+                        What&lsquo;s Happening
           </Typography>
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>

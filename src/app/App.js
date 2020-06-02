@@ -4,14 +4,14 @@ import theme from "./theme";
 import DashBoard from "../features/dashboard/DashBoard";
 
 const App = () => {
-    return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Container maxWidth="xl" disableGutters data-testid="app">
-                <DashBoard />
-            </Container>
-        </ThemeProvider>
-    );
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container maxWidth="xl" disableGutters data-testid="app">
+        <DashBoard />
+      </Container>
+    </ThemeProvider>
+  );
 };
 
 export default App;
