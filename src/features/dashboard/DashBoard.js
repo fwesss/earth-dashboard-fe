@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Component } from "react";
 import NavBar from "../navbar/NavBar";
 import DashBoardSec from "../../app/DashBoardSection";
-import { display } from "@material-ui/system";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 
@@ -17,15 +16,6 @@ class DashBoard extends Component {
         };
     }
 
-    setHeader = () => {
-        this.setState({
-            header: true,
-            bubbleChart: false,
-            racingChart: false,
-            heatMap: false,
-            airQuality: false,
-        });
-    };
     setBubbleChart = () => {
         this.setState({
             header: false,
