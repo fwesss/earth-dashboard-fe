@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -35,18 +35,8 @@ const useStyles = makeStyles({
   },
 });
 
-function NavBar({
-  header,
-  bubbleChart,
-  racingChart,
-  heatMap,
-  airQuality,
-  setHeader,
-  setBubbleChart,
-  setRacingChart,
-  setHeatMap,
-  setAirChart,
-}) {
+function NavBar() {
+  const { pathname } = useLocation();
   const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -71,10 +61,9 @@ function NavBar({
         <Logo alt="Planet Data logo" title="Planet Data" />
       </Box>
       <ListItem
-        className={header ? "active" : ""}
+        className={pathname === "/" ? "active" : ""}
         onClick={(e) => {
           e.preventDefault();
-          setHeader();
           history.push("/");
         }}
       >
@@ -95,10 +84,9 @@ function NavBar({
           <Collapse in={openCovid} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem
-                className={bubbleChart ? "active" : ""}
+                className={pathname === "/bubbles" ? "active" : ""}
                 onClick={(e) => {
                   e.preventDefault();
-                  setBubbleChart();
                   history.push("/bubbles");
                 }}
               >
@@ -106,10 +94,9 @@ function NavBar({
               </ListItem>
 
               <ListItem
-                className={racingChart ? "active" : ""}
+                className={pathname === "/racingchart" ? "active" : ""}
                 onClick={(e) => {
                   e.preventDefault();
-                  setRacingChart();
                   history.push("/racingchart");
                 }}
               >
@@ -117,10 +104,9 @@ function NavBar({
               </ListItem>
 
               <ListItem
-                className={heatMap ? "active" : ""}
+                className={pathname === "/heatmap" ? "active" : ""}
                 onClick={(e) => {
                   e.preventDefault();
-                  setHeatMap();
                   history.push("/heatmap");
                 }}
               >
@@ -128,10 +114,9 @@ function NavBar({
               </ListItem>
 
               <ListItem
-                className={airQuality ? "active" : ""}
+                className={pathname === "/airquality" ? "active" : ""}
                 onClick={(e) => {
                   e.preventDefault();
-                  setAirChart();
                   history.push("/airquality");
                 }}
               >
