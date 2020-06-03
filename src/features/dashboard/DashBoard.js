@@ -1,13 +1,8 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import SimpleBar from "simplebar-react";
 import NavBar from "../navbar/NavBar";
-import DashBoardSec from "../../app/DashBoardSec";
-
-const useStyles = (theme) => ({
-  root: {
-    display: theme.flex,
-  },
-});
+import DashBoardSec from "../../app/DashBoardSection";
+import "simplebar/dist/simplebar.min.css";
 
 class DashBoard extends Component {
   constructor(props) {
@@ -72,7 +67,6 @@ class DashBoard extends Component {
   }
 
   render() {
-    const { classes } = this.props;
     const {
       heatMap,
       airQuality,
@@ -80,11 +74,20 @@ class DashBoard extends Component {
       bubbleChart,
       header,
     } = this.state;
-
     return (
-      <div className={classes.root}>
+      <div
+        className="Container"
+        style={{
+          height: "100vh",
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          overflow: "hidden",
+        }}
+      >
         <NavBar
-          setHeader={this.header}
+          classsName="NavBar"
+          setHeader={this.setHeader}
           setBubbleChart={this.setBubbleChart}
           setRacingChart={this.setRacingChart}
           setHeatMap={this.setHeatMap}
@@ -95,16 +98,23 @@ class DashBoard extends Component {
           heatMap={heatMap}
           airQuality={airQuality}
         />
-        <DashBoardSec
-          header={header}
-          bubbleChart={bubbleChart}
-          racingChart={racingChart}
-          heatMap={heatMap}
-          airQuality={airQuality}
-        />
+        <SimpleBar
+          classsName="Container"
+          style={{ maxHeight: 1000, width: `${100}%` }}
+        >
+          <DashBoardSec
+            className="dashboardsec"
+            style={{ width: `${100}%` }}
+            header={header}
+            bubbleChart={bubbleChart}
+            racingChart={racingChart}
+            heatMap={heatMap}
+            airQuality={airQuality}
+          />
+        </SimpleBar>
       </div>
     );
   }
 }
 
-export default withStyles(useStyles)(DashBoard);
+export default DashBoard;

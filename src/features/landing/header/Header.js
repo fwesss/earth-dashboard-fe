@@ -3,35 +3,37 @@ import { Box, Typography, Button } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Img from "react-cool-img";
 
-import { ReactComponent as Logo } from "./logo.svg";
 import { ReactComponent as Arrow } from "../arrow.svg";
-import rectangle from "./rectangle.svg";
 import earth from "./earth.webp";
+import BlurbSection from "../blurbs/BlurbSection";
 
 const useStyles = makeStyles({
   headerBackground: {
-    backgroundImage: `url(${rectangle})`,
+    // backgroundImage: `url(${rectangle})`,
     backgroundRepeat: "no-repeat",
+    backgroundColor: "white",
+    width: "100%",
+    padding: "2rem",
   },
   welcomeHeading: {
     marginTop: "0.5em",
     marginBottom: "1.125em",
     marginLeft: "-2.5em",
 
-    color: "#FFFFFF",
+    color: "#4A5F70",
   },
   welcomeHook: {
     paddingLeft: "0.5em",
     marginRight: "1em",
 
-    color: "#FFFFFF",
+    color: "#4A5F70",
   },
   welcomeHookSmall: {
     marginTop: "1.375em",
     marginRight: "1.75em",
     paddingLeft: "1em",
 
-    color: "#FFFFFF",
+    color: "#4A5F70",
     fontWeight: 300,
   },
   button: {
@@ -42,7 +44,7 @@ const useStyles = makeStyles({
     paddingTop: "1em",
     paddingBottom: "1em",
 
-    color: "#FFFFFF",
+    color: "#4A5F70",
     fontSize: "1.5rem",
     fontWeight: 500,
     letterSpacing: "0.75px",
@@ -55,11 +57,8 @@ const Header = () => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.headerBackground} pt={6}>
-      <Box ml={9}>
-        <Logo alt="Planet Data logo" title="Planet Data" />
-      </Box>
-      <Box display="flex" ml={3} mt={16} pb={6}>
+    <Box className={classes.headerBackground} pt={7}>
+      <Box className="nextbox" display="flex">
         <Box width="60%">
           <Img src={earth} alt="Earth from space" lazy={false} width="100%" />
         </Box>
@@ -114,6 +113,7 @@ const Header = () => {
           </Box>
         </Box>
       </Box>
+      <BlurbSection />
     </Box>
   );
 };

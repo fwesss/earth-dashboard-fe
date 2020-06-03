@@ -3,7 +3,6 @@ import { Box, Typography } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { useSelector } from "react-redux";
 import Blurb from "./Blurb";
-import { ReactComponent as Arrow } from "../arrow.svg";
 
 const useStyles = makeStyles({
   headingText: {
@@ -152,7 +151,6 @@ const BlurbSection = () => {
         >
           Let&apos;s play around with some visuals
         </Typography>
-        <Arrow />
       </Box>
     </>
   );

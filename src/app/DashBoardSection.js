@@ -11,11 +11,11 @@ import RacingData from "../features/visualizations/Racing-Chart/RacingData";
 import ErrorBoundary from "./error/ErrorBoundary";
 
 const DashBoardSec = ({
-  airQuality,
-  bubbleChart,
   header,
-  heatMap,
+  bubbleChart,
   racingChart,
+  heatMap,
+  airQuality,
 }) => {
   const { fetching: fetchingBubbles } = useSelector(
     (state) => state.bubblesReducer
@@ -41,10 +41,7 @@ const DashBoardSec = ({
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="xl" disableGutters data-testid="app">
-        {header ? (
-          <Header />
-        ) : // <BlurbSection />
-        null}
+        {header ? <Header /> : null}
         {bubbleChart ? (
           <ErrorBoundary type="visualization">
             <Box
