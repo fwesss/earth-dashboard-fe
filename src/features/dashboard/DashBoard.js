@@ -86,7 +86,7 @@ class DashBoard extends Component {
         }}
       >
         <NavBar
-          classsName="NavBar"
+          className="NavBar"
           setHeader={this.setHeader}
           setBubbleChart={this.setBubbleChart}
           setRacingChart={this.setRacingChart}
@@ -99,7 +99,7 @@ class DashBoard extends Component {
           airQuality={airQuality}
         />
         <SimpleBar
-          classsName="Container"
+          className="Container"
           style={{ maxHeight: 1000, width: `${100}%` }}
         >
           <DashBoardSec
