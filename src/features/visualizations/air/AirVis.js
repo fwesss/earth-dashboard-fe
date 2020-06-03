@@ -7,7 +7,7 @@ import { schemeSet3 } from "d3";
 import { getAirQuality } from "./airSlice";
 import useWindowSize from "../../../hooks/useWindowSize";
 import VisTitle from "../VisTitle";
-import Blurb from "../../landing/blurbs/Blurb";
+import Blurb from "./Blurb";
 import withErrorBoundary from "../../../app/error/ErrorBoundary";
 
 const AirVis = () => {
@@ -42,7 +42,17 @@ const AirVis = () => {
 
   // Display a loading spinner while data is being fetched
   if (fetching) {
-    return <CircularProgress data-testid="progressbar" />;
+    return (
+      <Box
+        height="100vh"
+        width="100%"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
+      </Box>
+    );
   }
 
   return (
@@ -53,7 +63,7 @@ const AirVis = () => {
       alignItems="center"
       data-testid="airQuality"
     >
-      <VisTitle variant="h4" component="h2">
+      <VisTitle subtitled variant="h4" component="h2">
         {
           "Mean Particulate Matter < 2.5 microns vs. Confirmed cases of COVID-19"
         }
@@ -203,22 +213,22 @@ const AirVis = () => {
         </g>
       </svg>
       <Box display="flex" justifyContent="space-around" flexWrap="wrap">
-        <Blurb maxWidth={14}>
+        <Blurb maxWidth={16}>
           The term “PM 2.5” refers to atmospheric particulate matter that have a
           diameter of less than 2.5 micrometers, which is about 3% the diameter
           of a human hair.
         </Blurb>
-        <Blurb maxWidth={14}>
+        <Blurb maxWidth={16}>
           Guidelines from the World Health Organization (WHO) stipulate that the
           average PM 2.5 should not exceed 10 μg/m³ over the course of a year,
           and 25 μg/m³ over a 24-hour period.
         </Blurb>
-        <Blurb maxWidth={14}>
+        <Blurb maxWidth={16}>
           During quarantine in Glendora, CA, the PM 2.5 never exceeded the
           stipulated level of 25 μg/m³, but it did routinely before the
           lockdown.
         </Blurb>
-        <Blurb maxWidth={14}>
+        <Blurb maxWidth={16}>
           Even during quarantine, the average PM 2.5 was 10.3 μg/m³, making it
           unlikely that Glendora will hit their target of less than 10 μg/m³ on
           average over the course of a year.

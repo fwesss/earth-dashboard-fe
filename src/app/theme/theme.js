@@ -84,7 +84,7 @@ export default (prefersDarkMode = false) =>
           disabled: prefersDarkMode ? "#648282" : "#89A4A4",
           hint: prefersDarkMode ? "#648282" : "#89A4A4",
         },
-        divider: prefersDarkMode ? "#405454" : "#DAE2E2",
+        divider: "#DAE2E2",
         background: {
           default: prefersDarkMode ? "#334242" : "#F8FAFA",
           paper: prefersDarkMode ? "#405454" : "#FFFFFF",
@@ -120,6 +120,11 @@ export default (prefersDarkMode = false) =>
         640,
         768,
       ],
+      navBar: {
+        width: 240,
+        background: prefersDarkMode ? "#405454" : "#FFFFFF",
+        logoBackground: "#405454",
+      },
       typography: {
         fontSize: 16,
         h1: {
