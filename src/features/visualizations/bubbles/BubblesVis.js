@@ -24,6 +24,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import useTheme from "@material-ui/core/styles/useTheme";
 import { getSummary } from "./bubblesSlice";
 import useWindowSize from "../../../hooks/useWindowSize";
 import VisExplanation from "../VisExplanation";
@@ -48,6 +49,7 @@ const useStyles = makeStyles({
 });
 
 const Bubbles = () => {
+  const theme = useTheme();
   const classes = useStyles();
   const dispatch = useDispatch();
   const { summary, fetching, error } = useSelector(
@@ -62,7 +64,7 @@ const Bubbles = () => {
 
   // set the dimensions and margins of the graph
   const width = useWindowSize().width * 0.7;
-  const height = 460;
+  const height = 540;
 
   // Retrieve the bubbles data on component mount
   useEffect(() => {
@@ -114,7 +116,7 @@ const Bubbles = () => {
             .x(width / 2)
             .y(height / 2)
         ) // Attraction to the center of the svg area
-        .force("charge", forceManyBody().strength(0.1)) // Nodes are attracted one each other of value is > 0
+        .force("charge", forceManyBody().strength(0.8)) // Nodes are attracted one each other of value is > 0
         .force(
           "collide",
           forceCollide()
@@ -202,7 +204,17 @@ const Bubbles = () => {
 
   // Display a loading spinner while data is being fetched
   if (fetching) {
-    return <CircularProgress data-testid="progressbar" />;
+    return (
+      <Box
+        height="100vh"
+        width="100%"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
+      </Box>
+    );
   }
 
   return (

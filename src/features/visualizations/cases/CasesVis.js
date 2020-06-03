@@ -7,6 +7,7 @@ import { Box, Slider, CircularProgress, IconButton } from "@material-ui/core";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import useTheme from "@material-ui/core/styles/useTheme";
 import { getCases } from "./casesSlice";
 import "mapbox-gl/src/css/mapbox-gl.css";
 import useDebounce from "../../../hooks/useDebounce";
@@ -32,12 +33,13 @@ const useStyles = makeStyles({
 
 const DataProvider = () => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const { cases, fetching, error } = useSelector((state) => state.casesReducer);
   // filterBy() requires the map that was constructed in CasesVis so we need to pass it up to the
   // HOC and store it in local state
   const [mapState, setMapState] = useState(null);
   const [play, setPlay] = useState(false);
-  const width = useWindowSize().width * 0.8;
+  const { width } = useWindowSize();
 
   // Retrieve the map data on component mount
   useEffect(() => {
@@ -54,7 +56,22 @@ const DataProvider = () => {
 
   // Display a loading spinner while data is being fetched
   if (fetching) {
-    return <CircularProgress data-testid="progressbar" />;
+    return (
+      <Box
+        mt={13}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        width={
+          process.env.NODE_ENV === "test"
+            ? width
+            : width - theme.navBar.width - (width - document.body.clientWidth)
+        }
+      >
+        <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
+      </Box>
+    );
   }
 
   return (
@@ -62,7 +79,11 @@ const DataProvider = () => {
       display="flex"
       flexDirection="column"
       justifyContent="center"
-      width={width}
+      width={
+        process.env.NODE_ENV === "test"
+          ? width
+          : width - theme.navBar.width - (width - document.body.clientWidth)
+      }
     >
       <VisTitle
         id="map-title"

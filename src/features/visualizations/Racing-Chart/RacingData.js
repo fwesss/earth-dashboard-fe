@@ -73,7 +73,17 @@ const RacingData = () => {
 
   // Display a loading spinner while data is being fetched
   if (fetching) {
-    return <CircularProgress data-testid="progressbar" />;
+    return (
+      <Box
+        height="100vh"
+        width="100%"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
+      </Box>
+    );
   }
 
   return (
@@ -92,6 +102,7 @@ const RacingData = () => {
           variant="h5"
           component="span"
           aria-label="racing-title"
+          subtitled
         >
           Confirmed deaths (Covid-19)
         </VisTitle>

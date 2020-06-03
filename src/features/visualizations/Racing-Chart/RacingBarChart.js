@@ -12,7 +12,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 
 function RacingBarChart({ data }) {
   const theme = useTheme();
-  const [width, height] = [useWindowSize().width * 0.8, 800];
+  const [width, height] = [useWindowSize().width * 0.8, 680];
 
   return (
     <VictoryChart
@@ -39,7 +39,7 @@ function RacingBarChart({ data }) {
       />
       <VictoryBar
         horizontal
-        barWidth={30}
+        barWidth={20}
         data={data}
         x="country"
         y="deaths"
