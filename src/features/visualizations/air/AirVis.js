@@ -212,23 +212,29 @@ const AirVis = () => {
           />
         </g>
       </svg>
-      <Box display="flex" justifyContent="space-around" flexWrap="wrap">
-        <Blurb maxWidth={16}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        flexWrap="wrap"
+        pt={4}
+        px={11}
+      >
+        <Blurb maxWidth={14}>
           The term “PM 2.5” refers to atmospheric particulate matter that have a
           diameter of less than 2.5 micrometers, which is about 3% the diameter
           of a human hair.
         </Blurb>
-        <Blurb maxWidth={16}>
+        <Blurb maxWidth={14}>
           Guidelines from the World Health Organization (WHO) stipulate that the
           average PM 2.5 should not exceed 10 μg/m³ over the course of a year,
           and 25 μg/m³ over a 24-hour period.
         </Blurb>
-        <Blurb maxWidth={16}>
+        <Blurb maxWidth={14}>
           During quarantine in Glendora, CA, the PM 2.5 never exceeded the
           stipulated level of 25 μg/m³, but it did routinely before the
           lockdown.
         </Blurb>
-        <Blurb maxWidth={16}>
+        <Blurb maxWidth={14}>
           Even during quarantine, the average PM 2.5 was 10.3 μg/m³, making it
           unlikely that Glendora will hit their target of less than 10 μg/m³ on
           average over the course of a year.

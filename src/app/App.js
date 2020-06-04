@@ -15,6 +15,7 @@ import useWindowSize from "../hooks/useWindowSize";
 import Globe from "../features/landing/Globe";
 
 export default () => {
+  const [open, setOpen] = React.useState(true);
   const { width } = useWindowSize();
   const { darkMode } = useSelector((state) => state.themeReducer);
   // On first visit, query for a dark mode preference
@@ -58,7 +59,25 @@ export default () => {
           position="relative"
         >
           <Switch>
-            <Route exact path="/" component={Globe} />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Box
+                  width={
+                    open
+                      ? width -
+                        preferredTheme.navBar.width -
+                        preferredTheme.infoBar.width
+                      : width - preferredTheme.navBar.width
+                  }
+                  left={open && -preferredTheme.infoBar.width / 2}
+                  position="relative"
+                >
+                  <Globe open={open} setOpen={setOpen} />
+                </Box>
+              )}
+            />
             <Box py={8}>
               <Route exact path="/bubbles" component={Bubbles} />
               <Route exact path="/racingchart" component={Racing} />

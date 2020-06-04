@@ -5,27 +5,19 @@ import { useTheme } from "@material-ui/core";
 import {
   min,
   max,
+  select,
   scaleLinear,
   scaleSequential,
   interpolateYlOrRd,
   interpolateGreens,
 } from "d3";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
-import CardHeader from "@material-ui/core/CardHeader";
-import Box from "@material-ui/core/Box";
 import useWindowSize from "../../hooks/useWindowSize";
 import withErrorBoundary from "../../app/error/ErrorBoundary";
 import pollutionData from "./pollution.json";
 import recycledData from "./wasteRecycled.json";
-import Info from "./Info";
+import InfoBar from "./InfoBar";
 
-const Globe = () => {
+const Globe = ({ open, setOpen }) => {
   const theme = useTheme();
   const { width, height } = useWindowSize();
   const globeEl = useRef();
@@ -73,50 +65,19 @@ const Globe = () => {
       selected: event.target.value,
     });
 
+  /*
+   * This is a hacky solution to remove the vertical scrollbar caused by Globegl.
+   * When this component mounts, we hide the scrollbar on the parent html tag.
+   * When it unmounts, we set it to normal so we can scroll when needed on other pages.
+   */
+  useEffect(() => {
+    select("html").style("overflow-y", "hidden");
+
+    return () => select("html").style("overflow-y", "auto");
+  }, []);
+
   return (
     <>
-      <Box position="absolute" right={theme.spacing(6)} mt={6} zIndex={1}>
-        <Card raised>
-          <CardHeader title="Dataset" />
-          <CardContent>
-            <FormControl component="fieldset">
-              <FormLabel component="legend" hidden>
-                Dataset
-              </FormLabel>
-              <RadioGroup
-                aria-label="dataset"
-                name="dataset1"
-                value={data.selected}
-                onChange={handleChange}
-              >
-                <FormControlLabel
-                  value="pollution"
-                  control={<Radio />}
-                  label="Pollution from major cities"
-                />
-                <FormControlLabel
-                  value="recycled"
-                  control={<Radio />}
-                  label="Amount of waste recycled by countries"
-                />
-              </RadioGroup>
-            </FormControl>
-          </CardContent>
-        </Card>
-      </Box>
-
-      <Info
-        dataset={
-          data.selected === "pollution"
-            ? "Pollution Out From Major Cities"
-            : "Waste Recycled by Countries"
-        }
-      >
-        {data.selected === "pollution"
-          ? "Humans across the planet produce pollution but some cities produce more than their fair share. We can see which cities are polluting heavily but examining the height and color intensity of the columns representing pollution levels."
-          : "Recycling programs of varying effectiveness have been implemented around the world. We can get a high level picture of the amount of waste that's recycled by each country by examining the color intensity of the country."}
-      </Info>
-
       <Globegl
         data-testid="earth"
         ref={globeEl}
@@ -135,7 +96,11 @@ const Globe = () => {
         pointAltitude="altitude"
         pointColor="color"
         // === window width minus the width of the scrollbar to prevent horizontal scrollbar
-        width={width - theme.navBar.width - (width - document.body.clientWidth)}
+        width={
+          open
+            ? width - theme.navBar.width - theme.infoBar.width
+            : width - theme.navBar.width
+        }
         height={height}
         backgroundColor={theme.palette.common.black}
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
@@ -163,6 +128,13 @@ const Globe = () => {
             <b>${d["Country Name"]}</b><br />
             Waste recycled: ${d["% waste recycled"]}%
         `}
+      />
+
+      <InfoBar
+        data={data}
+        handleChange={handleChange}
+        open={open}
+        setOpen={setOpen}
       />
     </>
   );

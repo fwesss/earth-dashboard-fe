@@ -1,7 +1,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/66d40f027894d7ee1a93/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/earth-dashboard-fe/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/66d40f027894d7ee1a93/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/earth-dashboard-fe/test_coverage)
 
-# Title of project goes here
+# Planet Data
 
 You can find the deployed project at [Planet Data](https://www.planetdata.world).
 
