@@ -22,6 +22,10 @@ function NavBar() {
     nested: {
       paddingLeft: theme.spacing(7),
     },
+
+    logo: {
+      outline: 0,
+    },
   });
 
   const classes = useStyles();
@@ -47,6 +51,11 @@ function NavBar() {
       bgcolor={theme.navBar.background}
       height="100vh"
       position="fixed"
+      border={1}
+      borderColor={theme.palette.divider}
+      borderTop={0}
+      borderBottom={0}
+      borderLeft={0}
     >
       <Box
         display="flex"
@@ -55,7 +64,7 @@ function NavBar() {
         py={7}
         bgcolor={`${theme.palette.common.black}dd`}
       >
-        <Link component={NavLink} to="/">
+        <Link className={classes.logo} component={NavLink} to="/">
           <Logo alt="Planet Data logo" title="Planet Data" />
         </Link>
       </Box>

@@ -125,6 +125,9 @@ export default (prefersDarkMode = false) =>
         background: prefersDarkMode ? "#405454" : "#FFFFFF",
         logoBackground: "#405454",
       },
+      infoBar: {
+        width: 400,
+      },
       typography: {
         fontSize: 16,
         h1: {
