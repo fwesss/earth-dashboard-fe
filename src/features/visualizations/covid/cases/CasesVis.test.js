@@ -2,9 +2,9 @@ import React from "react";
 import { waitFor, fireEvent } from "@testing-library/react";
 import { Map } from "mapbox-gl";
 import CasesVis from "./CasesVis";
-import renderWithRedux from "../../../utils/testingUtils";
+import renderWithRedux from "../../../../utils/testingUtils";
 
-jest.mock("../../../api/cases");
+jest.mock("../../../../api/covid/cases");
 
 describe("CasesVis", () => {
   it("should render a loading spinner then the title, map, filter slider, and play and pause buttons", async () => {

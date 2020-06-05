@@ -13,7 +13,7 @@ import reducer, {
   airQuality,
   cases,
 } from "./airSlice";
-import api from "../../../api/air";
+import api from "../../../../api/covid/air";
 
 describe("air slice", () => {
   describe("reducer, actions, and selectors", () => {
@@ -78,7 +78,7 @@ describe("air slice", () => {
   });
 });
 
-jest.mock("../../../api/air");
+jest.mock("../../../../api/covid/air");
 
 const mockStore = configureMockStore([thunk]);
 

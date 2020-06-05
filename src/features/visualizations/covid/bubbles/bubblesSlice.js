@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import api from "../../../api/bubbles";
+import api from "../../../../api/covid/bubbles";
 
 export const initialState = {
-  fetching: true,
+  fetching: false,
   success: null,
   error: null,
   summary: null,

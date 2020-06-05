@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import GeoJSON from "geojson";
-import api from "../../../api/cases";
+import api from "../../../../api/covid/cases";
 
 export const initialState = {
-  fetching: true,
+  fetching: false,
   success: null,
   error: null,
   cases: null,

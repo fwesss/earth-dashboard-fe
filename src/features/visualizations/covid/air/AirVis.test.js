@@ -1,6 +1,6 @@
 import React from "react";
 import { waitFor } from "@testing-library/react";
-import renderWithRedux from "../../../utils/testingUtils";
+import renderWithRedux from "../../../../utils/testingUtils";
 import AirVis from "./AirVis";
 
 describe("AirVis", () => {

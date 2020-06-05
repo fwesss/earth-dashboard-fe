@@ -26,10 +26,10 @@ import {
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
 import { getSummary } from "./bubblesSlice";
-import useWindowSize from "../../../hooks/useWindowSize";
-import VisExplanation from "../VisExplanation";
-import VisTitle from "../VisTitle";
-import withErrorBoundary from "../../../app/error/ErrorBoundary";
+import useWindowSize from "../../../../hooks/useWindowSize";
+import VisExplanation from "../../VisExplanation";
+import VisTitle from "../../VisTitle";
+import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 
 const useStyles = makeStyles({
   factCard: {
@@ -68,10 +68,10 @@ const Bubbles = () => {
 
   // Retrieve the bubbles data on component mount
   useEffect(() => {
-    if (!summary) {
+    if (!summary && !fetching) {
       dispatch(getSummary());
     }
-  }, [dispatch, summary]);
+  }, [dispatch, fetching, summary]);
 
   useEffect(() => {
     if (error) {
@@ -80,7 +80,7 @@ const Bubbles = () => {
   }, [error]);
 
   useEffect(() => {
-    if (!fetching && data === null) {
+    if (!fetching && summary && data === null) {
       setData(
         summary.map((country) => ({
           ...country,
@@ -94,11 +94,13 @@ const Bubbles = () => {
     }
   }, [summary, fetching, data]);
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (data) {
       // append the svg object to the body of the page
       const svg = select("#bubble")
         .append("svg")
+        .attr("id", "bubbleSvg")
         .attr("width", width)
         .attr("height", height);
 
@@ -178,6 +180,7 @@ const Bubbles = () => {
 
       // Apply these forces to the nodes and update their positions.
       // Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
+
       simulation
         .nodes(data)
         .on("tick", () =>
@@ -199,6 +202,8 @@ const Bubbles = () => {
                 ))
             )
         );
+
+      return () => select("#bubbleSvg").remove();
     }
   }, [data, width]);
 

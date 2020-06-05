@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import api from "../../../api/air";
+import api from "../../../../api/covid/air";
 
 export const initialState = {
-  fetching: true,
+  fetching: false,
   success: null,
   error: null,
   dates: null,

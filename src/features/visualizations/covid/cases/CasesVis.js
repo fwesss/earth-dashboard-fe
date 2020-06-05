@@ -10,12 +10,12 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
 import { getCases } from "./casesSlice";
 import "mapbox-gl/src/css/mapbox-gl.css";
-import useDebounce from "../../../hooks/useDebounce";
+import useDebounce from "../../../../hooks/useDebounce";
 import { heatmap, circles, labels } from "./layers.json";
-import VisExplanation from "../VisExplanation";
-import VisTitle from "../VisTitle";
-import useWindowSize from "../../../hooks/useWindowSize";
-import withErrorBoundary from "../../../app/error/ErrorBoundary";
+import VisExplanation from "../../VisExplanation";
+import VisTitle from "../../VisTitle";
+import useWindowSize from "../../../../hooks/useWindowSize";
+import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 
 mapboxgl.accessToken = process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN;
 
@@ -34,7 +34,9 @@ const useStyles = makeStyles({
 const DataProvider = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const { cases, fetching, error } = useSelector((state) => state.casesReducer);
+  const { cases, dates, fetching, error } = useSelector(
+    (state) => state.casesReducer
+  );
   // filterBy() requires the map that was constructed in CasesVis so we need to pass it up to the
   // HOC and store it in local state
   const [mapState, setMapState] = useState(null);
@@ -43,10 +45,10 @@ const DataProvider = () => {
 
   // Retrieve the map data on component mount
   useEffect(() => {
-    if (!cases) {
+    if (!cases && !fetching) {
       dispatch(getCases());
     }
-  }, [cases, dispatch]);
+  }, [cases, dispatch, fetching]);
 
   useEffect(() => {
     if (error) {
@@ -103,7 +105,14 @@ const DataProvider = () => {
           <PauseCircleFilledIcon fontSize="large" />
         </IconButton>
 
-        <DateSlider mapState={mapState} play={play} setPlay={setPlay} />
+        {dates[0] && (
+          <DateSlider
+            mapState={mapState}
+            play={play}
+            setPlay={setPlay}
+            dates={dates}
+          />
+        )}
       </Box>
       <VisExplanation>
         A heatmap is a visual representation of data that uses a method of
@@ -176,9 +185,8 @@ const CasesVis = ({ cases, setMapState }) => {
   );
 };
 
-const DateSlider = ({ mapState, play, setPlay }) => {
+const DateSlider = ({ mapState, play, setPlay, dates }) => {
   const classes = useStyles();
-  const { dates } = useSelector((state) => state.casesReducer);
   const [dateToFilter, setDateToFilter] = useState({
     date: null,
     sliderValue: null,

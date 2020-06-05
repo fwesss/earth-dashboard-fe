@@ -11,7 +11,7 @@ import reducer, {
   error,
   summary,
 } from "./bubblesSlice";
-import api from "../../../api/bubbles";
+import api from "../../../../api/covid/bubbles";
 
 describe("bubbles slice", () => {
   describe("reducer, actions, and selectors", () => {
@@ -68,7 +68,7 @@ describe("bubbles slice", () => {
   });
 });
 
-jest.mock("../../../api/bubbles");
+jest.mock("../../../../api/covid/bubbles");
 
 const mockStore = configureMockStore([thunk]);
 
