@@ -15,7 +15,7 @@ import {
 } from "victory";
 import { schemeSet3 } from "d3";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
-import { getPredictions } from "./predictionSlice";
+import { getPredictions } from "../predictionSlice";
 import VisTitle from "../../VisTitle";
 import useWindowSize from "../../../../hooks/useWindowSize";
 
@@ -23,16 +23,16 @@ export default withErrorBoundary(() => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [width, height] = [useWindowSize().width * 0.8, 720];
-  const { fetching, predictions } = useSelector(
+  const { fetching, countryIncome } = useSelector(
     (state) => state.predictionReducer
   );
   const { darkMode } = useSelector((state) => state.themeReducer);
 
   useEffect(() => {
-    if (!predictions && !fetching) {
+    if (!countryIncome && !fetching) {
       dispatch(getPredictions());
     }
-  }, [dispatch, fetching, predictions]);
+  }, [dispatch, fetching, countryIncome]);
 
   if (fetching) {
     return (
@@ -51,9 +51,9 @@ export default withErrorBoundary(() => {
   return (
     <>
       <VisTitle subtitled variant="h4" component="h2">
-        Deforestation Prediction Trends 2019 - 2120
+        Deforestation Prediction Trends by Country Income 2019 - 2120
       </VisTitle>
-      {predictions && (
+      {countryIncome && (
         <VictoryChart
           width={width}
           height={height}
@@ -62,7 +62,7 @@ export default withErrorBoundary(() => {
           theme={VictoryTheme.material}
           containerComponent={
             <VictoryVoronoiContainer
-              voronoiBlacklist={["prediction-range"]}
+              voronoiBlacklist={["income-range"]}
               labels={({ datum }) =>
                 `${datum.x}: ${datum.incomeLevel} ${
                   Math.ceil(datum.y * 100) / 100
@@ -150,7 +150,7 @@ export default withErrorBoundary(() => {
             style={{
               data: { stroke: schemeSet3[0], strokeWidth: 4.5 },
             }}
-            data={predictions.filter(
+            data={countryIncome.filter(
               (group) => group.incomeLevel === "High Income Countries"
             )}
           />
@@ -158,7 +158,7 @@ export default withErrorBoundary(() => {
             style={{
               data: { stroke: schemeSet3[5], strokeWidth: 4.5 },
             }}
-            data={predictions.filter(
+            data={countryIncome.filter(
               (group) => group.incomeLevel === "Middle Income Countries"
             )}
           />
@@ -166,7 +166,7 @@ export default withErrorBoundary(() => {
             style={{
               data: { stroke: schemeSet3[3], strokeWidth: 4.5 },
             }}
-            data={predictions.filter(
+            data={countryIncome.filter(
               (group) => group.incomeLevel === "Low Income Countries"
             )}
           />

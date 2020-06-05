@@ -68,7 +68,7 @@ const AirVis = () => {
           "Mean Particulate Matter < 2.5 microns vs. Confirmed cases of COVID-19"
         }
       </VisTitle>
-      {airQuality && cases && (
+      {airQuality && cases ? (
         <svg width={width + 100} height={height}>
           <g transform="translate(54, -20)">
             <VictoryAxis
@@ -252,6 +252,8 @@ const AirVis = () => {
             />
           </g>
         </svg>
+      ) : (
+        <Box width={width} height={height} />
       )}
       <Box
         display="flex"

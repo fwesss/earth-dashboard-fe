@@ -24,8 +24,11 @@ const LazyGlobe = loadable(() => import("../features/landing/Globe"));
 const LazyRacing = loadable(() =>
   import("../features/visualizations/covid/Racing-Chart/RacingData")
 );
-const LazyPredictions = loadable(() =>
-  import("../features/visualizations/deforestation/prediction/PredictionVis")
+const LazyCountryIncome = loadable(() =>
+  import("../features/visualizations/deforestation/income/CountryIncomeVis")
+);
+const LazyCountry = loadable(() =>
+  import("../features/visualizations/deforestation/country/CountryVis")
 );
 
 export default () => {
@@ -95,13 +98,22 @@ export default () => {
               />
               <Box py={8}>
                 <Route exact path="/covid/bubbles" component={LazyBubbles} />
-                <Route exact path="/covid/racingchart" component={LazyRacing} />
-                <Route exact path="/covid/heatmap" component={LazyHeatmap} />
-                <Route exact path="/covid/airquality" component={LazyAir} />
                 <Route
                   exact
-                  path="/deforestation/prediction"
-                  component={LazyPredictions}
+                  path="/covid/racing-chart"
+                  component={LazyRacing}
+                />
+                <Route exact path="/covid/heatmap" component={LazyHeatmap} />
+                <Route exact path="/covid/air-quality" component={LazyAir} />
+                <Route
+                  exact
+                  path="/deforestation/country-income"
+                  component={LazyCountryIncome}
+                />
+                <Route
+                  exact
+                  path="/deforestation/country"
+                  component={LazyCountry}
                 />
               </Box>
             </Switch>
