@@ -4,7 +4,7 @@ import casesReducer from "../features/visualizations/covid/cases/casesSlice";
 import bubblesReducer from "../features/visualizations/covid/bubbles/bubblesSlice";
 import racingReducer from "../features/visualizations/covid/Racing-Chart/RacingSlice";
 import airReducer from "../features/visualizations/covid/air/airSlice";
-import predictionReducer from "../features/visualizations/deforestation/prediction/predictionSlice";
+import predictionReducer from "../features/visualizations/deforestation/predictionSlice";
 
 const rootReducer = combineReducers({
   themeReducer,

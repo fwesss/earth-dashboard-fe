@@ -79,7 +79,6 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
-    "react-transition-group": "^4.4.1",
     "resize-observer-polyfill": "^1.5.1",
     "victory": "^34.2.2"
   },

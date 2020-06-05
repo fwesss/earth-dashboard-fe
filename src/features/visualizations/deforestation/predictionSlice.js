@@ -1,15 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import api from "../../../../api/deforestation/prediction";
+import api from "../../../api/deforestation/prediction";
 
 export const initialState = {
   fetching: false,
   success: null,
   error: null,
-  predictions: null,
+  countryIncome: null,
+  country: null,
 };
 
 const predictionSlice = createSlice({
-  name: "prediction",
+  name: "income",
   initialState,
   reducers: {
     fetchingPredictions(state) {
@@ -28,7 +29,7 @@ const predictionSlice = createSlice({
         ...state,
         fetching: false,
         success: rest,
-        predictions: data
+        countryIncome: data
           .filter(
             (datum) =>
               datum["Country Code"] === "HIC" ||
@@ -39,6 +40,24 @@ const predictionSlice = createSlice({
             incomeLevel: country["Country Name"],
             x: country.Year,
             y: country["Forest area (% of land area)"],
+          })),
+        country: data
+          .filter(
+            (datum) =>
+              datum["Country Name"] === "Cambodia" ||
+              datum["Country Name"] === "India" ||
+              datum["Country Name"] === "United States of America" ||
+              datum["Country Name"] === "United Kingdom" ||
+              datum["Country Name"] === "Argentina" ||
+              datum["Country Name"] === "Brazil"
+          )
+          .map((country) => ({
+            name: country["Country Name"],
+            x: country.Year,
+            y:
+              country["Forest area (% of land area)"] >= 0
+                ? country["Forest area (% of land area)"]
+                : 0,
           })),
         error: null,
       };
@@ -67,7 +86,8 @@ export default predictionSlice.reducer;
 export const fetching = (state) => state.prediction.fetching;
 export const success = (state) => state.prediction.success;
 export const error = (state) => state.prediction.error;
-export const predictions = (state) => state.prediction.predictions;
+export const countryIncome = (state) => state.prediction.countryIncome;
+export const country = (state) => state.prediction.country;
 
 // Serializing API response by stringifying it
 export const getPredictions = () => async (dispatch) => {

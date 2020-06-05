@@ -133,7 +133,9 @@ export default ({ data, handleChange, setOpen, open }) => {
         <Box p={5}>
           {data.selected === "pollution" ? (
             <>
-              <Typography>Pollution Out From Major Cities</Typography>
+              <Typography variant="h5" component="h2">
+                Pollution Out From Major Cities
+              </Typography>
               <Typography>
                 Humans across the planet produce pollution but some cities
                 produce more than their fair share. We can see which cities are
@@ -143,7 +145,9 @@ export default ({ data, handleChange, setOpen, open }) => {
             </>
           ) : (
             <>
-              <Typography>Waste Recycled by Countries</Typography>
+              <Typography variant="h5" component="h2">
+                Waste Recycled by Countries
+              </Typography>
               <Typography>
                 Recycling programs of varying effectiveness have been
                 implemented around the world. We can get a high level picture of

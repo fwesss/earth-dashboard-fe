@@ -18,7 +18,7 @@ import { getAirQuality } from "../visualizations/covid/air/airSlice";
 import { getCases } from "../visualizations/covid/cases/casesSlice";
 import { getSummary } from "../visualizations/covid/bubbles/bubblesSlice";
 import { getConfirmedCases } from "../visualizations/covid/Racing-Chart/RacingSlice";
-import { getPredictions } from "../visualizations/deforestation/prediction/predictionSlice";
+import { getPredictions } from "../visualizations/deforestation/predictionSlice";
 
 function NavBar() {
   const theme = useTheme();
@@ -28,7 +28,9 @@ function NavBar() {
   const { summary } = useSelector((state) => state.bubblesReducer);
   const { deaths } = useSelector((state) => state.racingReducer);
   const { airQuality } = useSelector((state) => state.airReducer);
-  const { predictions } = useSelector((state) => state.predictionReducer);
+  const { country, countryIncome } = useSelector(
+    (state) => state.predictionReducer
+  );
 
   const useStyles = makeStyles({
     nested: {
@@ -63,7 +65,7 @@ function NavBar() {
   const handleClickDeforestation = () => {
     setOpenDeforestation(!openDeforestation);
 
-    if (!predictions) {
+    if (!country && !countryIncome) {
       dispatch(getPredictions());
     }
   };
@@ -125,10 +127,10 @@ function NavBar() {
                 </ListItem>
 
                 <ListItem
-                  selected={pathname === "/covid/racingchart"}
+                  selected={pathname === "/covid/racing-chart"}
                   button
                   component={NavLink}
-                  to="/covid/racingchart"
+                  to="/covid/racing-chart"
                 >
                   <ListItemText inset primary="Racing Chart" />
                 </ListItem>
@@ -143,10 +145,10 @@ function NavBar() {
                 </ListItem>
 
                 <ListItem
-                  selected={pathname === "/covid/airquality"}
+                  selected={pathname === "/covid/air-quality"}
                   button
                   component={NavLink}
-                  to="/covid/airquality"
+                  to="/covid/air-quality"
                 >
                   <ListItemText inset primary="Air Quality" />
                 </ListItem>
@@ -171,12 +173,21 @@ function NavBar() {
             <Collapse in={openDeforestation} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItem
-                  selected={pathname === "/deforestation/prediction"}
+                  selected={pathname === "/deforestation/country-income"}
                   button
                   component={NavLink}
-                  to="/deforestation/prediction"
+                  to="/deforestation/country-income"
                 >
-                  <ListItemText inset primary="Prediction" />
+                  <ListItemText inset primary="Country Income" />
+                </ListItem>
+
+                <ListItem
+                  selected={pathname === "/deforestation/country"}
+                  button
+                  component={NavLink}
+                  to="/deforestation/country"
+                >
+                  <ListItemText inset primary="Country" />
                 </ListItem>
               </List>
             </Collapse>
