@@ -11,12 +11,24 @@ import useTheme from "@material-ui/core/styles/useTheme";
 import Link from "@material-ui/core/Link";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as Logo } from "./smallLogo.svg";
 import ColorMode from "../../app/theme/ColorMode";
+import { getAirQuality } from "../visualizations/covid/air/airSlice";
+import { getCases } from "../visualizations/covid/cases/casesSlice";
+import { getSummary } from "../visualizations/covid/bubbles/bubblesSlice";
+import { getConfirmedCases } from "../visualizations/covid/Racing-Chart/RacingSlice";
+import { getPredictions } from "../visualizations/deforestation/prediction/predictionSlice";
 
 function NavBar() {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const { cases } = useSelector((state) => state.casesReducer);
+  const { summary } = useSelector((state) => state.bubblesReducer);
+  const { deaths } = useSelector((state) => state.racingReducer);
+  const { airQuality } = useSelector((state) => state.airReducer);
+  const { predictions } = useSelector((state) => state.predictionReducer);
 
   const useStyles = makeStyles({
     nested: {
@@ -29,7 +41,7 @@ function NavBar() {
   });
 
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [openCovid, setOpenCovid] = useState(false);
   const [openDeforestation, setOpenDeforestation] = useState(false);
 
@@ -39,10 +51,21 @@ function NavBar() {
 
   const handleClickCovid = () => {
     setOpenCovid(!openCovid);
+
+    if (!cases && !summary && !deaths && !airQuality) {
+      dispatch(getSummary());
+      dispatch(getConfirmedCases());
+      dispatch(getCases());
+      dispatch(getAirQuality());
+    }
   };
 
   const handleClickDeforestation = () => {
     setOpenDeforestation(!openDeforestation);
+
+    if (!predictions) {
+      dispatch(getPredictions());
+    }
   };
 
   return (
@@ -93,37 +116,37 @@ function NavBar() {
             <Collapse in={openCovid} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItem
-                  selected={pathname === "/bubbles"}
+                  selected={pathname === "/covid/bubbles"}
                   button
                   component={NavLink}
-                  to="/bubbles"
+                  to="/covid/bubbles"
                 >
                   <ListItemText inset primary="Bubbles" />
                 </ListItem>
 
                 <ListItem
-                  selected={pathname === "/racingchart"}
+                  selected={pathname === "/covid/racingchart"}
                   button
                   component={NavLink}
-                  to="/racingchart"
+                  to="/covid/racingchart"
                 >
                   <ListItemText inset primary="Racing Chart" />
                 </ListItem>
 
                 <ListItem
-                  selected={pathname === "/heatmap"}
+                  selected={pathname === "/covid/heatmap"}
                   button
                   component={NavLink}
-                  to="/heatmap"
+                  to="/covid/heatmap"
                 >
                   <ListItemText inset primary="Heatmap" />
                 </ListItem>
 
                 <ListItem
-                  selected={pathname === "/airquality"}
+                  selected={pathname === "/covid/airquality"}
                   button
                   component={NavLink}
-                  to="/airquality"
+                  to="/covid/airquality"
                 >
                   <ListItemText inset primary="Air Quality" />
                 </ListItem>
@@ -147,20 +170,13 @@ function NavBar() {
 
             <Collapse in={openDeforestation} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItem button component={NavLink} to="">
-                  <ListItemText inset primary="Vis 1" />
-                </ListItem>
-
-                <ListItem button component={NavLink} to="">
-                  <ListItemText inset primary="Vis 2" />
-                </ListItem>
-
-                <ListItem button component={NavLink} to="">
-                  <ListItemText inset primary="Vis 3" />
-                </ListItem>
-
-                <ListItem button component={NavLink} to="">
-                  <ListItemText inset primary="Vis 4" />
+                <ListItem
+                  selected={pathname === "/deforestation/prediction"}
+                  button
+                  component={NavLink}
+                  to="/deforestation/prediction"
+                >
+                  <ListItemText inset primary="Prediction" />
                 </ListItem>
               </List>
             </Collapse>

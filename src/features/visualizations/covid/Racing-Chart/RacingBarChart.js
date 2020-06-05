@@ -8,7 +8,7 @@ import {
 } from "victory";
 import { format } from "date-fns";
 import useTheme from "@material-ui/core/styles/useTheme";
-import useWindowSize from "../../../hooks/useWindowSize";
+import useWindowSize from "../../../../hooks/useWindowSize";
 
 function RacingBarChart({ data }) {
   const theme = useTheme();
@@ -21,19 +21,16 @@ function RacingBarChart({ data }) {
       domainPadding={{ x: 20, y: 300 }}
       theme={VictoryTheme.material}
     >
-      <VictoryLegend
-        x={width * 0.6}
-        y={height * 0.7}
-        data={[
-          {
-            name: format(data[0].date, "M/d/yy"),
-            symbol: { fill: "transparent" },
-          },
-        ]}
+      <VictoryAxis
+        dependentAxis
         style={{
-          labels: {
-            fontSize: 48,
-            fill: theme.palette.text.secondary,
+          tickLabels: {
+            fill: theme.palette.text.primary,
+            fontSize: 20,
+          },
+          grid: {
+            fill: theme.palette.divider,
+            stroke: theme.palette.divider,
           },
         }}
       />
@@ -60,16 +57,19 @@ function RacingBarChart({ data }) {
           },
         }}
       />
-      <VictoryAxis
-        dependentAxis
-        style={{
-          tickLabels: {
-            fill: theme.palette.text.primary,
-            fontSize: 20,
+      <VictoryLegend
+        x={width * 0.6}
+        y={height * 0.7}
+        data={[
+          {
+            name: format(data[0].date, "M/d/yy"),
+            symbol: { fill: "transparent" },
           },
-          grid: {
-            fill: theme.palette.divider,
-            stroke: theme.palette.divider,
+        ]}
+        style={{
+          labels: {
+            fontSize: 48,
+            fill: theme.palette.text.secondary,
           },
         }}
       />

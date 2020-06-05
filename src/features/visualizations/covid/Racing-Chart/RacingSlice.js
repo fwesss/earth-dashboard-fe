@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { schemeSet3 } from "d3";
-import api from "../../../api/racing";
+import api from "../../../../api/covid/racing";
 
 export const initialState = {
-  fetching: true,
+  fetching: false,
   success: null,
   error: null,
   deaths: null,

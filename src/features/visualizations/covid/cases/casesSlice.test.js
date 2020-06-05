@@ -12,7 +12,7 @@ import reducer, {
   cases,
   dates,
 } from "./casesSlice";
-import api from "../../../api/cases";
+import api from "../../../../api/covid/cases";
 
 describe("cases slice", () => {
   describe("reducer, actions, and selectors", () => {
@@ -78,7 +78,7 @@ describe("cases slice", () => {
   });
 });
 
-jest.mock("../../../api/cases");
+jest.mock("../../../../api/covid/cases");
 
 const mockStore = configureMockStore([thunk]);
 

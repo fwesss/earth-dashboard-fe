@@ -1,7 +1,7 @@
 import React from "react";
 import { waitFor } from "@testing-library/react";
 import BubblesVis from "./BubblesVis";
-import renderWithRedux from "../../../utils/testingUtils";
+import renderWithRedux from "../../../../utils/testingUtils";
 
 describe("BubblesVis", () => {
   it("should render a loading spinner then the title, bubbles, info card, and description text", async () => {

@@ -5,11 +5,11 @@ import { Box, Button, CircularProgress, makeStyles } from "@material-ui/core";
 import ReactGa from "react-ga";
 import useTheme from "@material-ui/core/styles/useTheme";
 import RacingBarChart from "./RacingBarChart";
-import useInterval from "../../../hooks/useInterval";
+import useInterval from "../../../../hooks/useInterval";
 import { getConfirmedCases } from "./RacingSlice";
-import VisExplanation from "../VisExplanation";
-import VisTitle from "../VisTitle";
-import withErrorBoundary from "../../../app/error/ErrorBoundary";
+import VisExplanation from "../../VisExplanation";
+import VisTitle from "../../VisTitle";
+import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 
 const RacingData = () => {
   const dispatch = useDispatch();
@@ -60,10 +60,10 @@ const RacingData = () => {
   }, 200);
 
   useEffect(() => {
-    if (!deaths) {
+    if (!deaths && !fetching) {
       dispatch(getConfirmedCases());
     }
-  }, [deaths, dispatch]);
+  }, [deaths, dispatch, fetching]);
 
   useEffect(() => {
     if (error) {
