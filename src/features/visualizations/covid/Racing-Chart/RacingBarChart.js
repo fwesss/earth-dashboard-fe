@@ -8,11 +8,9 @@ import {
 } from "victory";
 import { format } from "date-fns";
 import useTheme from "@material-ui/core/styles/useTheme";
-import useWindowSize from "../../../../hooks/useWindowSize";
 
-function RacingBarChart({ data }) {
+function RacingBarChart({ data, width, height }) {
   const theme = useTheme();
-  const [width, height] = [useWindowSize().width * 0.8, 680];
 
   return (
     <VictoryChart

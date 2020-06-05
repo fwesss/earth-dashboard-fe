@@ -10,6 +10,7 @@ import { getConfirmedCases } from "./RacingSlice";
 import VisExplanation from "../../VisExplanation";
 import VisTitle from "../../VisTitle";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
+import useWindowSize from "../../../../hooks/useWindowSize";
 
 const RacingData = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const RacingData = () => {
   const [data, setData] = useState(null);
   const [dateToFilter, setDateToFilter] = useState(null);
   const theme = useTheme();
+  const [width, height] = [useWindowSize().width * 0.8, 680];
 
   const useStyles = makeStyles({
     button: {
@@ -107,7 +109,11 @@ const RacingData = () => {
           Confirmed deaths (Covid-19)
         </VisTitle>
       </Box>
-      {data && <RacingBarChart data={data} />}
+      {data ? (
+        <RacingBarChart width={width} height={height} data={data} />
+      ) : (
+        <Box width={width} height={height} />
+      )}
       <Box display="flex" justifyContent="space-around" flexWrap="wrap">
         <Button
           className={classes.button}
