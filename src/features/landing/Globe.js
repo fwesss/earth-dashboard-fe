@@ -150,7 +150,7 @@ const Globe = ({ infoOpen, setInfoOpen, largeScreen, width }) => {
           <Box
             position="absolute"
             top={height - theme.spacing(8)}
-            right={theme.spacing(4)}
+            right={theme.spacing(5)}
           >
             <IconButton
               href="#info-section"

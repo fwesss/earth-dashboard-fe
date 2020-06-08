@@ -269,12 +269,7 @@ const NavBar = ({ navFixed }) => {
                 <MenuIcon />
               </IconButton>
               {!open && (
-                <Link
-                  className={classes.logo}
-                  component={NavLink}
-                  to="/"
-                  onClick={() => setOpen(!open)}
-                >
+                <Link className={classes.logo} component={NavLink} to="/">
                   <Logo alt="Planet Data logo" title="Planet Data" />
                 </Link>
               )}
