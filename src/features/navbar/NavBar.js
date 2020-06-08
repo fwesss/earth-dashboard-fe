@@ -12,6 +12,13 @@ import Link from "@material-ui/core/Link";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import { useDispatch, useSelector } from "react-redux";
+import Drawer from "@material-ui/core/Drawer";
+import Typography from "@material-ui/core/Typography";
+import clsx from "clsx";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
 import { ReactComponent as Logo } from "./smallLogo.svg";
 import ColorMode from "../../app/theme/ColorMode";
 import { getAirQuality } from "../visualizations/covid/air/airSlice";
@@ -20,7 +27,7 @@ import { getSummary } from "../visualizations/covid/bubbles/bubblesSlice";
 import { getConfirmedCases } from "../visualizations/covid/Racing-Chart/RacingSlice";
 import { getPredictions } from "../visualizations/deforestation/predictionSlice";
 
-function NavBar() {
+const NavBar = ({ navFixed }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
@@ -32,24 +39,63 @@ function NavBar() {
     (state) => state.predictionReducer
   );
 
+  const [open, setOpen] = useState(false);
+
   const useStyles = makeStyles({
-    nested: {
-      paddingLeft: theme.spacing(7),
+    appBar: {
+      background: theme.palette.common.black,
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+
+    appBarShift: {
+      width: `calc(100% - ${theme.navBar.width}px)`,
+      marginLeft: theme.navBar.width,
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+
+    menuButton: {
+      marginRight: theme.spacing(2),
+      color: theme.palette.secondary.main,
+    },
+
+    drawer: {
+      [theme.breakpoints.up("sm")]: {
+        width: theme.navBar.width,
+        flexShrink: 0,
+      },
+    },
+
+    drawerPaper: {
+      width: theme.navBar.width,
+    },
+
+    hide: {
+      display: "none",
     },
 
     logo: {
       outline: 0,
+      paddingTop: theme.spacing(2),
+    },
+
+    title: {
+      padding: theme.spacing(3),
+    },
+
+    nested: {
+      paddingLeft: theme.spacing(6),
     },
   });
 
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
   const [openCovid, setOpenCovid] = useState(false);
   const [openDeforestation, setOpenDeforestation] = useState(false);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
 
   const handleClickCovid = () => {
     setOpenCovid(!openCovid);
@@ -70,26 +116,21 @@ function NavBar() {
     }
   };
 
-  return (
-    <Box
-      width={theme.navBar.width}
-      bgcolor={theme.navBar.background}
-      height="100vh"
-      position="fixed"
-      border={1}
-      borderColor={theme.palette.divider}
-      borderTop={0}
-      borderBottom={0}
-      borderLeft={0}
-    >
+  const drawer = (
+    <>
       <Box
         display="flex"
         alignItems="center"
         pl={4}
         py={7}
-        bgcolor={`${theme.palette.common.black}dd`}
+        bgcolor={theme.palette.common.black}
       >
-        <Link className={classes.logo} component={NavLink} to="/">
+        <Link
+          className={classes.logo}
+          component={NavLink}
+          to="/"
+          onClick={() => setOpen(!open)}
+        >
           <Logo alt="Planet Data logo" title="Planet Data" />
         </Link>
       </Box>
@@ -100,102 +141,161 @@ function NavBar() {
       <Divider variant="middle" />
 
       <List component="nav">
-        <ListItem button onClick={handleClick}>
-          <ListItemText primary="What's Happening" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
+        <Typography variant="h5" component="h2" className={classes.title}>
+          What&apos;s Happening?
+        </Typography>
 
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem
-              button
-              onClick={handleClickCovid}
-              className={classes.nested}
-            >
-              <ListItemText primary="Covid-19" />
-              {openCovid ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={openCovid} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItem
-                  selected={pathname === "/covid/bubbles"}
-                  button
-                  component={NavLink}
-                  to="/covid/bubbles"
-                >
-                  <ListItemText inset primary="Bubbles" />
-                </ListItem>
+        <List component="div" disablePadding>
+          <ListItem button onClick={handleClickCovid}>
+            <ListItemText primary="Covid-19" />
+            {openCovid ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={openCovid} timeout="auto" unmountOnExit>
+            <List component="div">
+              <ListItem
+                selected={pathname === "/covid/bubbles"}
+                button
+                component={NavLink}
+                to="/covid/bubbles"
+                onClick={() => setOpen(!open)}
+              >
+                <ListItemText className={classes.nested} primary="Bubbles" />
+              </ListItem>
 
-                <ListItem
-                  selected={pathname === "/covid/racing-chart"}
-                  button
-                  component={NavLink}
-                  to="/covid/racing-chart"
-                >
-                  <ListItemText inset primary="Racing Chart" />
-                </ListItem>
+              <ListItem
+                selected={pathname === "/covid/racing-chart"}
+                button
+                component={NavLink}
+                to="/covid/racing-chart"
+                onClick={() => setOpen(!open)}
+              >
+                <ListItemText
+                  className={classes.nested}
+                  primary="Racing Chart"
+                />
+              </ListItem>
 
-                <ListItem
-                  selected={pathname === "/covid/heatmap"}
-                  button
-                  component={NavLink}
-                  to="/covid/heatmap"
-                >
-                  <ListItemText inset primary="Heatmap" />
-                </ListItem>
+              <ListItem
+                selected={pathname === "/covid/air-quality"}
+                button
+                component={NavLink}
+                to="/covid/air-quality"
+                onClick={() => setOpen(!open)}
+              >
+                <ListItemText
+                  className={classes.nested}
+                  primary="Air Quality"
+                />
+              </ListItem>
 
-                <ListItem
-                  selected={pathname === "/covid/air-quality"}
-                  button
-                  component={NavLink}
-                  to="/covid/air-quality"
-                >
-                  <ListItemText inset primary="Air Quality" />
-                </ListItem>
-              </List>
-            </Collapse>
-          </List>
-        </Collapse>
+              <ListItem
+                selected={pathname === "/covid/heatmap"}
+                button
+                component={NavLink}
+                to="/covid/heatmap"
+                onClick={() => setOpen(!open)}
+              >
+                <ListItemText className={classes.nested} primary="Heatmap" />
+              </ListItem>
+            </List>
+          </Collapse>
+        </List>
 
-        {open && <Divider variant="middle" />}
+        <Divider variant="middle" />
 
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem
-              button
-              className={classes.nested}
-              onClick={handleClickDeforestation}
-            >
-              <ListItemText primary="Deforestation" />
-              {openDeforestation ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
+        <List component="div" disablePadding>
+          <ListItem button onClick={handleClickDeforestation}>
+            <ListItemText primary="Deforestation" />
+            {openDeforestation ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
 
-            <Collapse in={openDeforestation} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItem
-                  selected={pathname === "/deforestation/country-income"}
-                  button
-                  component={NavLink}
-                  to="/deforestation/country-income"
-                >
-                  <ListItemText inset primary="Country Income" />
-                </ListItem>
+          <Collapse in={openDeforestation} timeout="auto" unmountOnExit>
+            <List component="div">
+              <ListItem
+                selected={pathname === "/deforestation/country-income"}
+                button
+                component={NavLink}
+                to="/deforestation/country-income"
+                onClick={() => setOpen(!open)}
+              >
+                <ListItemText
+                  className={classes.nested}
+                  primary="Country Income"
+                />
+              </ListItem>
 
-                <ListItem
-                  selected={pathname === "/deforestation/country"}
-                  button
-                  component={NavLink}
-                  to="/deforestation/country"
-                >
-                  <ListItemText inset primary="Country" />
-                </ListItem>
-              </List>
-            </Collapse>
-          </List>
-        </Collapse>
+              <ListItem
+                selected={pathname === "/deforestation/country"}
+                button
+                component={NavLink}
+                to="/deforestation/country"
+                onClick={() => setOpen(!open)}
+              >
+                <ListItemText className={classes.nested} primary="Country" />
+              </ListItem>
+            </List>
+          </Collapse>
+        </List>
       </List>
-    </Box>
+    </>
   );
-}
+
+  return (
+    <>
+      {navFixed ? (
+        <Drawer
+          className={classes.drawer}
+          classes={{ paper: classes.drawerPaper }}
+          variant="permanent"
+          open
+        >
+          {drawer}
+        </Drawer>
+      ) : (
+        <>
+          <AppBar
+            position="fixed"
+            className={clsx(classes.appBar, {
+              [classes.appBarShift]: open,
+            })}
+          >
+            <Toolbar>
+              <IconButton
+                aria-label="open navbar"
+                onClick={() => setOpen(!open)}
+                edge="start"
+                className={clsx(classes.menuButton, open && classes.hide)}
+              >
+                <MenuIcon />
+              </IconButton>
+              {!open && (
+                <Link
+                  className={classes.logo}
+                  component={NavLink}
+                  to="/"
+                  onClick={() => setOpen(!open)}
+                >
+                  <Logo alt="Planet Data logo" title="Planet Data" />
+                </Link>
+              )}
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            className={classes.drawer}
+            classes={{ paper: classes.drawerPaper }}
+            variant="temporary"
+            open={open}
+            onClose={() => setOpen(!open)}
+            ModalProps={{
+              keepMounted: true,
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </>
+      )}
+    </>
+  );
+};
 
 export default NavBar;

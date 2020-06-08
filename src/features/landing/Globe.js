@@ -11,15 +11,23 @@ import {
   interpolateYlOrRd,
   interpolateGreens,
 } from "d3";
+import IconButton from "@material-ui/core/IconButton";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import Box from "@material-ui/core/Box";
 import useWindowSize from "../../hooks/useWindowSize";
 import withErrorBoundary from "../../app/error/ErrorBoundary";
 import pollutionData from "./pollution.json";
 import recycledData from "./wasteRecycled.json";
 import InfoBar from "./InfoBar";
+import nightSky from "./night-sky.webp";
+import topology from "./earth-topology.webp";
+import earthNight from "./earth-night.webp";
+import earthDay from "./earth-blue-marble.webp";
+import InfoSection from "./InfoSection";
 
-const Globe = ({ open, setOpen }) => {
+const Globe = ({ infoOpen, setInfoOpen, largeScreen, width }) => {
   const theme = useTheme();
-  const { width, height } = useWindowSize();
+  const { height } = useWindowSize();
   const globeEl = useRef();
   const { darkMode } = useSelector((state) => state.themeReducer);
   const [hoverD, setHoverD] = useState();
@@ -55,8 +63,13 @@ const Globe = ({ open, setOpen }) => {
     globeEl.current.pointOfView({
       lat: 35,
       lng: 51,
+      /*
+       * The width function was calculated by finding the optimal width/altitude ratio on the smallest and
+       * largest screen sizes and drawing a linear line between them.
+       */
+      altitude: 4.62869 - 0.00118042 * width,
     });
-  }, []);
+  }, [width]);
 
   const handleChange = (event) =>
     setData({
@@ -70,11 +83,14 @@ const Globe = ({ open, setOpen }) => {
    * When this component mounts, we hide the scrollbar on the parent html tag.
    * When it unmounts, we set it to normal so we can scroll when needed on other pages.
    */
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    select("html").style("overflow-y", "hidden");
+    if (largeScreen) {
+      select("html").style("overflow-y", "hidden");
 
-    return () => select("html").style("overflow-y", "auto");
-  }, []);
+      return () => select("html").style("overflow-y", "auto");
+    }
+  }, [largeScreen]);
 
   return (
     <>
@@ -96,26 +112,18 @@ const Globe = ({ open, setOpen }) => {
         pointAltitude="altitude"
         pointColor="color"
         // === window width minus the width of the scrollbar to prevent horizontal scrollbar
-        width={
-          open
-            ? width - theme.navBar.width - theme.infoBar.width
-            : width - theme.navBar.width
-        }
+        width={width}
         height={height}
         backgroundColor={theme.palette.common.black}
-        backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
-        bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+        backgroundImageUrl={nightSky}
+        bumpImageUrl={topology}
         // Switch out the globe for a night or day version depending on color mode
-        globeImageUrl={
-          darkMode
-            ? "//unpkg.com/three-globe/example/img/earth-night.jpg"
-            : "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-        }
+        globeImageUrl={darkMode ? earthNight : earthDay}
         polygonsData={data.recycled?.features}
         polygonAltitude={(d) => (d === hoverD ? 0.12 : 0.06)}
         polygonCapColor={(d) =>
           d === hoverD
-            ? "steelblue"
+            ? theme.palette.info.main
             : color(
                 data.recycled.features.map((country) => country.properties),
                 "% waste recycled"
@@ -130,12 +138,34 @@ const Globe = ({ open, setOpen }) => {
         `}
       />
 
-      <InfoBar
-        data={data}
-        handleChange={handleChange}
-        open={open}
-        setOpen={setOpen}
-      />
+      {largeScreen ? (
+        <InfoBar
+          data={data}
+          handleChange={handleChange}
+          open={infoOpen}
+          setOpen={setInfoOpen}
+        />
+      ) : (
+        <>
+          <Box
+            position="absolute"
+            top={height - theme.spacing(8)}
+            right={theme.spacing(4)}
+          >
+            <IconButton
+              href="#info-section"
+              style={{
+                background: theme.palette.common.black,
+                color: theme.palette.secondary.main,
+              }}
+              edge="end"
+            >
+              <ArrowDownwardIcon />
+            </IconButton>
+          </Box>
+          <InfoSection data={data} handleChange={handleChange} />
+        </>
+      )}
     </>
   );
 };

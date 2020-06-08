@@ -8,9 +8,11 @@ import {
 } from "victory";
 import { format } from "date-fns";
 import useTheme from "@material-ui/core/styles/useTheme";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 function RacingBarChart({ data, width, height }) {
   const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <VictoryChart
@@ -20,11 +22,12 @@ function RacingBarChart({ data, width, height }) {
       theme={VictoryTheme.material}
     >
       <VictoryAxis
+        fixLabelOverlap
         dependentAxis
         style={{
           tickLabels: {
             fill: theme.palette.text.primary,
-            fontSize: 20,
+            fontSize: smallScreen ? 14 : 20,
           },
           grid: {
             fill: theme.palette.divider,
@@ -34,7 +37,7 @@ function RacingBarChart({ data, width, height }) {
       />
       <VictoryBar
         horizontal
-        barWidth={20}
+        barWidth={height * 0.0375}
         data={data}
         x="country"
         y="deaths"
@@ -49,14 +52,14 @@ function RacingBarChart({ data, width, height }) {
             fill: ({ datum }) => datum.color,
           },
           labels: {
-            fontSize: 20,
+            fontSize: smallScreen ? 14 : 20,
             fill: theme.palette.text.primary,
             padding: 10,
           },
         }}
       />
       <VictoryLegend
-        x={width * 0.6}
+        x={smallScreen ? width * 0.4 : width * 0.5}
         y={height * 0.7}
         data={[
           {
@@ -66,7 +69,7 @@ function RacingBarChart({ data, width, height }) {
         ]}
         style={{
           labels: {
-            fontSize: 48,
+            fontSize: smallScreen ? 32 : 48,
             fill: theme.palette.text.secondary,
           },
         }}

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import loadable from "@loadable/component";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Box from "@material-ui/core/Box";
@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import ReactGa from "react-ga";
 import NavBar from "../features/navbar/NavBar";
 import theme from "./theme/theme";
-
 import useWindowSize from "../hooks/useWindowSize";
 
 const LazyBubbles = loadable(() =>
@@ -32,13 +31,75 @@ const LazyCountry = loadable(() =>
 );
 
 export default () => {
-  const [open, setOpen] = React.useState(true);
   const { width } = useWindowSize();
   const { darkMode } = useSelector((state) => state.themeReducer);
   // On first visit, query for a dark mode preference
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   const preferredTheme = useMemo(() => theme(darkMode), [darkMode]);
+  const largeScreen = useMediaQuery(preferredTheme.breakpoints.up("lg"));
+  const mediumScreen = useMediaQuery(preferredTheme.breakpoints.up("md"));
+  const smallScreen = useMediaQuery(preferredTheme.breakpoints.down("sm"));
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [navFixed, setNavFixed] = useState(false);
+  const [globeWidth, setGlobeWidth] = useState(
+    width - (width - document.body.clientWidth)
+  );
+
+  useEffect(() => {
+    if (smallScreen) {
+      setNavFixed(false);
+      setInfoOpen(false);
+      setGlobeWidth(width);
+    }
+
+    if (mediumScreen) {
+      setNavFixed(true);
+      setInfoOpen(false);
+      setGlobeWidth(
+        width -
+          (width - document.body.clientWidth) -
+          preferredTheme.navBar.width
+      );
+    }
+
+    if (largeScreen) {
+      setNavFixed(true);
+      setInfoOpen(true);
+    }
+  }, [
+    largeScreen,
+    mediumScreen,
+    preferredTheme.navBar.width,
+    smallScreen,
+    width,
+  ]);
+
+  useEffect(() => {
+    if (infoOpen) {
+      setGlobeWidth(
+        width -
+          (width - document.body.clientWidth) -
+          preferredTheme.navBar.width -
+          preferredTheme.infoBar.width
+      );
+    } else if (mediumScreen) {
+      setGlobeWidth(
+        width -
+          (width - document.body.clientWidth) -
+          preferredTheme.navBar.width
+      );
+    } else if (smallScreen) {
+      setGlobeWidth(width);
+    }
+  }, [
+    infoOpen,
+    mediumScreen,
+    preferredTheme.infoBar.width,
+    preferredTheme.navBar.width,
+    smallScreen,
+    width,
+  ]);
 
   useEffect(() => {
     if (!localStorage.getItem("darkMode")) {
@@ -63,17 +124,12 @@ export default () => {
       <ThemeProvider theme={preferredTheme}>
         <CssBaseline />
         <Box display="flex">
-          <NavBar />
+          <NavBar navFixed={navFixed} />
           <Box
             data-testid="app"
             display="flex"
             justifyContent="center"
-            width={
-              width -
-              preferredTheme.navBar.width -
-              (width - document.body.clientWidth)
-            }
-            left={preferredTheme.navBar.width}
+            width={mediumScreen ? width - preferredTheme.navBar.width : width}
             position="relative"
           >
             <Switch>
@@ -82,21 +138,26 @@ export default () => {
                 path="/"
                 render={() => (
                   <Box
-                    width={
-                      open
-                        ? width -
-                          preferredTheme.navBar.width -
-                          preferredTheme.infoBar.width
-                        : width - preferredTheme.navBar.width
-                    }
-                    left={open && -preferredTheme.infoBar.width / 2}
+                    width={globeWidth}
                     position="relative"
+                    left={infoOpen && -preferredTheme.infoBar.width / 2}
                   >
-                    <LazyGlobe open={open} setOpen={setOpen} />
+                    <LazyGlobe
+                      infoOpen={infoOpen}
+                      setInfoOpen={setInfoOpen}
+                      largeScreen={largeScreen}
+                      width={globeWidth}
+                    />
                   </Box>
                 )}
               />
-              <Box py={8}>
+              <Box
+                pt={8}
+                pb={6}
+                width={
+                  mediumScreen ? width - preferredTheme.navBar.width : width
+                }
+              >
                 <Route exact path="/covid/bubbles" component={LazyBubbles} />
                 <Route
                   exact

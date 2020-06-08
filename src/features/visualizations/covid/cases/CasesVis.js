@@ -8,6 +8,7 @@ import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { getCases } from "./casesSlice";
 import "mapbox-gl/src/css/mapbox-gl.css";
 import useDebounce from "../../../../hooks/useDebounce";
@@ -19,17 +20,21 @@ import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 
 mapboxgl.accessToken = process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    marginLeft: "3rem",
-    marginRight: "3rem",
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+    },
   },
   markLabel: {
     transform: "translate(-20px, 20px) rotate(90deg)",
     fontSize: 14,
     fontFamily: "Roboto",
   },
-});
+}));
 
 const DataProvider = () => {
   const dispatch = useDispatch();
@@ -41,7 +46,11 @@ const DataProvider = () => {
   // HOC and store it in local state
   const [mapState, setMapState] = useState(null);
   const [play, setPlay] = useState(false);
-  const { width } = useWindowSize();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const largeScreen = useMediaQuery(theme.breakpoints.up("md"));
+
+  const windowWidth = useWindowSize().width;
+  const width = largeScreen ? windowWidth - theme.navBar.width : windowWidth;
 
   // Retrieve the map data on component mount
   useEffect(() => {
@@ -60,16 +69,11 @@ const DataProvider = () => {
   if (fetching) {
     return (
       <Box
-        mt={13}
+        height="100vh"
+        width="100%"
         display="flex"
-        flexDirection="column"
         justifyContent="center"
         alignItems="center"
-        width={
-          process.env.NODE_ENV === "test"
-            ? width
-            : width - theme.navBar.width - (width - document.body.clientWidth)
-        }
       >
         <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
       </Box>
@@ -81,11 +85,8 @@ const DataProvider = () => {
       display="flex"
       flexDirection="column"
       justifyContent="center"
-      width={
-        process.env.NODE_ENV === "test"
-          ? width
-          : width - theme.navBar.width - (width - document.body.clientWidth)
-      }
+      alignItems="center"
+      width={width}
     >
       <VisTitle
         id="map-title"
@@ -95,9 +96,14 @@ const DataProvider = () => {
       >
         Explore COVID-19 Confirmed Cases in the US
       </VisTitle>
-      <CasesVis cases={cases} setMapState={setMapState} />
+      <CasesVis
+        cases={cases}
+        setMapState={setMapState}
+        largeScreen={largeScreen}
+        theme={theme}
+      />
 
-      <Box display="flex" mx={2} my={4} alignItems="center" width="90%">
+      <Box display="flex" mx={2} mt={4} mb={6} alignItems="center" width="90%">
         <IconButton onClick={() => setPlay(true)} aria-label="play">
           <PlayCircleFilledIcon fontSize="large" />
         </IconButton>
@@ -111,6 +117,7 @@ const DataProvider = () => {
             play={play}
             setPlay={setPlay}
             dates={dates}
+            smallScreen={smallScreen}
           />
         )}
       </Box>
@@ -130,7 +137,7 @@ const DataProvider = () => {
   );
 };
 
-const CasesVis = ({ cases, setMapState }) => {
+const CasesVis = ({ cases, setMapState, largeScreen, theme }) => {
   const mapContainer = useRef(null);
   const initialData = useRef(cases);
 
@@ -144,8 +151,8 @@ const CasesVis = ({ cases, setMapState }) => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: darkMode ? darkStyle : lightStyle,
-      center: [-100, 38],
-      zoom: 3.75,
+      center: [-90, 38],
+      zoom: largeScreen ? 3.75 : 2,
       minZoom: 3.5,
     });
 
@@ -172,20 +179,36 @@ const CasesVis = ({ cases, setMapState }) => {
       event.preventDefault();
     });
 
+    const isTouchEvent = (e) => e.originalEvent && "touches" in e.originalEvent;
+    const isTwoFingerTouch = (e) => e.originalEvent.touches.length >= 2;
+
+    map.on("dragstart", (event) => {
+      if (isTouchEvent(event) && !isTwoFingerTouch(event)) {
+        map.dragPan.disable();
+      }
+    });
+
+    // Drag events not emited after dragPan disabled, so I use touch event here
+    map.on("touchstart", (event) => {
+      if (isTouchEvent(event) && isTwoFingerTouch(event)) {
+        map.dragPan.enable();
+      }
+    });
+
     return () => map.remove();
-  }, [darkMode, darkStyle, lightStyle, setMapState]);
+  }, [darkMode, darkStyle, largeScreen, lightStyle, setMapState]);
 
   return (
     <div
       aria-labelledby="map-title"
       data-testid="map"
       ref={mapContainer}
-      style={{ height: "75vh", width: "100%" }}
+      style={{ height: "80vh", width: "100%", marginTop: theme.spacing(5) }}
     />
   );
 };
 
-const DateSlider = ({ mapState, play, setPlay, dates }) => {
+const DateSlider = ({ mapState, play, setPlay, dates, smallScreen }) => {
   const classes = useStyles();
   const [dateToFilter, setDateToFilter] = useState({
     date: null,
@@ -258,7 +281,7 @@ const DateSlider = ({ mapState, play, setPlay, dates }) => {
             "M/d/yy"
           ),
         }))
-        .filter((_, j) => j % 7 === 0)}
+        .filter((_, j) => j % (smallScreen ? 14 : 7) === 0)}
       max={dates.length - 2}
       // Format the date in the tooltip to MM-dd because the full date does not fit
       valueLabelFormat={(value) =>

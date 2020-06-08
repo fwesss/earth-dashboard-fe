@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "analyze": "yarn run build && source-map-explorer 'build/static/js/*.js'",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "format": "yarn run prettier --write --ignore-path .gitignore",
@@ -69,9 +70,7 @@
     "date-fns": "^2.13.0",
     "geojson": "^0.5.0",
     "mapbox-gl": "^1.9.1",
-    "moment": "^2.26.0",
     "react": "^16.13.1",
-    "react-cool-img": "^1.1.5",
     "react-dom": "^16.13.1",
     "react-ga": "^2.7.0",
     "react-globe.gl": "^2.8.2",
@@ -112,6 +111,7 @@
     "prettier": "^2.0.4",
     "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.3.0",
-    "sort-package-json": "^1.42.0"
+    "sort-package-json": "^1.42.0",
+    "source-map-explorer": "^2.4.2"
   }
 }
