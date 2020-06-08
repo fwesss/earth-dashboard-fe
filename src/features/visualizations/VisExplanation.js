@@ -1,16 +1,17 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
+import { Typography, useTheme } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const useStyles = makeStyles({
-  explanation: {
-    maxWidth: "35em",
-    paddingBottom: "1rem",
-    margin: "2em auto 0",
-  },
-});
-
 const VisExplanation = ({ children }) => {
+  const theme = useTheme();
+  const useStyles = makeStyles({
+    explanation: {
+      maxWidth: "35em",
+      padding: theme.spacing(5),
+      margin: "auto 0",
+    },
+  });
+
   const classes = useStyles();
 
   return (

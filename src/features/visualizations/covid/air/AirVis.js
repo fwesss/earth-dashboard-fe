@@ -4,6 +4,7 @@ import { CircularProgress, Box, useTheme } from "@material-ui/core";
 import { VictoryLine, VictoryAxis, VictoryLabel, VictoryTheme } from "victory";
 import { format } from "date-fns";
 import { schemeSet3 } from "d3";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { getAirQuality } from "./airSlice";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import VisTitle from "../../VisTitle";
@@ -18,8 +19,15 @@ const AirVis = () => {
   );
   const [formattedDates, setFormattedDates] = useState([new Date()]);
 
-  const width = useWindowSize().width * 0.7;
-  const height = 600;
+  const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
+  const [windowWidth, windowHeight] = [
+    useWindowSize().width * 0.9,
+    useWindowSize().height,
+  ];
+  const [width, height] = [
+    mediumScreen ? windowWidth - theme.navBar.width : windowWidth,
+    windowHeight < 800 ? windowHeight * 0.9 : 800,
+  ];
 
   // Retrieve the air quality data on component mount
   useEffect(() => {
@@ -135,7 +143,9 @@ const AirVis = () => {
                   stroke: theme.palette.text.hint,
                 },
               }}
-              axisLabelComponent={<VictoryLabel dy={-60} />}
+              axisLabelComponent={
+                <VictoryLabel dy={mediumScreen ? -50 : -30} />
+              }
               name="Daily Mean PM2.5 Concentration"
               label="Daily Mean PM2.5 Concentration"
             />
@@ -189,7 +199,7 @@ const AirVis = () => {
                 },
               }}
               tickFormat={(tick) => (tick > 999 ? `${tick / 1000}k` : tick)}
-              axisLabelComponent={<VictoryLabel dy={60} />}
+              axisLabelComponent={<VictoryLabel dy={mediumScreen ? 50 : 30} />}
               name="Confirmed Cases of COVID-19"
               label="Confirmed Cases of COVID-19"
             />
@@ -255,13 +265,7 @@ const AirVis = () => {
       ) : (
         <Box width={width} height={height} />
       )}
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        flexWrap="wrap"
-        pt={4}
-        px={11}
-      >
+      <Box display="flex" justifyContent="center" flexWrap="wrap" pt={4} px={4}>
         <Blurb maxWidth={14}>
           The term “PM 2.5” refers to atmospheric particulate matter that have a
           diameter of less than 2.5 micrometers, which is about 3% the diameter

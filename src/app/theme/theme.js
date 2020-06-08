@@ -5,7 +5,7 @@ export default (prefersDarkMode = false) =>
     createMuiTheme({
       palette: {
         common: {
-          black: "#111313",
+          black: "#303232",
           white: "#F8FAFA",
         },
         primary: {
@@ -121,7 +121,7 @@ export default (prefersDarkMode = false) =>
         768,
       ],
       navBar: {
-        width: 240,
+        width: 255,
         background: prefersDarkMode ? "#405454" : "#FFFFFF",
         logoBackground: "#405454",
       },
