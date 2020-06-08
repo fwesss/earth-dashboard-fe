@@ -157,6 +157,7 @@ const CasesVis = ({ cases, setMapState, largeScreen, theme }) => {
     });
 
     map.on("load", () => {
+      map.resize();
       setMapState(map);
       map
         .addSource("confirmed-cases", {
