@@ -25,28 +25,29 @@ import {
 } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { getSummary } from "./bubblesSlice";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import VisExplanation from "../../VisExplanation";
 import VisTitle from "../../VisTitle";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   factCard: {
     position: "absolute",
     minWidth: "250px",
     marginLeft: "-18rem",
     marginTop: "5rem",
 
-    "@media (min-width:720px)": {
-      marginLeft: "-24rem",
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "-1rem",
     },
 
-    "@media (min-width:1440px)": {
+    [theme.breakpoints.up("lg")]: {
       marginLeft: "-36rem",
     },
   },
-});
+}));
 
 const Bubbles = () => {
   const theme = useTheme();
@@ -61,9 +62,10 @@ const Bubbles = () => {
     cases: null,
   });
   const [opacity, setOpacity] = useState(0);
+  const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
 
-  // set the dimensions and margins of the graph
-  const width = useWindowSize().width * 0.7;
+  const windowWidth = useWindowSize().width * 0.9;
+  const width = mediumScreen ? windowWidth - theme.navBar.width : windowWidth;
   const height = 540;
 
   // Retrieve the bubbles data on component mount
@@ -223,7 +225,12 @@ const Bubbles = () => {
   }
 
   return (
-    <Box display="flex" flexDirection="column" overflow="hidden">
+    <Box
+      display="flex"
+      flexDirection="column"
+      overflow="hidden"
+      alignItems="center"
+    >
       <VisTitle variant="h4" component="h2" subtitled>
         Biases in Bubbles:
       </VisTitle>

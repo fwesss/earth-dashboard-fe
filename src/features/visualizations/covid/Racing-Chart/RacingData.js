@@ -4,6 +4,7 @@ import { add, getDayOfYear } from "date-fns";
 import { Box, Button, CircularProgress, makeStyles } from "@material-ui/core";
 import ReactGa from "react-ga";
 import useTheme from "@material-ui/core/styles/useTheme";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import RacingBarChart from "./RacingBarChart";
 import useInterval from "../../../../hooks/useInterval";
 import { getConfirmedCases } from "./RacingSlice";
@@ -21,7 +22,13 @@ const RacingData = () => {
   const [data, setData] = useState(null);
   const [dateToFilter, setDateToFilter] = useState(null);
   const theme = useTheme();
-  const [width, height] = [useWindowSize().width * 0.8, 680];
+  const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
+
+  const windowWidth = useWindowSize().width * 0.9;
+  const [width, height] = [
+    mediumScreen ? windowWidth - theme.navBar.width : windowWidth,
+    useWindowSize().height,
+  ];
 
   const useStyles = makeStyles({
     button: {
@@ -110,14 +117,18 @@ const RacingData = () => {
         </VisTitle>
       </Box>
       {data ? (
-        <RacingBarChart width={width} height={height} data={data} />
+        <RacingBarChart
+          width={width}
+          height={height < 800 ? height * 0.9 : 800}
+          data={data}
+        />
       ) : (
-        <Box width={width} height={height} />
+        <Box width={width} height={height < 800 ? height : 800} />
       )}
       <Box display="flex" justifyContent="space-around" flexWrap="wrap">
         <Button
           className={classes.button}
-          variant="contained"
+          variant="outlined"
           color="primary"
           type="button"
           onClick={() => {
@@ -134,12 +145,12 @@ const RacingData = () => {
         </Button>
         <Button
           className={classes.button}
-          variant="contained"
+          variant="outlined"
           color="primary"
           type="button"
           onClick={reset}
         >
-          Reset race
+          Reset
         </Button>
       </Box>
       <VisExplanation>

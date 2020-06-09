@@ -12,7 +12,6 @@ import {
   VictoryVoronoiContainer,
   VictoryArea,
   VictoryTooltip,
-  VictoryBar,
 } from "victory";
 import { schemeSet3 } from "d3";
 import FormControl from "@material-ui/core/FormControl";
@@ -20,6 +19,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import VisTitle from "../../VisTitle";
 import { getPredictions } from "../predictionSlice";
@@ -30,17 +30,29 @@ const countries = [
   { name: "United States of America", color: 3 },
   { name: "India", color: 4 },
   { name: "Cambodia", color: 0 },
-  { name: "United Kingdom", color: 6 },
   { name: "Argentina", color: 9 },
+  { name: "United Kingdom", color: 6 },
 ];
 
 export default withErrorBoundary(() => {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const [width, height] = [useWindowSize().width * 0.8, 820];
+  const extraSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const mediumScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const largeScreen = useMediaQuery(theme.breakpoints.up("md"));
+  const extraLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const [windowWidth, windowHeight] = [
+    useWindowSize().width * 0.9,
+    useWindowSize().height,
+  ];
+  const [width, height] = [
+    largeScreen ? windowWidth - theme.navBar.width : windowWidth,
+    windowHeight < 800 ? windowHeight * 0.9 : 800,
+  ];
   const { fetching, country } = useSelector((state) => state.predictionReducer);
   const { darkMode } = useSelector((state) => state.themeReducer);
-  const [graphType, setGraphType] = useState("bar");
+  const [graphType, setGraphType] = useState("area");
 
   useEffect(() => {
     if (!country && !fetching) {
@@ -69,13 +81,18 @@ export default withErrorBoundary(() => {
       <VisTitle subtitled variant="h4" component="h2">
         Deforestation Prediction Trends by Country 2019 - 2120
       </VisTitle>
-      <Box display="flex">
+      <Box display="flex" flexDirection={extraLargeScreen ? "row" : "column"}>
         {country && (
           <VictoryChart
             width={width}
             height={height}
             maxDomain={{ x: 2120, y: 85 }}
-            padding={{ top: 20, right: 40, bottom: 250, left: 100 }}
+            padding={{
+              top: 120,
+              right: mediumScreen ? 40 : 20,
+              bottom: 60,
+              left: smallScreen ? 75 : 100,
+            }}
             theme={VictoryTheme.material}
             containerComponent={
               <VictoryVoronoiContainer
@@ -121,16 +138,17 @@ export default withErrorBoundary(() => {
               }}
             />
             <VictoryAxis
+              fixLabelOverlap
               dependentAxis
               style={{
                 tickLabels: {
                   fill: theme.palette.text.primary,
-                  fontSize: 20,
+                  fontSize: smallScreen ? 14 : 20,
                 },
                 axisLabel: {
                   fill: theme.palette.text.primary,
-                  fontSize: 28,
-                  padding: 60,
+                  fontSize: smallScreen ? 20 : 28,
+                  padding: smallScreen ? 45 : 60,
                 },
                 grid: {
                   fill: `${theme.palette.text.hint}66`,
@@ -141,16 +159,17 @@ export default withErrorBoundary(() => {
               label="Forest Area"
             />
             <VictoryAxis
+              fixLabelOverlap
               scale="time"
               style={{
                 tickLabels: {
                   fill: theme.palette.text.primary,
-                  fontSize: 20,
+                  fontSize: smallScreen ? 14 : 20,
                 },
                 axisLabel: {
                   fill: theme.palette.text.primary,
-                  fontSize: 28,
-                  padding: 36,
+                  fontSize: smallScreen ? 20 : 28,
+                  padding: smallScreen ? 32 : 36,
                 },
                 grid: {
                   fill: `${theme.palette.text.hint}66`,
@@ -162,12 +181,12 @@ export default withErrorBoundary(() => {
               label="Year"
             />
 
-            {graphType === "bar"
+            {graphType === "area"
               ? countries.map(({ name, color }) => (
-                  <VictoryBar
+                  <VictoryArea
                     key={name}
                     style={{
-                      data: { stroke: schemeSet3[color], strokeWidth: 4.5 },
+                      data: { fill: `${schemeSet3[color]}99` },
                     }}
                     data={country.filter((group) => group.name === name)}
                   />
@@ -183,37 +202,44 @@ export default withErrorBoundary(() => {
                 ))}
 
             <VictoryLegend
-              x={80}
-              y={640}
-              itemsPerRow={3}
+              x={smallScreen ? 30 : 120}
+              y={extraSmallScreen ? 5 : 25}
+              itemsPerRow={extraSmallScreen ? 2 : 3}
+              orientation="horizontal"
               style={{
-                labels: { fontSize: 20, fill: theme.palette.text.primary },
-                parent: { fill: "blue" },
-              }}
-              data={[
-                { name: "Cambodia", symbol: { fill: schemeSet3[0] } },
-                { name: "Brazil", symbol: { fill: schemeSet3[5] } },
-                {
-                  name: "United States of America",
-                  symbol: { fill: schemeSet3[3] },
+                labels: {
+                  fontSize: mediumScreen ? 14 : 20,
+                  fill: theme.palette.text.primary,
                 },
-                { name: "United Kingdom", symbol: { fill: schemeSet3[6] } },
-                { name: "Argentina", symbol: { fill: schemeSet3[9] } },
-                { name: "India", symbol: { fill: schemeSet3[4] } },
-              ]}
+              }}
+              data={countries.map(({ name, color }) => ({
+                name,
+                symbol: {
+                  fill: `${schemeSet3[color]}${
+                    graphType === "area" ? "99" : ""
+                  }`,
+                },
+              }))}
             />
           </VictoryChart>
         )}
-        <Box width={200} p={5}>
+
+        <Box
+          width={mediumScreen ? 500 : 200}
+          p={5}
+          ml={mediumScreen && 8}
+          mt={extraLargeScreen && 9}
+        >
           <FormControl component="fieldset">
             <FormLabel component="legend">Graph Type</FormLabel>
             <RadioGroup
-              aria-label="dataset"
-              name="dataset1"
+              row
+              aria-label="graph type"
+              name="graph-type"
               value={graphType}
               onChange={handleChange}
             >
-              <FormControlLabel value="bar" control={<Radio />} label="Bar" />
+              <FormControlLabel value="area" control={<Radio />} label="Area" />
               <FormControlLabel value="line" control={<Radio />} label="Line" />
             </RadioGroup>
           </FormControl>

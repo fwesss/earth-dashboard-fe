@@ -14,6 +14,7 @@ import {
   VictoryTooltip,
 } from "victory";
 import { schemeSet3 } from "d3";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import { getPredictions } from "../predictionSlice";
 import VisTitle from "../../VisTitle";
@@ -22,7 +23,17 @@ import useWindowSize from "../../../../hooks/useWindowSize";
 export default withErrorBoundary(() => {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const [width, height] = [useWindowSize().width * 0.8, 720];
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
+  const [windowWidth, windowHeight] = [
+    useWindowSize().width * 0.9,
+    useWindowSize().height,
+  ];
+  const [width, height] = [
+    mediumScreen ? windowWidth - theme.navBar.width : windowWidth,
+    windowHeight < 800 ? windowHeight * 0.9 : 800,
+  ];
+
   const { fetching, countryIncome } = useSelector(
     (state) => state.predictionReducer
   );
@@ -58,7 +69,12 @@ export default withErrorBoundary(() => {
           width={width}
           height={height}
           maxDomain={{ x: 2120, y: 40 }}
-          padding={{ top: 20, right: 100, bottom: 100, left: 100 }}
+          padding={{
+            top: smallScreen ? 80 : 120,
+            right: smallScreen ? 30 : 40,
+            bottom: 60,
+            left: smallScreen ? 75 : 100,
+          }}
           theme={VictoryTheme.material}
           containerComponent={
             <VictoryVoronoiContainer
@@ -84,7 +100,7 @@ export default withErrorBoundary(() => {
           }
         >
           <VictoryArea
-            name="prediction-range"
+            name="income-range"
             data={[
               {
                 x: 2018,
@@ -106,16 +122,17 @@ export default withErrorBoundary(() => {
             }}
           />
           <VictoryAxis
+            fixLabelOverlap
             dependentAxis
             style={{
               tickLabels: {
                 fill: theme.palette.text.primary,
-                fontSize: 20,
+                fontSize: smallScreen ? 14 : 20,
               },
               axisLabel: {
                 fill: theme.palette.text.primary,
-                fontSize: 28,
-                padding: 60,
+                fontSize: smallScreen ? 20 : 28,
+                padding: smallScreen ? 45 : 60,
               },
               grid: {
                 fill: `${theme.palette.text.hint}66`,
@@ -126,16 +143,17 @@ export default withErrorBoundary(() => {
             label="Forest Area"
           />
           <VictoryAxis
+            fixLabelOverlap
             scale="time"
             style={{
               tickLabels: {
                 fill: theme.palette.text.primary,
-                fontSize: 20,
+                fontSize: smallScreen ? 14 : 20,
               },
               axisLabel: {
                 fill: theme.palette.text.primary,
-                fontSize: 28,
-                padding: 36,
+                fontSize: smallScreen ? 20 : 28,
+                padding: smallScreen ? 32 : 36,
               },
               grid: {
                 fill: `${theme.palette.text.hint}66`,
@@ -171,14 +189,20 @@ export default withErrorBoundary(() => {
             )}
           />
           <VictoryLegend
-            x={140}
-            y={350}
+            x={smallScreen ? 40 : 75}
+            y={smallScreen ? -10 : -5}
             title="Country Income Level"
-            orientation="vertical"
+            orientation="horizontal"
             borderPadding={20}
             style={{
-              title: { fontSize: 24, fill: theme.palette.text.primary },
-              labels: { fontSize: 20, fill: theme.palette.text.primary },
+              title: {
+                fontSize: smallScreen ? 16 : 20,
+                fill: theme.palette.text.primary,
+              },
+              labels: {
+                fontSize: smallScreen ? 14 : 20,
+                fill: theme.palette.text.primary,
+              },
               parent: { fill: "blue" },
             }}
             data={[
