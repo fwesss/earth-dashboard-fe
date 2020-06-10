@@ -44,13 +44,22 @@ export default ({ data, handleChange }) => (
       {data.selected === "pollution" ? (
         <>
           <Typography variant="h5" component="h2">
-            Pollution From Major Cities
+            Carbon Footprint of Major Cities
           </Typography>
           <Typography>
             Humans across the planet produce pollution but some cities produce
-            more than their fair share. We can see which cities are polluting
-            heavily but examining the height and color intensity of the columns
-            representing pollution levels.
+            more than their fair share. The amount of greenhouse gas emissions
+            produced by a city can be referred to as the city&apos;s carbon
+            footprint. We can see which cities have a larger carbon footprint by
+            examining the height and color intensity of the columns. The higher
+            the column, the larger the carbon footprint. For example, Los
+            Angeles has a carbon footprint of 196.4~ Mt CO2 (Megatons of carbon
+            dioxide equivalent). We can reduce a city&apos;s carbon footprint by
+            limiting the use of nonelectric transportation, by carpooling,
+            biking, and using mass transit, by reducing consumption of ruminants
+            such as cattle, by reducing the products you send to the landfill,
+            and by using energy-efficient lighting. What ways can you think of
+            to cut back on your city&apos;s carbon footprint?
           </Typography>
         </>
       ) : (

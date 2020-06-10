@@ -24,6 +24,7 @@ import useWindowSize from "../../../../hooks/useWindowSize";
 import VisTitle from "../../VisTitle";
 import { getPredictions } from "../predictionSlice";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
+import VisExplanation from "../../VisExplanation";
 
 const countries = [
   { name: "Brazil", color: 5 },
@@ -48,7 +49,9 @@ export default withErrorBoundary(() => {
   ];
   const [width, height] = [
     largeScreen ? windowWidth - theme.navBar.width : windowWidth,
-    windowHeight < 800 ? windowHeight * 0.9 : 800,
+    smallScreen
+      ? (windowHeight - theme.appBar.height) * 0.8
+      : windowHeight * 0.8,
   ];
   const { fetching, country } = useSelector((state) => state.predictionReducer);
   const { darkMode } = useSelector((state) => state.themeReducer);
@@ -77,151 +80,165 @@ export default withErrorBoundary(() => {
   const handleChange = (event) => setGraphType(event.target.value);
 
   return (
-    <>
+    <Box display="flex" flexDirection="column" alignItems="center">
       <VisTitle subtitled variant="h4" component="h2">
         Deforestation Prediction Trends by Country 2019 - 2120
       </VisTitle>
-      <Box display="flex" flexDirection={extraLargeScreen ? "row" : "column"}>
+      <VisExplanation>
+        Deforestation is a very important topic when it comes to the earth’s
+        longevity and health. Forests and trees absorb and store carbon dioxide
+        that otherwise would have a direct impact on climate change and they
+        cover ⅓ of the earth’s surface.
+      </VisExplanation>
+      <Box
+        display="flex"
+        flexDirection={extraLargeScreen ? "row" : "column"}
+        width={width}
+      >
         {country && (
-          <VictoryChart
-            width={width}
-            height={height}
-            maxDomain={{ x: 2120, y: 85 }}
-            padding={{
-              top: 120,
-              right: mediumScreen ? 40 : 20,
-              bottom: 60,
-              left: smallScreen ? 75 : 100,
-            }}
-            theme={VictoryTheme.material}
-            containerComponent={
-              <VictoryVoronoiContainer
-                voronoiBlacklist={["prediction-range"]}
-                labels={({ datum }) =>
-                  `${datum.x}: ${datum.name} ${Math.ceil(datum.y * 100) / 100}%`
-                }
-                labelComponent={
-                  <VictoryTooltip
-                    style={{ fontSize: 14, fill: theme.palette.text.primary }}
-                    constrainToVisibleArea
-                    cornerRadius={theme.shape.borderRadius}
-                    flyoutStyle={{
-                      fill: theme.palette.background.paper,
-                      filter: "drop-shadow(0px 5px 5px rgba(0, 0, 0, .2))",
-                      stroke: 0,
-                    }}
-                  />
-                }
+          <Box width={width}>
+            <VictoryChart
+              width={width}
+              height={height}
+              maxDomain={{ x: 2120, y: 85 }}
+              padding={{
+                top: 120,
+                right: mediumScreen ? 40 : 20,
+                bottom: 60,
+                left: smallScreen ? 75 : 100,
+              }}
+              theme={VictoryTheme.material}
+              containerComponent={
+                <VictoryVoronoiContainer
+                  voronoiBlacklist={["prediction-range"]}
+                  labels={({ datum }) =>
+                    `${datum.x}: ${datum.name} ${
+                      Math.ceil(datum.y * 100) / 100
+                    }%`
+                  }
+                  labelComponent={
+                    <VictoryTooltip
+                      style={{ fontSize: 14, fill: theme.palette.text.primary }}
+                      constrainToVisibleArea
+                      cornerRadius={theme.shape.borderRadius}
+                      flyoutStyle={{
+                        fill: theme.palette.background.paper,
+                        filter: "drop-shadow(0px 5px 5px rgba(0, 0, 0, .2))",
+                        stroke: 0,
+                      }}
+                    />
+                  }
+                />
+              }
+            >
+              <VictoryArea
+                name="prediction-range"
+                data={[
+                  {
+                    x: 2018,
+                    y: 0.1,
+                    y0: 85,
+                  },
+                  {
+                    x: 2120,
+                    y: 0.1,
+                    y0: 85,
+                  },
+                ]}
+                style={{
+                  data: {
+                    fill: darkMode ? schemeSet3[10] : schemeSet3[6],
+                    fillOpacity: 0.2,
+                    stroke: "none",
+                  },
+                }}
               />
-            }
-          >
-            <VictoryArea
-              name="prediction-range"
-              data={[
-                {
-                  x: 2018,
-                  y: 0.1,
-                  y0: 85,
-                },
-                {
-                  x: 2120,
-                  y: 0.1,
-                  y0: 85,
-                },
-              ]}
-              style={{
-                data: {
-                  fill: darkMode ? schemeSet3[10] : schemeSet3[6],
-                  fillOpacity: 0.2,
-                  stroke: "none",
-                },
-              }}
-            />
-            <VictoryAxis
-              fixLabelOverlap
-              dependentAxis
-              style={{
-                tickLabels: {
-                  fill: theme.palette.text.primary,
-                  fontSize: smallScreen ? 14 : 20,
-                },
-                axisLabel: {
-                  fill: theme.palette.text.primary,
-                  fontSize: smallScreen ? 20 : 28,
-                  padding: smallScreen ? 45 : 60,
-                },
-                grid: {
-                  fill: `${theme.palette.text.hint}66`,
-                  stroke: `${theme.palette.text.hint}66`,
-                },
-              }}
-              tickFormat={(x) => `${x}%`}
-              label="Forest Area"
-            />
-            <VictoryAxis
-              fixLabelOverlap
-              scale="time"
-              style={{
-                tickLabels: {
-                  fill: theme.palette.text.primary,
-                  fontSize: smallScreen ? 14 : 20,
-                },
-                axisLabel: {
-                  fill: theme.palette.text.primary,
-                  fontSize: smallScreen ? 20 : 28,
-                  padding: smallScreen ? 32 : 36,
-                },
-                grid: {
-                  fill: `${theme.palette.text.hint}66`,
-                  stroke: `${theme.palette.text.hint}66`,
-                },
-              }}
-              tickFormat={(x) => x}
-              name="Year"
-              label="Year"
-            />
+              <VictoryAxis
+                fixLabelOverlap
+                dependentAxis
+                style={{
+                  tickLabels: {
+                    fill: theme.palette.text.primary,
+                    fontSize: smallScreen ? 14 : 20,
+                  },
+                  axisLabel: {
+                    fill: theme.palette.text.primary,
+                    fontSize: smallScreen ? 20 : 28,
+                    padding: smallScreen ? 45 : 60,
+                  },
+                  grid: {
+                    fill: `${theme.palette.text.hint}66`,
+                    stroke: `${theme.palette.text.hint}66`,
+                  },
+                }}
+                tickFormat={(x) => `${x}%`}
+                label="Forest Area"
+              />
+              <VictoryAxis
+                fixLabelOverlap
+                scale="time"
+                style={{
+                  tickLabels: {
+                    fill: theme.palette.text.primary,
+                    fontSize: smallScreen ? 14 : 20,
+                  },
+                  axisLabel: {
+                    fill: theme.palette.text.primary,
+                    fontSize: smallScreen ? 20 : 28,
+                    padding: smallScreen ? 32 : 36,
+                  },
+                  grid: {
+                    fill: `${theme.palette.text.hint}66`,
+                    stroke: `${theme.palette.text.hint}66`,
+                  },
+                }}
+                tickFormat={(x) => x}
+                name="Year"
+                label="Year"
+              />
 
-            {graphType === "area"
-              ? countries.map(({ name, color }) => (
-                  <VictoryArea
-                    key={name}
-                    style={{
-                      data: { fill: `${schemeSet3[color]}99` },
-                    }}
-                    data={country.filter((group) => group.name === name)}
-                  />
-                ))
-              : countries.map(({ name, color }) => (
-                  <VictoryLine
-                    key={name}
-                    style={{
-                      data: { stroke: schemeSet3[color], strokeWidth: 4.5 },
-                    }}
-                    data={country.filter((group) => group.name === name)}
-                  />
-                ))}
+              {graphType === "area"
+                ? countries.map(({ name, color }) => (
+                    <VictoryArea
+                      key={name}
+                      style={{
+                        data: { fill: `${schemeSet3[color]}99` },
+                      }}
+                      data={country.filter((group) => group.name === name)}
+                    />
+                  ))
+                : countries.map(({ name, color }) => (
+                    <VictoryLine
+                      key={name}
+                      style={{
+                        data: { stroke: schemeSet3[color], strokeWidth: 4.5 },
+                      }}
+                      data={country.filter((group) => group.name === name)}
+                    />
+                  ))}
 
-            <VictoryLegend
-              x={smallScreen ? 30 : 120}
-              y={extraSmallScreen ? 5 : 25}
-              itemsPerRow={extraSmallScreen ? 2 : 3}
-              orientation="horizontal"
-              style={{
-                labels: {
-                  fontSize: mediumScreen ? 14 : 20,
-                  fill: theme.palette.text.primary,
-                },
-              }}
-              data={countries.map(({ name, color }) => ({
-                name,
-                symbol: {
-                  fill: `${schemeSet3[color]}${
-                    graphType === "area" ? "99" : ""
-                  }`,
-                },
-              }))}
-            />
-          </VictoryChart>
+              <VictoryLegend
+                x={smallScreen ? 30 : 120}
+                y={extraSmallScreen ? 5 : 25}
+                itemsPerRow={extraSmallScreen ? 2 : 3}
+                orientation="horizontal"
+                style={{
+                  labels: {
+                    fontSize: mediumScreen ? 14 : 20,
+                    fill: theme.palette.text.primary,
+                  },
+                }}
+                data={countries.map(({ name, color }) => ({
+                  name,
+                  symbol: {
+                    fill: `${schemeSet3[color]}${
+                      graphType === "area" ? "99" : ""
+                    }`,
+                  },
+                }))}
+              />
+            </VictoryChart>
+          </Box>
         )}
 
         <Box
@@ -245,6 +262,18 @@ export default withErrorBoundary(() => {
           </FormControl>
         </Box>
       </Box>
-    </>
+      <VisExplanation>
+        When there is relevant historical data it is possible to use data
+        science prediction modeling to see what the future of deforestation
+        could possibly look like. Here we were able to find useful data from
+        1990 - 2018 for some countries about their agricultural land (sq. km),
+        electric power consumption (kWh per capita), GDP per capita growth
+        (annual %), Livestock production, ores and metals exports (% of
+        exports), urban population totals, crop production, food production
+        index, and forest area (% of land area). Using a random forest
+        regression prediction model we are able to predict the ‘forest area (%
+        of land area)’ for the next 100 years based on the data collected.
+      </VisExplanation>
+    </Box>
   );
 }, "visualization");

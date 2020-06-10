@@ -120,6 +120,9 @@ export default (prefersDarkMode = false) =>
         640,
         768,
       ],
+      appBar: {
+        height: 56,
+      },
       navBar: {
         width: 255,
         background: prefersDarkMode ? "#405454" : "#FFFFFF",

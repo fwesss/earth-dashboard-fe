@@ -113,7 +113,7 @@ const RacingData = () => {
           aria-label="racing-title"
           subtitled
         >
-          Confirmed deaths (Covid-19)
+          Confirmed deaths (COVID-19)
         </VisTitle>
       </Box>
       {data ? (

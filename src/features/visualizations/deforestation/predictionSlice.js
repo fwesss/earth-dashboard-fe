@@ -10,7 +10,7 @@ export const initialState = {
 };
 
 const predictionSlice = createSlice({
-  name: "income",
+  name: "deforestation",
   initialState,
   reducers: {
     fetchingPredictions(state) {

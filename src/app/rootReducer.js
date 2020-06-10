@@ -5,6 +5,7 @@ import bubblesReducer from "../features/visualizations/covid/bubbles/bubblesSlic
 import racingReducer from "../features/visualizations/covid/Racing-Chart/RacingSlice";
 import airReducer from "../features/visualizations/covid/air/airSlice";
 import predictionReducer from "../features/visualizations/deforestation/predictionSlice";
+import migrationReducer from "../features/visualizations/migration/migrationSlice";
 
 const rootReducer = combineReducers({
   themeReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   racingReducer,
   airReducer,
   predictionReducer,
+  migrationReducer,
 });
 
 export default rootReducer;
