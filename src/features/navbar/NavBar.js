@@ -26,6 +26,7 @@ import { getCases } from "../visualizations/covid/cases/casesSlice";
 import { getSummary } from "../visualizations/covid/bubbles/bubblesSlice";
 import { getConfirmedCases } from "../visualizations/covid/Racing-Chart/RacingSlice";
 import { getPredictions } from "../visualizations/deforestation/predictionSlice";
+import { getMigrations } from "../visualizations/migration/migrationSlice";
 
 const NavBar = ({ navFixed }) => {
   const theme = useTheme();
@@ -38,6 +39,7 @@ const NavBar = ({ navFixed }) => {
   const { country, countryIncome } = useSelector(
     (state) => state.predictionReducer
   );
+  const { migration } = useSelector((state) => state.migrationReducer);
 
   const [open, setOpen] = useState(false);
 
@@ -96,6 +98,7 @@ const NavBar = ({ navFixed }) => {
   const classes = useStyles();
   const [openCovid, setOpenCovid] = useState(false);
   const [openDeforestation, setOpenDeforestation] = useState(false);
+  const [openMigration, setOpenMigration] = useState(false);
 
   const handleClickCovid = () => {
     setOpenCovid(!openCovid);
@@ -113,6 +116,14 @@ const NavBar = ({ navFixed }) => {
 
     if (!country && !countryIncome) {
       dispatch(getPredictions());
+    }
+  };
+
+  const handleClickMigration = () => {
+    setOpenMigration(!openMigration);
+
+    if (!migration) {
+      dispatch(getMigrations());
     }
   };
 
@@ -147,7 +158,7 @@ const NavBar = ({ navFixed }) => {
 
         <List component="div" disablePadding>
           <ListItem button onClick={handleClickCovid}>
-            <ListItemText primary="Covid-19" />
+            <ListItemText primary="COVID-19" />
             {openCovid ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={openCovid} timeout="auto" unmountOnExit>
@@ -232,6 +243,29 @@ const NavBar = ({ navFixed }) => {
                 onClick={() => setOpen(!open)}
               >
                 <ListItemText className={classes.nested} primary="Country" />
+              </ListItem>
+            </List>
+          </Collapse>
+        </List>
+
+        <Divider variant="middle" />
+
+        <List component="div" disablePadding>
+          <ListItem button onClick={handleClickMigration}>
+            <ListItemText primary="Migration" />
+            {openMigration ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+
+          <Collapse in={openMigration} timeout="auto" unmountOnExit>
+            <List component="div">
+              <ListItem
+                selected={pathname === "/migration/trend"}
+                button
+                component={NavLink}
+                to="/migration/trend"
+                onClick={() => setOpen(!open)}
+              >
+                <ListItemText className={classes.nested} primary="Pattern" />
               </ListItem>
             </List>
           </Collapse>
