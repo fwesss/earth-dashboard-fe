@@ -1,6 +1,6 @@
-import { slices } from "../app/rootReducer";
+import { slices } from "../features/visualizations/visConstructor";
 
-describe("redux", () => {
+describe("redux slices", () => {
   slices.forEach((visualization) => {
     describe(`${visualization.slice.name} slice`, () => {
       describe("reducer, actions, and selectors", () => {

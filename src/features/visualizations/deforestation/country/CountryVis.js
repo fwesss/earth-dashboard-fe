@@ -57,11 +57,11 @@ export default withErrorBoundary(() => {
     error,
     fetching,
     data: { country },
-  } = useSelector((state) => state.deforestationReducer);
+  } = useSelector((state) => state.countryReducer);
   const { darkMode } = useSelector((state) => state.themeReducer);
   const [graphType, setGraphType] = useState("area");
 
-  useVisDataFetch("deforestation", data, fetching, error);
+  useVisDataFetch("country", data, fetching, error);
 
   if (fetching) {
     return <LoadingSpinner />;

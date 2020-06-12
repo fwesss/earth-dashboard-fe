@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { visStates } from "../app/rootReducer";
+import { visStates } from "../features/visualizations/visConstructor";
 
 export const checkIfNoData = (data) =>
   Object.values(data).some((value) => value == null);

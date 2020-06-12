@@ -41,10 +41,10 @@ export default withErrorBoundary(() => {
     error,
     fetching,
     data: { countryIncome },
-  } = useSelector((state) => state.deforestationReducer);
+  } = useSelector((state) => state.countryIncomeReducer);
   const { darkMode } = useSelector((state) => state.themeReducer);
 
-  useVisDataFetch("deforestation", data, fetching, error);
+  useVisDataFetch("countryIncome", data, fetching, error);
 
   if (fetching) {
     return <LoadingSpinner />;

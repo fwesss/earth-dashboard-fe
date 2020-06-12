@@ -10,12 +10,12 @@ import {
   VictoryLabel,
   VictoryArea,
 } from "victory";
-import withErrorBoundary from "../../../app/error/ErrorBoundary";
-import useWindowSize from "../../../hooks/useWindowSize";
-import VisTitle from "../VisTitle";
-import VisExplanation from "../VisExplanation";
-import useVisDataFetch from "../../../hooks/useVisDataFetch";
-import LoadingSpinner from "../LoadingSpinner";
+import withErrorBoundary from "../../../../app/error/ErrorBoundary";
+import useWindowSize from "../../../../hooks/useWindowSize";
+import VisTitle from "../../VisTitle";
+import VisExplanation from "../../VisExplanation";
+import useVisDataFetch from "../../../../hooks/useVisDataFetch";
+import LoadingSpinner from "../../LoadingSpinner";
 
 export default withErrorBoundary(() => {
   const theme = useTheme();
@@ -36,9 +36,9 @@ export default withErrorBoundary(() => {
     error,
     fetching,
     data: { migration },
-  } = useSelector((state) => state.migrationReducer);
+  } = useSelector((state) => state.patternReducer);
 
-  useVisDataFetch("migration", data, fetching, error);
+  useVisDataFetch("pattern", data, fetching, error);
 
   if (fetching) {
     return <LoadingSpinner />;

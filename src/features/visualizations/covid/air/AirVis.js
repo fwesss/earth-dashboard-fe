@@ -55,9 +55,7 @@ const AirVis = () => {
       data-testid="vis-container"
     >
       <VisTitle subtitled variant="h4" component="h2">
-        {
-          "Mean Particulate Matter < 2.5 microns vs. Confirmed cases of COVID-19"
-        }
+        {"Mean Particulate Matter < 2.5 microns vs. Confirmed cases of covid"}
       </VisTitle>
 
       {checkIfNoData(data) ? (

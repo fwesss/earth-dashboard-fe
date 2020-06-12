@@ -9,28 +9,11 @@ import ReactGa from "react-ga";
 import NavBar from "../features/navbar/NavBar";
 import theme from "./theme/theme";
 import useWindowSize from "../hooks/useWindowSize";
+import { visualizations } from "../features/visualizations/visConstructor";
 
-const LazyBubbles = loadable(() =>
-  import("../features/visualizations/covid/bubbles/BubblesVis")
-);
-const LazyAir = loadable(() =>
-  import("../features/visualizations/covid/air/AirVis")
-);
-const LazyHeatmap = loadable(() =>
-  import("../features/visualizations/covid/cases/CasesVis")
-);
 const LazyGlobe = loadable(() => import("../features/landing/Globe"));
-const LazyRacing = loadable(() =>
-  import("../features/visualizations/covid/Racing-Chart/RacingData")
-);
-const LazyCountryIncome = loadable(() =>
-  import("../features/visualizations/deforestation/income/CountryIncomeVis")
-);
-const LazyCountry = loadable(() =>
-  import("../features/visualizations/deforestation/country/CountryVis")
-);
-const LazyMigrationPattern = loadable(() =>
-  import("../features/visualizations/migration/Migration")
+const LazyVisualizations = visualizations.map((vis) =>
+  loadable(() => import(`../features/visualizations${vis.path}`))
 );
 
 export default () => {
@@ -161,29 +144,14 @@ export default () => {
                   mediumScreen ? width - preferredTheme.navBar.width : width
                 }
               >
-                <Route exact path="/covid/bubbles" component={LazyBubbles} />
-                <Route
-                  exact
-                  path="/covid/racing-chart"
-                  component={LazyRacing}
-                />
-                <Route exact path="/covid/heatmap" component={LazyHeatmap} />
-                <Route exact path="/covid/air-quality" component={LazyAir} />
-                <Route
-                  exact
-                  path="/deforestation/country-income"
-                  component={LazyCountryIncome}
-                />
-                <Route
-                  exact
-                  path="/deforestation/country"
-                  component={LazyCountry}
-                />
-                <Route
-                  exact
-                  path="/migration/trend"
-                  component={LazyMigrationPattern}
-                />
+                {visualizations.map((vis, index) => (
+                  <Route
+                    key={vis.name}
+                    exact
+                    path={`/${vis.topic}/${vis.name}`}
+                    component={LazyVisualizations[index]}
+                  />
+                ))}
               </Box>
             </Switch>
           </Box>
