@@ -29,6 +29,9 @@ const LazyCountryIncome = loadable(() =>
 const LazyCountry = loadable(() =>
   import("../features/visualizations/deforestation/country/CountryVis")
 );
+const LazyMigrationPattern = loadable(() =>
+  import("../features/visualizations/migration/Migration")
+);
 
 export default () => {
   const { width } = useWindowSize();
@@ -175,6 +178,11 @@ export default () => {
                   exact
                   path="/deforestation/country"
                   component={LazyCountry}
+                />
+                <Route
+                  exact
+                  path="/migration/trend"
+                  component={LazyMigrationPattern}
                 />
               </Box>
             </Switch>
