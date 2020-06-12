@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import useTheme from "@material-ui/core/styles/useTheme";
 import Box from "@material-ui/core/Box";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   VictoryChart,
   VictoryTheme,
@@ -16,13 +15,13 @@ import {
 import { schemeSet3 } from "d3";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
-import { getPredictions } from "../predictionSlice";
 import VisTitle from "../../VisTitle";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import VisExplanation from "../../VisExplanation";
+import LoadingSpinner from "../../LoadingSpinner";
+import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 
 export default withErrorBoundary(() => {
-  const dispatch = useDispatch();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -37,33 +36,27 @@ export default withErrorBoundary(() => {
       : windowHeight * 0.8,
   ];
 
-  const { fetching, countryIncome } = useSelector(
-    (state) => state.predictionReducer
-  );
+  const {
+    data,
+    error,
+    fetching,
+    data: { countryIncome },
+  } = useSelector((state) => state.deforestationReducer);
   const { darkMode } = useSelector((state) => state.themeReducer);
 
-  useEffect(() => {
-    if (!countryIncome && !fetching) {
-      dispatch(getPredictions());
-    }
-  }, [dispatch, fetching, countryIncome]);
+  useVisDataFetch("deforestation", data, fetching, error);
 
   if (fetching) {
-    return (
-      <Box
-        height="100vh"
-        width="100%"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
-      </Box>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
+    <Box
+      data-testid="vis-container"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+    >
       <VisTitle subtitled variant="h4" component="h2">
         Deforestation Prediction Trends by Country Income 2019 - 2120
       </VisTitle>

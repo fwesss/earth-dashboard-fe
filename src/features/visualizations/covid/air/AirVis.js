@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { CircularProgress, Box, useTheme } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { Box, useTheme } from "@material-ui/core";
 import { VictoryLine, VictoryAxis, VictoryLabel, VictoryTheme } from "victory";
 import { format } from "date-fns";
 import { schemeSet3 } from "d3";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { getAirQuality } from "./airSlice";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import VisTitle from "../../VisTitle";
 import Blurb from "./Blurb";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
+import useVisDataFetch, {
+  checkIfNoData,
+} from "../../../../hooks/useVisDataFetch";
+import LoadingSpinner from "../../LoadingSpinner";
 
 const AirVis = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
-  const { dates, airQuality, cases, fetching, error } = useSelector(
-    (state) => state.airReducer
-  );
+  const {
+    data,
+    data: { dates, airQuality, cases },
+    fetching,
+    error,
+  } = useSelector((state) => state.airQualityReducer);
   const [formattedDates, setFormattedDates] = useState([new Date()]);
 
   const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -29,18 +34,7 @@ const AirVis = () => {
     windowHeight < 800 ? windowHeight * 0.9 : 800,
   ];
 
-  // Retrieve the air quality data on component mount
-  useEffect(() => {
-    if ((!cases || !dates || !airQuality) && !fetching) {
-      dispatch(getAirQuality());
-    }
-  }, [airQuality, cases, dates, dispatch, fetching]);
-
-  useEffect(() => {
-    if (error) {
-      throw new Error("Could not retrieve data for visualization");
-    }
-  }, [error]);
+  useVisDataFetch("airQuality", data, fetching, error);
 
   useEffect(() => {
     if (dates !== null) {
@@ -48,19 +42,8 @@ const AirVis = () => {
     }
   }, [dates]);
 
-  // Display a loading spinner while data is being fetched
   if (fetching) {
-    return (
-      <Box
-        height="100vh"
-        width="100%"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
-      </Box>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
@@ -69,15 +52,18 @@ const AirVis = () => {
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      data-testid="airQuality"
+      data-testid="vis-container"
     >
       <VisTitle subtitled variant="h4" component="h2">
         {
           "Mean Particulate Matter < 2.5 microns vs. Confirmed cases of COVID-19"
         }
       </VisTitle>
-      {airQuality && cases ? (
-        <svg width={width + 100} height={height}>
+
+      {checkIfNoData(data) ? (
+        <Box width={width} height={height} />
+      ) : (
+        <svg width={width + 100} height={height} data-testid="vis-svg">
           <g transform="translate(54, -20)">
             <VictoryAxis
               width={width}
@@ -262,8 +248,6 @@ const AirVis = () => {
             />
           </g>
         </svg>
-      ) : (
-        <Box width={width} height={height} />
       )}
       <Box display="flex" justifyContent="center" flexWrap="wrap" pt={4} px={4}>
         <Blurb maxWidth={14}>

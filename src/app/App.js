@@ -143,7 +143,7 @@ export default () => {
                   <Box
                     width={globeWidth}
                     position="relative"
-                    left={infoOpen && -preferredTheme.infoBar.width / 2}
+                    left={infoOpen ? -preferredTheme.infoBar.width / 2 : 0}
                   >
                     <LazyGlobe
                       infoOpen={infoOpen}

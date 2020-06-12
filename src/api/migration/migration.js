@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as d3 from "d3";
 
-const requestMigrationData = async () => {
+export default async () => {
   const { data, ...rest } = await axios.get(
     "https://4eo1w5jvy0.execute-api.us-east-1.amazonaws.com/default/migration_density"
   );
@@ -42,7 +42,5 @@ const requestMigrationData = async () => {
     color: myColor(means[index]),
   }));
 
-  return { data: cleanData, rest };
+  return { data: { migration: cleanData }, rest };
 };
-
-export default { requestMigrationData };

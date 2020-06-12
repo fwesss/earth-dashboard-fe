@@ -21,25 +21,21 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { ReactComponent as Logo } from "./smallLogo.svg";
 import ColorMode from "../../app/theme/ColorMode";
-import { getAirQuality } from "../visualizations/covid/air/airSlice";
-import { getCases } from "../visualizations/covid/cases/casesSlice";
-import { getSummary } from "../visualizations/covid/bubbles/bubblesSlice";
-import { getConfirmedCases } from "../visualizations/covid/Racing-Chart/RacingSlice";
-import { getPredictions } from "../visualizations/deforestation/predictionSlice";
-import { getMigrations } from "../visualizations/migration/migrationSlice";
+import { visStates } from "../../app/rootReducer";
+import { checkIfNoData } from "../../hooks/useVisDataFetch";
 
 const NavBar = ({ navFixed }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { cases } = useSelector((state) => state.casesReducer);
-  const { summary } = useSelector((state) => state.bubblesReducer);
-  const { deaths } = useSelector((state) => state.racingReducer);
-  const { airQuality } = useSelector((state) => state.airReducer);
-  const { country, countryIncome } = useSelector(
-    (state) => state.predictionReducer
+  const heatmapData = useSelector((state) => state.heatmapReducer.data);
+  const bubblesData = useSelector((state) => state.bubblesReducer.data);
+  const racingData = useSelector((state) => state.racingReducer.data);
+  const airQualityData = useSelector((state) => state.airQualityReducer.data);
+  const deforestationData = useSelector(
+    (state) => state.deforestationReducer.data
   );
-  const { migration } = useSelector((state) => state.migrationReducer);
+  const migrationData = useSelector((state) => state.migrationReducer.data);
 
   const [open, setOpen] = useState(false);
 
@@ -103,27 +99,32 @@ const NavBar = ({ navFixed }) => {
   const handleClickCovid = () => {
     setOpenCovid(!openCovid);
 
-    if (!cases && !summary && !deaths && !airQuality) {
-      dispatch(getSummary());
-      dispatch(getConfirmedCases());
-      dispatch(getCases());
-      dispatch(getAirQuality());
+    if (
+      checkIfNoData(bubblesData) &&
+      checkIfNoData(racingData) &&
+      checkIfNoData(airQualityData) &&
+      checkIfNoData(heatmapData)
+    ) {
+      dispatch(visStates.bubbles.getData());
+      dispatch(visStates.racing.getData());
+      dispatch(visStates.airQuality.getData());
+      dispatch(visStates.heatmap.getData());
     }
   };
 
   const handleClickDeforestation = () => {
     setOpenDeforestation(!openDeforestation);
 
-    if (!country && !countryIncome) {
-      dispatch(getPredictions());
+    if (checkIfNoData(deforestationData)) {
+      dispatch(visStates.deforestation.getData());
     }
   };
 
   const handleClickMigration = () => {
     setOpenMigration(!openMigration);
 
-    if (!migration) {
-      dispatch(getMigrations());
+    if (checkIfNoData(migrationData)) {
+      dispatch(visStates.migration.getData());
     }
   };
 

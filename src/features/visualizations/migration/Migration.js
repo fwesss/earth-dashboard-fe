@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import useTheme from "@material-ui/core/styles/useTheme";
 import Box from "@material-ui/core/Box";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {
   VictoryChart,
@@ -12,13 +11,13 @@ import {
   VictoryArea,
 } from "victory";
 import withErrorBoundary from "../../../app/error/ErrorBoundary";
-import { getMigrations } from "./migrationSlice";
 import useWindowSize from "../../../hooks/useWindowSize";
 import VisTitle from "../VisTitle";
 import VisExplanation from "../VisExplanation";
+import useVisDataFetch from "../../../hooks/useVisDataFetch";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default withErrorBoundary(() => {
-  const dispatch = useDispatch();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const largeScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -32,32 +31,26 @@ export default withErrorBoundary(() => {
       ? (windowHeight - theme.appBar.height) * 0.9
       : windowHeight * 0.9,
   ];
-  const { fetching, migration } = useSelector(
-    (state) => state.migrationReducer
-  );
+  const {
+    data,
+    error,
+    fetching,
+    data: { migration },
+  } = useSelector((state) => state.migrationReducer);
 
-  useEffect(() => {
-    if (!migration && !fetching) {
-      dispatch(getMigrations());
-    }
-  }, [dispatch, fetching, migration]);
+  useVisDataFetch("migration", data, fetching, error);
 
   if (fetching) {
-    return (
-      <Box
-        height="100vh"
-        width="100%"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
-      </Box>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
+    <Box
+      data-testid="vis-container"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+    >
       <VisTitle subtitled variant="h4" component="h2">
         Migration Patterns by Year
       </VisTitle>

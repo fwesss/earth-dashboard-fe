@@ -15,7 +15,11 @@ const VisExplanation = ({ children }) => {
   const classes = useStyles();
 
   return (
-    <Typography paragraph className={classes.explanation}>
+    <Typography
+      data-testid="vis-explanation"
+      paragraph
+      className={classes.explanation}
+    >
       {children}
     </Typography>
   );

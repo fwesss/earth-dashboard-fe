@@ -21,7 +21,12 @@ export default ({ children, id, maxWidth = 13 }) => {
   return (
     <Card data-testid={`blurb${id}`} raised className={classes.card}>
       <CardContent>
-        <Typography variant="h6" component="p" align="center">
+        <Typography
+          data-testid="vis-explanation"
+          variant="h6"
+          component="p"
+          align="center"
+        >
           {children}
         </Typography>
       </CardContent>
