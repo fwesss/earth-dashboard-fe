@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   factCard: {
     position: "absolute",
     minWidth: "250px",
-    marginLeft: "-18rem",
+    marginLeft: "-10rem",
     marginTop: "5rem",
 
     [theme.breakpoints.down("sm")]: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     [theme.breakpoints.up("lg")]: {
-      marginLeft: "-36rem",
+      marginLeft: "-22rem",
     },
   },
 }));
