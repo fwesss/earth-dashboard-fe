@@ -16,6 +16,7 @@
     "jest",
     "jest-formatting",
     "testing-library",
+    "jsdoc"
   ],
   "extends": [
     "eslint:recommended",
@@ -26,6 +27,7 @@
     "plugin:jsx-a11y/recommended",
     "airbnb",
     "airbnb/hooks",
+    "plugin:jsdoc/recommended",
 
     // testing
     "plugin:jest/recommended",
@@ -46,7 +48,14 @@
     "react/jsx-filename-extension": "off",
     "react/prop-types": "off",
     "spaced-comment": ["error", "always", { "markers": ["/"] }],
-    "import/no-cycle": "off"
+    "import/no-cycle": "off",
+    "require-jsdoc": ["warn", {
+      "require": {
+        "ArrowFunctionExpression": true,
+        "MethodDefinition":  true,
+        "FunctionExpression":  true
+      }
+    }]
   },
   "env": {
     "browser": true,

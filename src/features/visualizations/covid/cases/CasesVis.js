@@ -9,7 +9,6 @@ import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import "mapbox-gl/src/css/mapbox-gl.css";
 import useDebounce from "../../../../hooks/useDebounce";
 import { heatmap, circles, labels } from "./layers.json";
 import VisExplanation from "../../VisExplanation";
@@ -18,6 +17,7 @@ import useWindowSize from "../../../../hooks/useWindowSize";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 mapboxgl.accessToken = process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN;
 

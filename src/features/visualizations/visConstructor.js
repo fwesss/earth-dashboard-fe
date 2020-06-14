@@ -14,6 +14,34 @@ import CountryVis from "./deforestation/country/CountryVis";
 import CountryIncomeVis from "./deforestation/income/CountryIncomeVis";
 import Migration from "./migration/pattern/Migration";
 
+/**
+ * The initial state of a visualization
+ *
+ * @typedef {object} InitialState
+ * @property {boolean} fetching - Flag to indicate data is currently being
+ *   fetched.
+ * @property {?object} success - After a successful fetch, non-response
+ *   data is added here
+ * @property {?object} error - After an unsuccessful fetch, error data
+ *   is added here
+ * @property {object} data - All data necessary to render a visualization is
+ *   stored here after a successful fetch
+ */
+
+/**
+ * The updated state of a visualization
+ *
+ * @typedef {InitialState} NewState
+ */
+
+/**
+ *  Builds the initial state for a visualization.
+ *
+ *  @function
+ *  @param {object} initialData - Visualization specific data that should be
+ *   stored in redux.
+ *  @returns {InitialState} - Visualization specific data that should be
+ */
 const initialStateBuilder = (initialData) => ({
   fetching: false,
   success: null,
@@ -23,7 +51,51 @@ const initialStateBuilder = (initialData) => ({
   },
 });
 
+/**
+ * @typedef {object} Action
+ * @property {string} payload - Redux action data
+ * @property {string} type - Redux action type
+ */
+
+/**
+ * State of the visualization while data is being fetched
+ *
+ * @typedef {Function} FetchingData
+ * @param {InitialState} state
+ * @returns {NewState}
+ */
+
+/**
+ * State of the visualization after data has been successfully fetched
+ *
+ * @typedef {Function} FetchingDataSuccess
+ * @param {InitialState} state
+ * @param {Action} action
+ * @returns {NewState}
+ */
+
+/**
+ * State of the visualization after a fetch has failed
+ *
+ * @typedef {Function} FetchingDataError
+ * @param {InitialState} state
+ * @param {Action} action
+ * @returns {NewState}
+ */
+
+/**
+ * Reducers for fetching data and storing it in the redux store
+ *
+ * @namespace
+ * @property {FetchingData} fetchingData - Switches visualization state to fetching
+ * @property {FetchingDataSuccess} fetchingDataSuccess - Switches visualization state to success
+ * @property {FetchingDataError} fetchingDataError - Switches visualization state to error
+ */
 const fetchingReducers = {
+  /**
+   * @param {InitialState} state - Current visualization state
+   * @returns {NewState} - New visualization state
+   */
   fetchingData(state) {
     return {
       ...state,
@@ -33,6 +105,11 @@ const fetchingReducers = {
     };
   },
 
+  /**
+   * @param {InitialState} state - Current visualization state
+   * @param {Action} action - Action to change state
+   * @returns {NewState} - New visualization state
+   */
   fetchingDataSuccess(state, action) {
     const { data, rest } = JSON.parse(action.payload);
 
@@ -45,6 +122,11 @@ const fetchingReducers = {
     };
   },
 
+  /**
+   * @param {InitialState} state - Current visualization state
+   * @param {Action} action - Action to change state
+   * @returns {NewState} - New visualization state
+   */
   fetchingDataError(state, action) {
     return {
       ...state,
@@ -58,13 +140,30 @@ const fetchingReducers = {
 const getData = (requestData, actions) => () => async (dispatch) => {
   dispatch(actions.fetchingData());
   try {
-    const apiResponse = await requestData();
-    dispatch(actions.fetchingDataSuccess(JSON.stringify(apiResponse)));
+    dispatch(actions.fetchingDataSuccess(JSON.stringify(await requestData())));
   } catch (fetchError) {
     dispatch(actions.fetchingDataError(JSON.stringify(fetchError)));
   }
 };
 
+/**
+ * @typedef {object} VisSlice
+ * @property {any} slice - Redux actions and reducers
+ * @property {InitialState} initialState - Initial state of visualization
+ * @property {Function} getData - Method to call API
+ * @property {Function} fetching - Returns the fetching property of state
+ * @property {Function} success - Returns the success property of state
+ * @property {Function} error - Returns the error property of state
+ * @property {Function} data - Returns the data property of state
+ */
+
+/**
+ * Builds a slice of state for a visualization. Also attaches the data fetch method, and actions to the visualization object.
+ *
+ * @param {string} name - Name of the visualization.
+ * @param {object} initialData - Data necessary to render the visualization.
+ * @returns {VisSlice} - Everything needed to automatically create tests, add to navigation and routes, and state to render the visualization
+ */
 const sliceBuilder = (name, initialData) => ({
   slice: createSlice({
     name,
@@ -79,6 +178,25 @@ const sliceBuilder = (name, initialData) => ({
   data: (state) => state[name].data,
 });
 
+/**
+ * The Visualization object holds the data necessary to automatically add a visualization page to the app, NavBar,
+ * and routes. A test is automatically written for the redux actions and state, and integration tests are written
+ * for the page based on the data stored in this object.
+ *
+ * @typedef {object} Visualization
+ * @property {string} name - The name of the visualization
+ * @property {string} displayName - The name of the visualization as it should display in the NavBar
+ * @property {string} topic - The topic of the visualization as it should display in the NavBar
+ * @property {string} path - The path from the visualizations folder of the component exporting the visualization
+ * @property {object} initialData - The object that will hold visualization state required to render
+ * @property {Function} fetchMethod - The function called to retrieve data from the API
+ * @property {object} minTestData - The minimum required data to render a visualization. Tests will be automatically run using this data to render a test visualization.
+ * @property {Function} component - The component exporting the visualization page
+ */
+
+/**
+ * @type {Visualization[]}
+ */
 export const visualizations = [
   {
     name: "bubbles",
@@ -272,10 +390,21 @@ export const visualizations = [
   },
 ];
 
-export const slices = visualizations.map(({ name, initialData, fetchMethod }) =>
-  sliceBuilder(name, initialData, fetchMethod)
+/**
+ * An array of all visualizations, their redux slices, and methods for handling data
+ *
+ * @type {VisSlice[]}
+ */
+export const slices = visualizations.map(({ name, initialData }) =>
+  sliceBuilder(name, initialData)
 );
 
+/**
+ * An object containing all visSlices and preloading the getData function with the visualization's
+ * fetch method and redux actions.
+ *
+ * @type {object.<string, VisSlice>}
+ */
 export const visStates = Object.fromEntries(
   Object.entries({
     ...slices,
@@ -288,6 +417,11 @@ export const visStates = Object.fromEntries(
   ])
 );
 
+/**
+ * Reducer creators for visualizations. Exported for inclusion with other reducers passed to combineReducers.
+ *
+ * @type {object<string, Function>}
+ */
 export const visualizationReducers = Object.fromEntries(
   Object.entries({
     ...slices.map((vis) => vis.slice.reducer),
