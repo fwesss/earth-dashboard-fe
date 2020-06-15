@@ -50,16 +50,22 @@ export default ({ data, handleChange }) => (
             Humans across the planet produce pollution but some cities produce
             more than their fair share. The amount of greenhouse gas emissions
             produced by a city can be referred to as the city&apos;s carbon
-            footprint. We can see which cities have a larger carbon footprint by
-            examining the height and color intensity of the columns. The higher
-            the column, the larger the carbon footprint. For example, Los
-            Angeles has a carbon footprint of 196.4~ Mt CO2 (Megatons of carbon
-            dioxide equivalent). We can reduce a city&apos;s carbon footprint by
-            limiting the use of nonelectric transportation, by carpooling,
-            biking, and using mass transit, by reducing consumption of ruminants
-            such as cattle, by reducing the products you send to the landfill,
-            and by using energy-efficient lighting. What ways can you think of
-            to cut back on your city&apos;s carbon footprint?
+            footprint.
+          </Typography>
+          <Typography>
+            We can see which cities have a larger carbon footprint by examining
+            the height and color intensity of the columns. The higher the
+            column, the larger the carbon footprint. For example, Los Angeles
+            has a carbon footprint of 196.4~ Mt CO2 (Megatons of carbon dioxide
+            equivalent).
+          </Typography>
+          <Typography>
+            We can reduce a city&apos;s carbon footprint by limiting the use of
+            nonelectric transportation, by carpooling, biking, and using mass
+            transit, by reducing consumption of ruminants such as cattle, by
+            reducing the products you send to the landfill, and by using
+            energy-efficient lighting. What ways can you think of to cut back on
+            your city&apos;s carbon footprint?
           </Typography>
         </>
       ) : (
@@ -68,10 +74,28 @@ export default ({ data, handleChange }) => (
             Waste Recycled by Countries
           </Typography>
           <Typography>
-            Recycling programs of varying effectiveness have been implemented
-            around the world. We can get a high level picture of the amount of
-            waste that&apos;s recycled by each country by examining the color
-            intensity of the country.
+            Recycling is one of the simplest ways that we can help keep our
+            earth healthy and clean. When we recycle, used materials are
+            converted into new products reducing the need to consume more of the
+            earth’s natural resources, when we manufacture with recycled
+            materials less energy is used in the process which in return reduces
+            greenhouse gas emissions, the benefits of recycling are a no
+            brainer.
+          </Typography>
+          <Typography>
+            Here we can see different countries from around the world and the
+            amount that the country recycles, the taller the visual is for the
+            country represents a larger % of recycled waste. Hover over South
+            Korea and you can see that they recycle most with 59.18% of their
+            waste recycled.
+          </Typography>
+          <Typography>
+            We can help the longevity and health of our earth by keeping
+            recycling in our decisions, we can reuse bottles and make sure that
+            they are recycled when done, we can purchase products that use
+            recycled materials, and by separating our trash and plastics into
+            their different containers so the plastic does not make it to the
+            landfills.
           </Typography>
         </>
       )}

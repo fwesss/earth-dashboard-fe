@@ -21,25 +21,14 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { ReactComponent as Logo } from "./smallLogo.svg";
 import ColorMode from "../../app/theme/ColorMode";
-import { getAirQuality } from "../visualizations/covid/air/airSlice";
-import { getCases } from "../visualizations/covid/cases/casesSlice";
-import { getSummary } from "../visualizations/covid/bubbles/bubblesSlice";
-import { getConfirmedCases } from "../visualizations/covid/Racing-Chart/RacingSlice";
-import { getPredictions } from "../visualizations/deforestation/predictionSlice";
-import { getMigrations } from "../visualizations/migration/migrationSlice";
+import { visStates, visualizations } from "../visualizations/visConstructor";
+import { checkIfNoData } from "../../hooks/useVisDataFetch";
 
 const NavBar = ({ navFixed }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { cases } = useSelector((state) => state.casesReducer);
-  const { summary } = useSelector((state) => state.bubblesReducer);
-  const { deaths } = useSelector((state) => state.racingReducer);
-  const { airQuality } = useSelector((state) => state.airReducer);
-  const { country, countryIncome } = useSelector(
-    (state) => state.predictionReducer
-  );
-  const { migration } = useSelector((state) => state.migrationReducer);
+  const store = useSelector((state) => state);
 
   const [open, setOpen] = useState(false);
 
@@ -96,35 +85,25 @@ const NavBar = ({ navFixed }) => {
   });
 
   const classes = useStyles();
-  const [openCovid, setOpenCovid] = useState(false);
-  const [openDeforestation, setOpenDeforestation] = useState(false);
-  const [openMigration, setOpenMigration] = useState(false);
 
-  const handleClickCovid = () => {
-    setOpenCovid(!openCovid);
+  const topics = new Set(visualizations.map((vis) => vis.topic));
+  const [openTopic, setOpenTopic] = useState(
+    [...topics].map((topic) => ({
+      [topic]: false,
+    }))
+  );
 
-    if (!cases && !summary && !deaths && !airQuality) {
-      dispatch(getSummary());
-      dispatch(getConfirmedCases());
-      dispatch(getCases());
-      dispatch(getAirQuality());
-    }
-  };
+  const clickHandler = (topic) => {
+    setOpenTopic({ ...openTopic, [topic]: !openTopic[topic] });
 
-  const handleClickDeforestation = () => {
-    setOpenDeforestation(!openDeforestation);
-
-    if (!country && !countryIncome) {
-      dispatch(getPredictions());
-    }
-  };
-
-  const handleClickMigration = () => {
-    setOpenMigration(!openMigration);
-
-    if (!migration) {
-      dispatch(getMigrations());
-    }
+    return (
+      visualizations
+        .filter((vis) => vis.topic === topic)
+        .every((vis) => checkIfNoData(store[`${vis.name}Reducer`].data)) &&
+      visualizations
+        .filter((vis) => vis.topic === topic)
+        .forEach((vis) => dispatch(visStates[vis.name].getData()))
+    );
   };
 
   const drawer = (
@@ -156,120 +135,38 @@ const NavBar = ({ navFixed }) => {
           What&apos;s Happening?
         </Typography>
 
-        <List component="div" disablePadding>
-          <ListItem button onClick={handleClickCovid}>
-            <ListItemText primary="COVID-19" />
-            {openCovid ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={openCovid} timeout="auto" unmountOnExit>
-            <List component="div">
-              <ListItem
-                selected={pathname === "/covid/bubbles"}
-                button
-                component={NavLink}
-                to="/covid/bubbles"
-                onClick={() => setOpen(!open)}
-              >
-                <ListItemText className={classes.nested} primary="Bubbles" />
+        {[...topics].map((topic) => (
+          <div key={topic}>
+            <List component="div" disablePadding>
+              <ListItem button onClick={() => clickHandler(topic)}>
+                <ListItemText primary={topic} />
+                {openTopic[topic] ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
-
-              <ListItem
-                selected={pathname === "/covid/racing-chart"}
-                button
-                component={NavLink}
-                to="/covid/racing-chart"
-                onClick={() => setOpen(!open)}
-              >
-                <ListItemText
-                  className={classes.nested}
-                  primary="Racing Chart"
-                />
-              </ListItem>
-
-              <ListItem
-                selected={pathname === "/covid/air-quality"}
-                button
-                component={NavLink}
-                to="/covid/air-quality"
-                onClick={() => setOpen(!open)}
-              >
-                <ListItemText
-                  className={classes.nested}
-                  primary="Air Quality"
-                />
-              </ListItem>
-
-              <ListItem
-                selected={pathname === "/covid/heatmap"}
-                button
-                component={NavLink}
-                to="/covid/heatmap"
-                onClick={() => setOpen(!open)}
-              >
-                <ListItemText className={classes.nested} primary="Heatmap" />
-              </ListItem>
+              <Collapse in={openTopic[topic]} timeout="auto" unmountOnExit>
+                <List component="div">
+                  {visualizations
+                    .filter((vis) => vis.topic === topic)
+                    .map((vis) => (
+                      <ListItem
+                        key={vis.name}
+                        selected={pathname === `/${vis.topic}/${vis.name}`}
+                        button
+                        component={NavLink}
+                        to={`/${vis.topic}/${vis.name}`}
+                        onClick={() => setOpen(!open)}
+                      >
+                        <ListItemText
+                          className={classes.nested}
+                          primary={vis.displayName}
+                        />
+                      </ListItem>
+                    ))}
+                </List>
+              </Collapse>
+              <Divider variant="middle" />
             </List>
-          </Collapse>
-        </List>
-
-        <Divider variant="middle" />
-
-        <List component="div" disablePadding>
-          <ListItem button onClick={handleClickDeforestation}>
-            <ListItemText primary="Deforestation" />
-            {openDeforestation ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-
-          <Collapse in={openDeforestation} timeout="auto" unmountOnExit>
-            <List component="div">
-              <ListItem
-                selected={pathname === "/deforestation/country-income"}
-                button
-                component={NavLink}
-                to="/deforestation/country-income"
-                onClick={() => setOpen(!open)}
-              >
-                <ListItemText
-                  className={classes.nested}
-                  primary="Country Income"
-                />
-              </ListItem>
-
-              <ListItem
-                selected={pathname === "/deforestation/country"}
-                button
-                component={NavLink}
-                to="/deforestation/country"
-                onClick={() => setOpen(!open)}
-              >
-                <ListItemText className={classes.nested} primary="Country" />
-              </ListItem>
-            </List>
-          </Collapse>
-        </List>
-
-        <Divider variant="middle" />
-
-        <List component="div" disablePadding>
-          <ListItem button onClick={handleClickMigration}>
-            <ListItemText primary="Migration" />
-            {openMigration ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-
-          <Collapse in={openMigration} timeout="auto" unmountOnExit>
-            <List component="div">
-              <ListItem
-                selected={pathname === "/migration/trend"}
-                button
-                component={NavLink}
-                to="/migration/trend"
-                onClick={() => setOpen(!open)}
-              >
-                <ListItemText className={classes.nested} primary="Pattern" />
-              </ListItem>
-            </List>
-          </Collapse>
-        </List>
+          </div>
+        ))}
       </List>
     </>
   );

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import useTheme from "@material-ui/core/styles/useTheme";
 import Box from "@material-ui/core/Box";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   VictoryChart,
   VictoryTheme,
@@ -22,9 +21,10 @@ import Radio from "@material-ui/core/Radio";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import VisTitle from "../../VisTitle";
-import { getPredictions } from "../predictionSlice";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import VisExplanation from "../../VisExplanation";
+import useVisDataFetch from "../../../../hooks/useVisDataFetch";
+import LoadingSpinner from "../../LoadingSpinner";
 
 const countries = [
   { name: "Brazil", color: 5 },
@@ -36,7 +36,6 @@ const countries = [
 ];
 
 export default withErrorBoundary(() => {
-  const dispatch = useDispatch();
   const theme = useTheme();
   const extraSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -53,34 +52,30 @@ export default withErrorBoundary(() => {
       ? (windowHeight - theme.appBar.height) * 0.8
       : windowHeight * 0.8,
   ];
-  const { fetching, country } = useSelector((state) => state.predictionReducer);
+  const {
+    data,
+    error,
+    fetching,
+    data: { country },
+  } = useSelector((state) => state.countryReducer);
   const { darkMode } = useSelector((state) => state.themeReducer);
   const [graphType, setGraphType] = useState("area");
 
-  useEffect(() => {
-    if (!country && !fetching) {
-      dispatch(getPredictions());
-    }
-  }, [dispatch, fetching, country]);
+  useVisDataFetch("country", data, fetching, error);
 
   if (fetching) {
-    return (
-      <Box
-        height="100vh"
-        width="100%"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
-      </Box>
-    );
+    return <LoadingSpinner />;
   }
 
   const handleChange = (event) => setGraphType(event.target.value);
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
+    <Box
+      data-testid="vis-container"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+    >
       <VisTitle subtitled variant="h4" component="h2">
         Deforestation Prediction Trends by Country 2019 - 2120
       </VisTitle>
@@ -244,8 +239,8 @@ export default withErrorBoundary(() => {
         <Box
           width={mediumScreen ? 500 : 200}
           p={5}
-          ml={mediumScreen && 8}
-          mt={extraLargeScreen && 9}
+          ml={mediumScreen ? 8 : 0}
+          mt={extraLargeScreen ? 9 : 0}
         >
           <FormControl component="fieldset">
             <FormLabel component="legend">Graph Type</FormLabel>

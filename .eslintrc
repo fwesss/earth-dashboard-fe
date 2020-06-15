@@ -46,7 +46,7 @@
     "react/jsx-filename-extension": "off",
     "react/prop-types": "off",
     "spaced-comment": ["error", "always", { "markers": ["/"] }],
-    "import/no-cycle": "warn"
+    "import/no-cycle": "off"
   },
   "env": {
     "browser": true,

@@ -15,6 +15,7 @@ const VisTitle = ({ children, variant, component, subtitled = false }) => {
   return (
     <Box px={5} display="flex" flexDirection="column">
       <Typography
+        data-testid="vis-title"
         variant={variant}
         component={component}
         align="center"

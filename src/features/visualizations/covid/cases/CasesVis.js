@@ -1,15 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { format } from "date-fns";
 import ReactGa from "react-ga";
 import mapboxgl from "mapbox-gl";
-import { Box, Slider, CircularProgress, IconButton } from "@material-ui/core";
+import { Box, Slider, IconButton } from "@material-ui/core";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { getCases } from "./casesSlice";
 import "mapbox-gl/src/css/mapbox-gl.css";
 import useDebounce from "../../../../hooks/useDebounce";
 import { heatmap, circles, labels } from "./layers.json";
@@ -17,6 +16,8 @@ import VisExplanation from "../../VisExplanation";
 import VisTitle from "../../VisTitle";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
+import useVisDataFetch from "../../../../hooks/useVisDataFetch";
+import LoadingSpinner from "../../LoadingSpinner";
 
 mapboxgl.accessToken = process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN;
 
@@ -37,11 +38,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DataProvider = () => {
-  const dispatch = useDispatch();
   const theme = useTheme();
-  const { cases, dates, fetching, error } = useSelector(
-    (state) => state.casesReducer
-  );
+  const {
+    data,
+    data: { cases, dates },
+    fetching,
+    error,
+  } = useSelector((state) => state.heatmapReducer);
   // filterBy() requires the map that was constructed in CasesVis so we need to pass it up to the
   // HOC and store it in local state
   const [mapState, setMapState] = useState(null);
@@ -52,32 +55,10 @@ const DataProvider = () => {
   const windowWidth = useWindowSize().width;
   const width = largeScreen ? windowWidth - theme.navBar.width : windowWidth;
 
-  // Retrieve the map data on component mount
-  useEffect(() => {
-    if (!cases && !fetching) {
-      dispatch(getCases());
-    }
-  }, [cases, dispatch, fetching]);
+  useVisDataFetch("heatmap", data, fetching, error);
 
-  useEffect(() => {
-    if (error) {
-      throw new Error("Could not retrieve data for visualization");
-    }
-  }, [error]);
-
-  // Display a loading spinner while data is being fetched
   if (fetching) {
-    return (
-      <Box
-        height="100vh"
-        width="100%"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
-      </Box>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
@@ -202,7 +183,7 @@ const CasesVis = ({ cases, setMapState, largeScreen, theme }) => {
   return (
     <div
       aria-labelledby="map-title"
-      data-testid="map"
+      data-testid="vis-container"
       ref={mapContainer}
       style={{ height: "80vh", width: "100%", marginTop: theme.spacing(5) }}
     />

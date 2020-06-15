@@ -1,23 +1,26 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { add, getDayOfYear } from "date-fns";
-import { Box, Button, CircularProgress, makeStyles } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { add, getDayOfYear, parseISO } from "date-fns";
+import { Box, Button, makeStyles } from "@material-ui/core";
 import ReactGa from "react-ga";
 import useTheme from "@material-ui/core/styles/useTheme";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import RacingBarChart from "./RacingBarChart";
 import useInterval from "../../../../hooks/useInterval";
-import { getConfirmedCases } from "./RacingSlice";
 import VisExplanation from "../../VisExplanation";
 import VisTitle from "../../VisTitle";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import useWindowSize from "../../../../hooks/useWindowSize";
+import useVisDataFetch from "../../../../hooks/useVisDataFetch";
+import LoadingSpinner from "../../LoadingSpinner";
 
 const RacingData = () => {
-  const dispatch = useDispatch();
-  const { deaths, fetching, error } = useSelector(
-    (state) => state.racingReducer
-  );
+  const {
+    data: sliceData,
+    data: { deaths },
+    fetching,
+    error,
+  } = useSelector((state) => state.racingReducer);
   const [start, setStart] = useState(false);
   const [data, setData] = useState(null);
   const [dateToFilter, setDateToFilter] = useState(null);
@@ -39,7 +42,11 @@ const RacingData = () => {
   const classes = useStyles();
 
   const reset = useCallback(() => {
-    setData(deaths.filter((x) => x.date === deaths[0].date));
+    setData(
+      deaths
+        .filter((x) => x.date === deaths[0].date)
+        .map((country) => ({ ...country, date: parseISO(country.date) }))
+    );
     setDateToFilter(new Date(deaths[0].date));
   }, [deaths]);
 
@@ -52,14 +59,16 @@ const RacingData = () => {
   useInterval(() => {
     if (start) {
       setData(
-        deaths.filter(
-          (x) => getDayOfYear(x.date) === getDayOfYear(dateToFilter)
-        )
+        deaths
+          .filter(
+            (x) => getDayOfYear(parseISO(x.date)) === getDayOfYear(dateToFilter)
+          )
+          .map((country) => ({ ...country, date: parseISO(country.date) }))
       );
       setDateToFilter(add(dateToFilter, { days: 1 }));
 
       if (
-        getDayOfYear(deaths[deaths.length - 1].date) ===
+        getDayOfYear(parseISO(deaths[deaths.length - 1].date)) ===
         getDayOfYear(dateToFilter)
       ) {
         setDateToFilter(new Date(deaths[0].date));
@@ -68,31 +77,10 @@ const RacingData = () => {
     }
   }, 200);
 
-  useEffect(() => {
-    if (!deaths && !fetching) {
-      dispatch(getConfirmedCases());
-    }
-  }, [deaths, dispatch, fetching]);
+  useVisDataFetch("racing", sliceData, fetching, error);
 
-  useEffect(() => {
-    if (error) {
-      throw new Error("Could not retrieve data for visualization");
-    }
-  }, [error]);
-
-  // Display a loading spinner while data is being fetched
   if (fetching) {
-    return (
-      <Box
-        height="100vh"
-        width="100%"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
-      </Box>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
@@ -101,6 +89,7 @@ const RacingData = () => {
       justifyContent="center"
       flexDirection="column"
       alignItems="center"
+      data-testid="vis-container"
     >
       <Box display="flex" flexDirection="column" overflow="hidden">
         <VisTitle variant="h4" component="h2" subtitled>

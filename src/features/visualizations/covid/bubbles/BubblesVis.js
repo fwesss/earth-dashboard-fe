@@ -2,7 +2,7 @@
 /* eslint no-param-reassign: 0 */
 
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   select,
   schemeSet3,
@@ -16,27 +16,22 @@ import {
   drag,
 } from "d3";
 import ReactGa from "react-ga";
-import {
-  CircularProgress,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-} from "@material-ui/core";
+import { Box, Card, CardContent, Typography } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { getSummary } from "./bubblesSlice";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import VisExplanation from "../../VisExplanation";
 import VisTitle from "../../VisTitle";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
+import useVisDataFetch from "../../../../hooks/useVisDataFetch";
+import LoadingSpinner from "../../LoadingSpinner";
 
 const useStyles = makeStyles((theme) => ({
   factCard: {
     position: "absolute",
     minWidth: "250px",
-    marginLeft: "-18rem",
+    marginLeft: "-10rem",
     marginTop: "5rem",
 
     [theme.breakpoints.down("sm")]: {
@@ -44,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     [theme.breakpoints.up("lg")]: {
-      marginLeft: "-36rem",
+      marginLeft: "-22rem",
     },
   },
 }));
@@ -52,10 +47,12 @@ const useStyles = makeStyles((theme) => ({
 const Bubbles = () => {
   const theme = useTheme();
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const { summary, fetching, error } = useSelector(
-    (state) => state.bubblesReducer
-  );
+  const {
+    data: sliceData,
+    data: { summary },
+    fetching,
+    error,
+  } = useSelector((state) => state.bubblesReducer);
   const [data, setData] = useState(null);
   const [tooltipData, setTooltipData] = useState({
     country: null,
@@ -68,18 +65,7 @@ const Bubbles = () => {
   const width = mediumScreen ? windowWidth - theme.navBar.width : windowWidth;
   const height = 540;
 
-  // Retrieve the bubbles data on component mount
-  useEffect(() => {
-    if (!summary && !fetching) {
-      dispatch(getSummary());
-    }
-  }, [dispatch, fetching, summary]);
-
-  useEffect(() => {
-    if (error) {
-      throw new Error("Could not retrieve data for visualization");
-    }
-  }, [error]);
+  useVisDataFetch("bubbles", sliceData, fetching, error);
 
   useEffect(() => {
     if (!fetching && summary && data === null) {
@@ -151,7 +137,7 @@ const Bubbles = () => {
 
       // Initialize the circle: all located at the center of the svg area
       const node = svg
-        .attr("data-testid", "svg")
+        .attr("data-testid", "vis-svg")
         .append("g")
         .selectAll("circle")
         .data(data)
@@ -209,19 +195,8 @@ const Bubbles = () => {
     }
   }, [data, width]);
 
-  // Display a loading spinner while data is being fetched
   if (fetching) {
-    return (
-      <Box
-        height="100vh"
-        width="100%"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <CircularProgress size={theme.spacing(10)} data-testid="progressbar" />
-      </Box>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
@@ -230,6 +205,7 @@ const Bubbles = () => {
       flexDirection="column"
       overflow="hidden"
       alignItems="center"
+      data-testid="vis-container"
     >
       <VisTitle variant="h4" component="h2" subtitled>
         Biases in Bubbles:
