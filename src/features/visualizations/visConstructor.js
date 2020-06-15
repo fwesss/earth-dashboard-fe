@@ -1,5 +1,11 @@
 import React from "react";
-import { createSlice } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  // eslint-disable-next-line
+  CaseReducerActions,
+  // eslint-disable-next-line
+  ThunkDispatch,
+} from "@reduxjs/toolkit";
 import bubbles from "../../api/covid/bubbles";
 import racing from "../../api/covid/racing";
 import airQuality from "../../api/covid/airQuality";
@@ -137,6 +143,13 @@ const fetchingReducers = {
   },
 };
 
+/**
+ * Function for retrieving data from API to be used in the visualization
+ *
+ * @param {Function} requestData - Data retrieval and manipulation function
+ * @param {CaseReducerActions} actions - Redux actions for the visualization
+ * @returns {function(): function(ThunkDispatch)} - Asynchronously fetches data need for visualization and either dipatches a success or error action with the API response
+ */
 const getData = (requestData, actions) => () => async (dispatch) => {
   dispatch(actions.fetchingData());
   try {
@@ -148,7 +161,7 @@ const getData = (requestData, actions) => () => async (dispatch) => {
 
 /**
  * @typedef {object} VisSlice
- * @property {any} slice - Redux actions and reducers
+ * @property {createSlice} slice - Redux actions and reducers
  * @property {InitialState} initialState - Initial state of visualization
  * @property {Function} getData - Method to call API
  * @property {Function} fetching - Returns the fetching property of state
@@ -196,6 +209,7 @@ const sliceBuilder = (name, initialData) => ({
 
 /**
  * @type {Visualization[]}
+ * @namespace
  */
 export const visualizations = [
   {
