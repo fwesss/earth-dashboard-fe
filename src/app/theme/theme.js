@@ -1,5 +1,17 @@
-import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
+import {
+  createMuiTheme,
+  responsiveFontSizes,
+  // eslint-disable-next-line
+  Theme,
+} from "@material-ui/core/styles";
 
+/**
+ * App styles and colors are derived from the theme object created from this function.
+ * Colors were all selected to coordinate with the primary color and text has acceptable contrast.
+ *
+ * @param {boolean} prefersDarkMode - Whether the user prefers a dark theme or not
+ * @returns {Theme} - Theme object
+ */
 export default (prefersDarkMode = false) =>
   responsiveFontSizes(
     createMuiTheme({

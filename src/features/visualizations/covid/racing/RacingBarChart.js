@@ -10,7 +10,7 @@ import { format } from "date-fns";
 import useTheme from "@material-ui/core/styles/useTheme";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-function RacingBarChart({ data, width, height }) {
+const RacingBarChart = ({ data, width, height }) => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -76,6 +76,6 @@ function RacingBarChart({ data, width, height }) {
       />
     </VictoryChart>
   );
-}
+};
 
 export default RacingBarChart;
