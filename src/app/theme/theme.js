@@ -136,7 +136,7 @@ export default (prefersDarkMode = false) =>
         height: 56,
       },
       navBar: {
-        width: 255,
+        width: 265,
         background: prefersDarkMode ? "#405454" : "#FFFFFF",
         logoBackground: "#405454",
       },
@@ -154,6 +154,7 @@ export default (prefersDarkMode = false) =>
         },
         body2: {
           fontFamily: "'Source Sans Pro', sans-serif",
+          fontSize: 20,
         },
         caption: {
           fontFamily: "'Source Sans Pro', sans-serif",

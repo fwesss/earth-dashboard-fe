@@ -11,6 +11,7 @@ export const initialState = {
   darkMode: JSON.parse(localStorage.getItem("darkMode"))
     ? JSON.parse(localStorage.getItem("darkMode"))
     : false,
+  showSplash: true,
 };
 
 const themeSlice = createSlice({
@@ -29,9 +30,16 @@ const themeSlice = createSlice({
         darkMode: !state.darkMode,
       };
     },
+
+    toggleShowSplash(state) {
+      return {
+        ...state,
+        showSplash: false,
+      };
+    },
   },
 });
 
-export const { toggleDarkMode } = themeSlice.actions;
+export const { toggleDarkMode, toggleShowSplash } = themeSlice.actions;
 
 export default themeSlice.reducer;

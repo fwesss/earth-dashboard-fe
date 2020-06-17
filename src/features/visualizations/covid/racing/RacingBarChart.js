@@ -20,6 +20,9 @@ const RacingBarChart = ({ data, width, height }) => {
       height={height}
       domainPadding={{ x: 20, y: 300 }}
       theme={VictoryTheme.material}
+      style={{
+        touchAction: "auto",
+      }}
     >
       <VictoryAxis
         fixLabelOverlap

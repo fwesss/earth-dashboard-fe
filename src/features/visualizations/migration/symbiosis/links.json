@@ -1,0 +1,157 @@
+[
+  {
+    "source": "Flower Mites",
+    "target": "Hamelia Flower",
+    "type": "parasitism"
+  },
+  {
+    "source": "Oxpecker Bird",
+    "target": "Rhinoceros",
+    "type": "commensalism"
+  },
+  {
+    "source": "Flower Mites",
+    "target": "Hummingbird",
+    "type": "parasitism"
+  },
+  {
+    "source": "Hamelia Flower",
+    "target": "Hummingbird",
+    "type": "mutualism"
+  },
+  {
+    "source": "Three-Toed Sloth",
+    "target": "Sloth Moth",
+    "type": "mutualism"
+  },
+  {
+    "source": "Algae",
+    "target": "Sloth Moth",
+    "type": "mutualism"
+  },
+  {
+    "source": "Three-Toed Sloth",
+    "target": "Algae",
+    "type": "mutualism"
+  },
+  {
+    "source": "Golden Jellyfish",
+    "target": "Algae",
+    "type": "mutualism"
+  },
+  {
+    "source": "Sea Anemone",
+    "target": "Algae",
+    "type": "mutualism"
+  },
+  {
+    "source": "Jewel Wasp",
+    "target": "American Cockroach",
+    "type": "parasitism"
+  },
+  {
+    "source": "Sea Otter",
+    "target": "Kelp",
+    "type": "mutualism"
+  },
+  {
+    "source": "Garter Snake",
+    "target": "Rough-Skinned Newt",
+    "type": "parasitism"
+  },
+  {
+    "source": "Ostrich",
+    "target": "Zebra",
+    "type": "mutualism"
+  },
+  {
+    "source": "Blue Wildebeest",
+    "target": "Zebra",
+    "type": "mutualism"
+  },
+  {
+    "source": "Crabs",
+    "target": "Sea Urchin",
+    "type": "mutualism"
+  },
+  {
+    "source": "Zebra",
+    "target": "Oxpecker Bird",
+    "type": "mutualism"
+  },
+  {
+    "source": "Water Buffalo",
+    "target": "Oxpecker Bird",
+    "type": "mutualism"
+  },
+  {
+    "source": "Hermit Crab",
+    "target": "Sea Anemone",
+    "type": "mutualism"
+  },
+  {
+    "source": "Sea Anemone",
+    "target": "Clownfish",
+    "type": "mutualism"
+  },
+  {
+    "source": "Annelid worm",
+    "target": "Sea Star",
+    "type": "commensalism"
+  },
+  {
+    "source": "Barnacles",
+    "target": "Baleen Whale",
+    "type": "commensalism"
+  },
+  {
+    "source": "Large Blue Butterfly",
+    "target": "Red Ant",
+    "type": "mutualism"
+  },
+  {
+    "source": "Red Ant",
+    "target": "Aphid",
+    "type": "commensalism"
+  },
+  {
+    "source": "Monarch Butterfly",
+    "target": "Viceroy Butterfly",
+    "type": "commensalism"
+  },
+  {
+    "source": "Sea Star",
+    "target": "Coral reef",
+    "type": "parasitism"
+  },
+  {
+    "source": "Arctic Fox",
+    "target": "Caribou",
+    "type": "commensalism"
+  },
+  {
+    "source": "Emperor Shrimp",
+    "target": "Sea Cucumber",
+    "type": "commensalism"
+  },
+  {
+    "source": "Pearlfish",
+    "target": "Sea Cucumber",
+    "type": "commensalism"
+  },
+  {
+    "source": "Aphids",
+    "target": "Plants (various)",
+    "type": "parasitism"
+  },
+  {
+    "source": "Zebra Crab",
+    "target": "Sea Urchin",
+    "type": "parasitism"
+  },
+  {
+    "source": "Sea Urchin",
+    "target": "Carrier Crab",
+    "type": "mutualism"
+  }
+]

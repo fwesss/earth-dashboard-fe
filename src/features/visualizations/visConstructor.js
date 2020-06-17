@@ -1,4 +1,3 @@
-import React from "react";
 import {
   createSlice,
   // eslint-disable-next-line
@@ -12,13 +11,6 @@ import airQuality from "../../api/covid/airQuality";
 import heatmap from "../../api/covid/heatmap";
 import deforestation from "../../api/deforestation/prediction";
 import migration from "../../api/migration/migration";
-import BubblesVis from "./covid/bubbles/BubblesVis";
-import RacingData from "./covid/racing/RacingData";
-import AirVis from "./covid/air/AirVis";
-import CasesVis from "./covid/cases/CasesVis";
-import CountryVis from "./deforestation/country/CountryVis";
-import CountryIncomeVis from "./deforestation/income/CountryIncomeVis";
-import Migration from "./migration/pattern/Migration";
 
 /**
  * The initial state of a visualization
@@ -201,9 +193,9 @@ const sliceBuilder = (name, initialData) => ({
  * @property {string} displayName - The name of the visualization as it should display in the NavBar
  * @property {string} topic - The topic of the visualization as it should display in the NavBar
  * @property {string} path - The path from the visualizations folder of the component exporting the visualization
- * @property {object} initialData - The object that will hold visualization state required to render
- * @property {Function} fetchMethod - The function called to retrieve data from the API
- * @property {object} minTestData - The minimum required data to render a visualization. Tests will be automatically run using this data to render a test visualization.
+ * @property {?object} initialData - The object that will hold visualization state required to render
+ * @property {?Function} fetchMethod - The function called to retrieve data from the API
+ * @property {?object} minTestData - The minimum required data to render a visualization. Tests will be automatically run using this data to render a test visualization.
  * @property {Function} component - The component exporting the visualization page
  */
 
@@ -215,7 +207,7 @@ export const visualizations = [
   {
     name: "bubbles",
     displayName: "Bubbles",
-    topic: "COVID-19",
+    topic: "Pandemic",
     path: "/covid/bubbles/BubblesVis",
     initialData: {
       summary: null,
@@ -233,12 +225,12 @@ export const visualizations = [
         },
       ],
     },
-    component: <BubblesVis />,
+    // component: () => import("./covid/bubbles/BubblesVis"),
   },
   {
     name: "racing",
     displayName: "Racing",
-    topic: "COVID-19",
+    topic: "Pandemic",
     path: "/covid/racing/RacingData",
     initialData: {
       deaths: null,
@@ -254,12 +246,12 @@ export const visualizations = [
         },
       ],
     },
-    component: <RacingData />,
+    // component: () => import("./covid/racing/RacingData"),
   },
   {
     name: "airQuality",
     displayName: "Air Quality",
-    topic: "COVID-19",
+    topic: "Pandemic",
     path: "/covid/air/AirVis",
     initialData: {
       dates: null,
@@ -290,12 +282,12 @@ export const visualizations = [
         },
       ],
     },
-    component: <AirVis />,
+    // component: () => import("./covid/air/AirVis"),
   },
   {
     name: "heatmap",
     displayName: "Heatmap",
-    topic: "COVID-19",
+    topic: "Pandemic",
     path: "/covid/cases/CasesVis",
     initialData: {
       cases: null,
@@ -332,7 +324,7 @@ export const visualizations = [
         type: "FeatureCollection",
       },
     },
-    component: <CasesVis />,
+    // component: () => import("./covid/cases/CasesVis"),
   },
   {
     name: "country",
@@ -353,7 +345,7 @@ export const visualizations = [
         },
       ],
     },
-    component: <CountryVis />,
+    // component: () => import("./deforestation/country/CountryVis"),
   },
   {
     name: "countryIncome",
@@ -374,12 +366,12 @@ export const visualizations = [
         },
       ],
     },
-    component: <CountryIncomeVis />,
+    // component: () => import("./deforestation/income/CountryIncomeVis"),
   },
   {
     name: "pattern",
-    displayName: "Pattern",
-    topic: "Migration",
+    displayName: "Migration",
+    topic: "Wildlife",
     path: "/migration/pattern/Migration",
     initialData: {
       migration: null,
@@ -400,7 +392,14 @@ export const visualizations = [
         },
       ],
     },
-    component: <Migration />,
+    // component: () => import("./migration/pattern/Migration"),
+  },
+  {
+    name: "symbiosis",
+    displayName: "Symbiosis",
+    topic: "Wildlife",
+    path: "/migration/symbiosis/Symbiosis",
+    // component: () => import("./migration/symbiosis/Symbiosis"),
   },
 ];
 
