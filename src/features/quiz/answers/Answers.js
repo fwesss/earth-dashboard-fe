@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Answer from "./Answer";
 
 export default function Answers(props) {
