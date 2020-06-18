@@ -13,6 +13,7 @@ import useVisDataFetch, {
   checkIfNoData,
 } from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
+import AirQuiz from "../../../quiz/AirQuiz";
 
 const AirVis = () => {
   const theme = useTheme();
@@ -269,6 +270,7 @@ const AirVis = () => {
           average over the course of a year.
         </Blurb>
       </Box>
+      <AirQuiz />
     </Box>
   );
 };

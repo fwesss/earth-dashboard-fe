@@ -26,6 +26,7 @@ import VisTitle from "../../VisTitle";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
+import BubblesQuiz from "../../../quiz/BubblesQuiz";
 
 const useStyles = makeStyles((theme) => ({
   factCard: {
@@ -247,6 +248,7 @@ const Bubbles = () => {
         each country. We can see that the US bubble is far larger than the Italy
         bubble, but of course the United States has a much larger population.
       </VisExplanation>
+      <BubblesQuiz />
     </Box>
   );
 };

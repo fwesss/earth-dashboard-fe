@@ -20,6 +20,7 @@ import useWindowSize from "../../../../hooks/useWindowSize";
 import VisExplanation from "../../VisExplanation";
 import LoadingSpinner from "../../LoadingSpinner";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
+import IncomeQuiz from "../../../quiz/IncomeQuiz";
 
 export default withErrorBoundary(() => {
   const theme = useTheme();
@@ -218,6 +219,7 @@ export default withErrorBoundary(() => {
         bar graph, these visualization types are important because they
         typically are quick to produce and easy to understand.
       </VisExplanation>
+      <IncomeQuiz />
     </Box>
   );
 }, "visualization");
