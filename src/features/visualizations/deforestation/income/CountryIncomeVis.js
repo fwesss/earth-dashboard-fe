@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import useTheme from "@material-ui/core/styles/useTheme";
 import Box from "@material-ui/core/Box";
 import {
@@ -20,8 +20,10 @@ import useWindowSize from "../../../../hooks/useWindowSize";
 import VisExplanation from "../../VisExplanation";
 import LoadingSpinner from "../../LoadingSpinner";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
+import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 
 export default withErrorBoundary(() => {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -46,6 +48,10 @@ export default withErrorBoundary(() => {
 
   useVisDataFetch("countryIncome", data, fetching, error);
 
+  useEffect(() => {
+    dispatch(toggleShowSplash());
+  }, [dispatch]);
+
   if (fetching) {
     return <LoadingSpinner />;
   }
@@ -66,6 +72,9 @@ export default withErrorBoundary(() => {
             width={width}
             height={height}
             maxDomain={{ x: 2120, y: 40 }}
+            style={{
+              touchAction: "auto",
+            }}
             padding={{
               top: smallScreen ? 80 : 120,
               right: smallScreen ? 30 : 80,
@@ -214,7 +223,7 @@ export default withErrorBoundary(() => {
       <VisExplanation>
         Using the same prediction model and data source we are also able to see
         how deforestation trends look based on a countries ‘income’. Here we are
-        able to select between two different visualizations, a line graph and a
+        able to select between two different visualizations, a line graph, and a
         bar graph, these visualization types are important because they
         typically are quick to produce and easy to understand.
       </VisExplanation>

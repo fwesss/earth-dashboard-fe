@@ -1,9 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import "./index.css";
-import store from "./app/store";
 
 const render = () => {
   // eslint-disable-next-line global-require
@@ -11,9 +9,7 @@ const render = () => {
 
   ReactDOM.render(
     <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <App />
     </React.StrictMode>,
     document.getElementById("root")
   );
