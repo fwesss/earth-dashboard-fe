@@ -17,7 +17,7 @@ const store = configureStore({
 });
 
 /*
- * When a change is made in development, refresh the changed component and hot swap
+ * When a temperature is made in development, refresh the changed component and hot swap
  * the Redux store. This allows us to make changes without fetching data for all
  * components.
  */
