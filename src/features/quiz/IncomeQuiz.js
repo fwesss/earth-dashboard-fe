@@ -1,13 +1,24 @@
 /* eslint-disable */
 
 import React, { useState } from "react";
-import { Box, TextField } from "@material-ui/core";
+import { Box, TextField, Button } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import VisTitle from "../visualizations/VisTitle";
 
 const useStyles = makeStyles({
-  inputField: {
-    width: 100,
+  input: {
+    width: "100%",
+    marginBottom: "2rem",
+    marginTop: "2rem",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    marginLeft: "2rem",
   },
 });
 
@@ -50,7 +61,7 @@ export default function BubblesQuiz() {
       flexDirection="column"
       justifyContent="center"
       width="100%"
-      height="30vh"
+      height="50vh"
       alignItems="center"
     >
       {showResults ? (
@@ -70,9 +81,15 @@ export default function BubblesQuiz() {
               than higher-income countries?
             </VisTitle>
           </div>
-          <form noValidate autoComplete="off" onSubmit={handelSubmit}>
-            <div>
+          <form
+            noValidate
+            className={classes.form}
+            autoComplete="off"
+            onSubmit={handelSubmit}
+          >
+            <Box style={{ width: "50%" }}>
               <TextField
+                className={classes.input}
                 id="outlined-error-helper-text"
                 label={results.results ? results.results : null}
                 error={error.error}
@@ -81,13 +98,21 @@ export default function BubblesQuiz() {
                 onChange={handleChange}
                 multiline
                 rows={2}
-                defaultValue="Answer Question here"
+                defaultValue="Your opinion here"
                 value={answer.answer}
                 variant="outlined"
                 // required
               />
-            </div>
-            <button type="submit">Submit</button>
+            </Box>
+            <Button
+              className={classes.button}
+              height="20%"
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
           </form>
         </div>
       )}

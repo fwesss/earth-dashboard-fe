@@ -4,8 +4,23 @@ import React, { useState } from "react";
 import Progress from "./Progress";
 import Questions from "./questions/Questions";
 import Answers from "./answers/Answers";
+import { makeStyles } from "@material-ui/core/styles";
+import { Box, Typography, Button } from "@material-ui/core";
+import VisTitle from "../visualizations/VisTitle";
+
+const useStyles = makeStyles({
+  Container: {
+    width: "80%",
+    height: "70vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 
 export default function BirdPatternQuiz() {
+  const classes = useStyles();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState("");
   const [answers, setAnswers] = useState([]);
@@ -91,27 +106,34 @@ export default function BirdPatternQuiz() {
   if (showResults) {
     return (
       <div className="container-results">
-        <h3>Results</h3>
+        <VisTitle
+          id="bubble-question-title"
+          variant="h4"
+          aria-label="bubble-title"
+        >
+          Results
+        </VisTitle>
         <ul>{renderResultsData()}</ul>
         <button className="btn btn-primary" onClick={restart}>
           Restart
         </button>
       </div>
     );
+  } else {
+    return (
+      <Box className={classes.Container}>
+        <Progress total={questions.length} current={currentQuestion + 1} />
+        <Questions questions={question.question} />
+        {renderError()}
+        <Answers
+          question={question}
+          currentAnswer={currentAnswer}
+          handleClick={handleClick}
+        />
+        <button className="btn btn-primary" onClick={next}>
+          Confirm
+        </button>
+      </Box>
+    );
   }
-  return (
-    <div className="container">
-      <Progress total={questions.length} current={currentQuestion + 1} />
-      <Questions questions={question.question} />
-      {renderError()}
-      <Answers
-        question={question}
-        currentAnswer={currentAnswer}
-        handleClick={handleClick}
-      />
-      <button className="btn btn-primary" onClick={next}>
-        Confirm
-      </button>
-    </div>
-  );
 }
