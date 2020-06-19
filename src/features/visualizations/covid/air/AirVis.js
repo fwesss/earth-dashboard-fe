@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, useTheme } from "@material-ui/core";
 import { VictoryLine, VictoryAxis, VictoryLabel, VictoryTheme } from "victory";
 import { format } from "date-fns";
@@ -7,16 +7,18 @@ import { schemeSet3 } from "d3";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import VisTitle from "../../VisTitle";
-import Blurb from "./Blurb";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import useVisDataFetch, {
   checkIfNoData,
 } from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
+import VisExplanation from "../../VisExplanation";
+import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import AirQuiz from "../../../quiz/AirQuiz";
 
 const AirVis = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const {
     data,
     data: { dates, airQuality, cases },
@@ -35,13 +37,17 @@ const AirVis = () => {
     windowHeight < 800 ? windowHeight * 0.9 : 800,
   ];
 
-  useVisDataFetch("airQuality", data, fetching, error);
-
   useEffect(() => {
     if (dates !== null) {
       setFormattedDates(dates.map((date) => new Date(date)));
     }
   }, [dates]);
+
+  useVisDataFetch("airQuality", data, fetching, error);
+
+  useEffect(() => {
+    dispatch(toggleShowSplash());
+  }, [dispatch]);
 
   if (fetching) {
     return <LoadingSpinner />;
@@ -56,7 +62,7 @@ const AirVis = () => {
       data-testid="vis-container"
     >
       <VisTitle subtitled variant="h4" component="h2">
-        {"Mean Particulate Matter < 2.5 microns vs. Confirmed cases of covid"}
+        Air Pollution vs. the Spread of COVID-19
       </VisTitle>
 
       {checkIfNoData(data) ? (
@@ -248,28 +254,18 @@ const AirVis = () => {
           </g>
         </svg>
       )}
-      <Box display="flex" justifyContent="center" flexWrap="wrap" pt={4} px={4}>
-        <Blurb maxWidth={14}>
-          The term “PM 2.5” refers to atmospheric particulate matter that have a
-          diameter of less than 2.5 micrometers, which is about 3% the diameter
-          of a human hair.
-        </Blurb>
-        <Blurb maxWidth={14}>
-          Guidelines from the World Health Organization (WHO) stipulate that the
-          average PM 2.5 should not exceed 10 μg/m³ over the course of a year,
-          and 25 μg/m³ over a 24-hour period.
-        </Blurb>
-        <Blurb maxWidth={14}>
-          During quarantine in Glendora, CA, the PM 2.5 never exceeded the
-          stipulated level of 25 μg/m³, but it did routinely before the
-          lockdown.
-        </Blurb>
-        <Blurb maxWidth={14}>
-          Even during quarantine, the average PM 2.5 was 10.3 μg/m³, making it
-          unlikely that Glendora will hit their target of less than 10 μg/m³ on
-          average over the course of a year.
-        </Blurb>
-      </Box>
+      <VisExplanation>
+        This is a simple line graph that shows the air quality in Glendora,
+        California superimposed against the number of COVID-19 cases in the
+        whole country. While line graphs are one of the simplest types of
+        visualization to create, they remain one of the most effective ways to
+        convey ideas or demonstrate phenomena. Here we see that as coronavirus
+        cases increase - and especially after the lockdown is ordered - air
+        quality dramatically improves in Glendora. This could be due to a
+        variety of factors, and is probably a result of a combination of reduced
+        land/air travel and reduced production in manufacturing/industrial
+        plants.
+      </VisExplanation>
       <AirQuiz />
     </Box>
   );

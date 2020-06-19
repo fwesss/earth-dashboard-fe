@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
 import ReactGa from "react-ga";
 import mapboxgl from "mapbox-gl";
@@ -9,7 +9,6 @@ import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import "mapbox-gl/src/css/mapbox-gl.css";
 import useDebounce from "../../../../hooks/useDebounce";
 import { heatmap, circles, labels } from "./layers.json";
 import VisExplanation from "../../VisExplanation";
@@ -18,6 +17,8 @@ import useWindowSize from "../../../../hooks/useWindowSize";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 
 mapboxgl.accessToken = process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN;
 
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DataProvider = () => {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const {
     data,
@@ -49,6 +51,10 @@ const DataProvider = () => {
   // HOC and store it in local state
   const [mapState, setMapState] = useState(null);
   const [play, setPlay] = useState(false);
+  const [dateToFilter, setDateToFilter] = useState({
+    date: null,
+    sliderValue: null,
+  });
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const largeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
@@ -57,9 +63,25 @@ const DataProvider = () => {
 
   useVisDataFetch("heatmap", data, fetching, error);
 
+  useEffect(() => {
+    dispatch(toggleShowSplash());
+  }, [dispatch]);
+
   if (fetching) {
     return <LoadingSpinner />;
   }
+
+  const handlePlay = () => {
+    if (dateToFilter.sliderValue === dates.length - 2) {
+      setDateToFilter({
+        date: dates[0],
+        sliderValue: 0,
+      });
+      setPlay(true);
+    } else {
+      setPlay(true);
+    }
+  };
 
   return (
     <Box
@@ -85,7 +107,7 @@ const DataProvider = () => {
       />
 
       <Box display="flex" mx={2} mt={4} mb={6} alignItems="center" width="90%">
-        <IconButton onClick={() => setPlay(true)} aria-label="play">
+        <IconButton onClick={handlePlay} aria-label="play">
           <PlayCircleFilledIcon fontSize="large" />
         </IconButton>
         <IconButton onClick={() => setPlay(false)} aria-label="pause">
@@ -99,6 +121,8 @@ const DataProvider = () => {
             setPlay={setPlay}
             dates={dates}
             smallScreen={smallScreen}
+            dateToFilter={dateToFilter}
+            setDateToFilter={setDateToFilter}
           />
         )}
       </Box>
@@ -106,13 +130,14 @@ const DataProvider = () => {
         A heatmap is a visual representation of data that uses a method of
         color-coding to represent the different data values. Data which includes
         latitude and longitude values (coordinates for mapping associated with
-        the data) is great to use with a heatmap. The data for daily new
-        COVID-19 confirmed cases includes latitude and longitude values which
-        allows us to visually see where and how the COVID-19 virus is spreading
-        throughout the United States and where the most and least impacted areas
-        are. Here in this heatmap we can see over-time how much more New York
-        and the general east coast have been affected by the virus compared to
-        California and the west coast.
+        the data) is great to use with a heatmap. This data for daily new
+        COVID-19 confirmed cases from late January through the middle of May of
+        2020 which includes latitude and longitude values that allow us to
+        visually see where and how the COVID-19 virus is spreading throughout
+        the United States and where the most and least impacted areas are. Here
+        in this heatmap we can see over-time how much more New York and the
+        general east coast have been affected by the virus compared to
+        California and the west coast during this time period.
       </VisExplanation>
     </Box>
   );
@@ -190,15 +215,19 @@ const CasesVis = ({ cases, setMapState, largeScreen, theme }) => {
   );
 };
 
-const DateSlider = ({ mapState, play, setPlay, dates, smallScreen }) => {
+const DateSlider = ({
+  mapState,
+  play,
+  setPlay,
+  dates,
+  smallScreen,
+  dateToFilter,
+  setDateToFilter,
+}) => {
   const classes = useStyles();
-  const [dateToFilter, setDateToFilter] = useState({
-    date: null,
-    sliderValue: null,
-  });
   // The date filter is debounced so dragging the slider quickly will not trigger multiple layer filter
   // changes. Filter changes are only registered every 25ms.
-  const debouncedDateToFilter = useDebounce(dateToFilter, 15);
+  const debouncedDateToFilter = useDebounce(dateToFilter, 25);
 
   // Whenever the dateToFilter changes in state, we change the data we are showing by filtering by date
   // There are separate layers for the circles, labels, and heatmap so we set the filter on each
@@ -217,7 +246,7 @@ const DateSlider = ({ mapState, play, setPlay, dates, smallScreen }) => {
       date: dates[dates.length - 2],
       sliderValue: dates.length - 2,
     });
-  }, [dates]);
+  }, [dates, setDateToFilter]);
 
   useEffect(() => {
     let interval;
@@ -230,11 +259,11 @@ const DateSlider = ({ mapState, play, setPlay, dates, smallScreen }) => {
             date: dates[dateToFilter.sliderValue + 1],
             sliderValue: dateToFilter.sliderValue + 1,
           }),
-        25000 / dates.length
+        50000 / dates.length
       );
     }
     return () => clearInterval(interval);
-  }, [dates, dateToFilter.sliderValue, play]);
+  }, [dates, dateToFilter.sliderValue, play, setDateToFilter]);
 
   return (
     <Slider

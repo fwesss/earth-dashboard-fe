@@ -2,7 +2,7 @@
 /* eslint no-param-reassign: 0 */
 
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   select,
   schemeSet3,
@@ -26,6 +26,7 @@ import VisTitle from "../../VisTitle";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
+import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import BubblesQuiz from "../../../quiz/BubblesQuiz";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Bubbles = () => {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
   const {
@@ -60,6 +62,7 @@ const Bubbles = () => {
     cases: null,
   });
   const [opacity, setOpacity] = useState(0);
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   const windowWidth = useWindowSize().width * 0.9;
@@ -67,6 +70,10 @@ const Bubbles = () => {
   const height = 540;
 
   useVisDataFetch("bubbles", sliceData, fetching, error);
+
+  useEffect(() => {
+    dispatch(toggleShowSplash());
+  }, [dispatch]);
 
   useEffect(() => {
     if (!fetching && summary && data === null) {
@@ -93,11 +100,13 @@ const Bubbles = () => {
         .attr("width", width)
         .attr("height", height);
 
-      // Color palette for continents?
+      // Color palette for countries
       const color = scaleOrdinal().range(schemeSet3);
 
       // Size scale for countries
-      const size = scaleLinear().domain([0, 800000]).range([7, 75]); // circle will be between 7 and 55 px wide
+      const size = scaleLinear()
+        .domain([0, 800000])
+        .range([7, smallScreen ? 35 : 75]); // circle will be between 7 and 75 px wide on a large screen or 35px on small
 
       // Features of the forces applied to the nodes:
       const simulation = forceSimulation()
@@ -151,8 +160,8 @@ const Bubbles = () => {
         .attr("data-testid", (d) => d.country)
         .style("fill", (d) => color(d.country))
         .style("fill-opacity", 0.8)
-        .attr("stroke", "black")
-        .style("stroke-width", 1)
+        .attr("stroke", (d) => color(d.country))
+        .style("stroke-width", 2)
         .on("mousemove", (d) =>
           setTooltipData({
             country: d.country,
@@ -194,7 +203,7 @@ const Bubbles = () => {
 
       return () => select("#bubbleSvg").remove();
     }
-  }, [data, width]);
+  }, [data, smallScreen, width]);
 
   if (fetching) {
     return <LoadingSpinner />;
@@ -245,8 +254,12 @@ const Bubbles = () => {
         One goal of data visualization is to communicate information that
         accounts for both accuracy and depth. In this case, we have a high level
         of accuracy, but no accounting for the vastly different populations of
-        each country. We can see that the US bubble is far larger than the Italy
-        bubble, but of course the United States has a much larger population.
+        each country. We can see that the Brazil bubble is far larger than the
+        Italy bubble, but of course, Brazil has a much larger population. A
+        bubble chart or visualization allows for processing a lot of numeric
+        information quickly. You can easily visualize three or more variables by
+        placing the bubbles on an axis. You can quickly get an idea of the
+        difference in size for each country.
       </VisExplanation>
       <BubblesQuiz />
     </Box>

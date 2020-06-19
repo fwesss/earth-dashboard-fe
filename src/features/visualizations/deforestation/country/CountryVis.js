@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import useTheme from "@material-ui/core/styles/useTheme";
 import Box from "@material-ui/core/Box";
 import {
@@ -25,6 +25,7 @@ import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import VisExplanation from "../../VisExplanation";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
+import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import CountryQuiz from "../../../quiz/CountryQuiz";
 
 const countries = [
@@ -37,6 +38,7 @@ const countries = [
 ];
 
 export default withErrorBoundary(() => {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const extraSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -64,6 +66,10 @@ export default withErrorBoundary(() => {
 
   useVisDataFetch("country", data, fetching, error);
 
+  useEffect(() => {
+    dispatch(toggleShowSplash());
+  }, [dispatch]);
+
   if (fetching) {
     return <LoadingSpinner />;
   }
@@ -80,12 +86,6 @@ export default withErrorBoundary(() => {
       <VisTitle subtitled variant="h4" component="h2">
         Deforestation Prediction Trends by Country 2019 - 2120
       </VisTitle>
-      <VisExplanation>
-        Deforestation is a very important topic when it comes to the earth’s
-        longevity and health. Forests and trees absorb and store carbon dioxide
-        that otherwise would have a direct impact on climate change and they
-        cover ⅓ of the earth’s surface.
-      </VisExplanation>
       <Box
         display="flex"
         flexDirection={extraLargeScreen ? "row" : "column"}
@@ -102,6 +102,9 @@ export default withErrorBoundary(() => {
                 right: mediumScreen ? 40 : 20,
                 bottom: 60,
                 left: smallScreen ? 75 : 100,
+              }}
+              style={{
+                touchAction: "auto",
               }}
               theme={VictoryTheme.material}
               containerComponent={

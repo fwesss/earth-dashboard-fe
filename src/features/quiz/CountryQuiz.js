@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState } from "react";
 import { Box, TextField } from "@material-ui/core";
 import VisTitle from "../visualizations/VisTitle";

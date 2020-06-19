@@ -16,6 +16,7 @@ const VisExplanation = ({ children }) => {
 
   return (
     <Typography
+      variant="body2"
       data-testid="vis-explanation"
       paragraph
       className={classes.explanation}

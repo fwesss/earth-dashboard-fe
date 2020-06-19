@@ -15,7 +15,7 @@
     "optimize-regex",
     "jest",
     "jest-formatting",
-    "testing-library",
+    "testing-library"
   ],
   "extends": [
     "eslint:recommended",

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { add, getDayOfYear, parseISO } from "date-fns";
 import { Box, Button, makeStyles } from "@material-ui/core";
 import ReactGa from "react-ga";
@@ -13,10 +13,11 @@ import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
+import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import RacingQuiz from "../../../quiz/RacingQuiz";
-// import RacingQuiz from "../../../quiz/HeatMapQuiz";
 
 const RacingData = () => {
+  const dispatch = useDispatch();
   const {
     data: sliceData,
     data: { deaths },
@@ -80,6 +81,10 @@ const RacingData = () => {
   }, 200);
 
   useVisDataFetch("racing", sliceData, fetching, error);
+
+  useEffect(() => {
+    dispatch(toggleShowSplash());
+  }, [dispatch]);
 
   if (fetching) {
     return <LoadingSpinner />;
@@ -145,12 +150,12 @@ const RacingData = () => {
         </Button>
       </Box>
       <VisExplanation>
-        Even the most basic graphs like a bar chart can be engaging and
+        Even the most basic graphs such as a bar chart can be engaging and
         interesting with the right set up and data. Time-series data (data that
-        has a date and/or time associated to it) allows us to see changes that
+        has a date and/or time associated with it) allows us to see changes that
         happen over-time. Here we are able to see the total death counts for the
-        world countries that have the highest totals in a basic bar graph,
-        because we have time-series data we are able to put the data in an
+        world countries that have the highest totals in a basic bar graph
+        because we have time-series data. We are able to put the data in
         animation from the very first day a COVID-19 death was confirmed through
         the present day.
       </VisExplanation>
