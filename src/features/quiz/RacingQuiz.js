@@ -2,8 +2,26 @@ import React, { useState } from "react";
 import Progress from "./Progress";
 import Questions from "./questions/Questions";
 import Answers from "./answers/Answers";
+import { makeStyles } from "@material-ui/core/styles";
+import { Box, Typography, Button } from "@material-ui/core";
+
+
+
+
+
+const useStyles = makeStyles({
+    Container: {
+        width: '100%',
+        height: '60vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+})
 
 export default function RacingQuiz() {
+    const classes = useStyles();
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [currentAnswer, setCurrentAnswer] = useState('');
     const [answers, setAnswers] = useState([]);
@@ -15,7 +33,7 @@ export default function RacingQuiz() {
         {
             id: 1,
             question: "When did Italy surpass China in its total count?",
-            answer_a: "Feburary 12,2020",
+            answer_a: "Feburary 12, 2020",
             answer_b: "March 19, 2020",
             answer_c: "April 6, 2020",
             answer_d: "May 4, 2020",
@@ -26,6 +44,7 @@ export default function RacingQuiz() {
     const question = questions[currentQuestion];
 
     const handleClick = e => {
+        console.log('you clicked me', e.target.value)
         setCurrentAnswer(e.target.value);
         setError('');
     }
@@ -88,16 +107,16 @@ export default function RacingQuiz() {
 
     if (showResults) {
         return (
-            <div className="container-results">
-                <h3>Results</h3>
+            <Box className="container-results">
+                <h1>Results</h1>
                 <ul>{renderResultsData()}</ul>
-                <button className="btn btn-primary" onClick={restart}>Restart</button>
+                <Button className="btn btn-primary" onClick={restart}>Restart</Button>
 
-            </div>
+            </Box>
         )
     } else {
         return (
-            <div className="container">
+            <Box className={classes.Container}>
                 <Progress total={questions.length} current={currentQuestion + 1} />
                 <Questions questions={question.question} />
                 {renderError()}
@@ -106,8 +125,15 @@ export default function RacingQuiz() {
                     currentAnswer={currentAnswer}
                     handleClick={handleClick}
                 />
-                <button className="btn btn-primary" onClick={next}>Confirm</button>
-            </div>
+                <Button
+                    className="btn btn-primary"
+                    onClick={next}
+                    variant="contained"
+                    color="primary"
+                >
+                    Confirm
+                </Button>
+            </Box>
         );
     }
 }
