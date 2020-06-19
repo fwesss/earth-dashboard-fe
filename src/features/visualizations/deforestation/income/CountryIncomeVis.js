@@ -21,6 +21,7 @@ import VisExplanation from "../../VisExplanation";
 import LoadingSpinner from "../../LoadingSpinner";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
+import IncomeQuiz from "../../../quiz/IncomeQuiz";
 
 export default withErrorBoundary(() => {
   const dispatch = useDispatch();
@@ -226,6 +227,7 @@ export default withErrorBoundary(() => {
         This allows us see how the forest area (% of land area) predictions
         trend for high, medium, and low income countries.
       </VisExplanation>
+      <IncomeQuiz />
     </Box>
   );
 }, "visualization");

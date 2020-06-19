@@ -14,6 +14,7 @@ import useVisDataFetch, {
 import LoadingSpinner from "../../LoadingSpinner";
 import VisExplanation from "../../VisExplanation";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
+import AirQuiz from "../../../quiz/AirQuiz";
 
 const AirVis = () => {
   const theme = useTheme();
@@ -265,6 +266,7 @@ const AirVis = () => {
         land/air travel and reduced production in manufacturing/industrial
         plants.
       </VisExplanation>
+      <AirQuiz />
     </Box>
   );
 };

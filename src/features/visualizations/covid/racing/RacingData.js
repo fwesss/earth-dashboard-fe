@@ -14,6 +14,7 @@ import useWindowSize from "../../../../hooks/useWindowSize";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
+import RacingQuiz from "../../../quiz/RacingQuiz";
 
 const RacingData = () => {
   const dispatch = useDispatch();
@@ -158,6 +159,7 @@ const RacingData = () => {
         animation from the very first day a COVID-19 death was confirmed through
         the present day.
       </VisExplanation>
+      <RacingQuiz />
     </Box>
   );
 };
