@@ -9,7 +9,8 @@ import CasesVis from "../features/visualizations/covid/cases/CasesVis";
 import CountryVis from "../features/visualizations/deforestation/country/CountryVis";
 import CountryIncomeVis from "../features/visualizations/deforestation/income/CountryIncomeVis";
 import Migration from "../features/visualizations/migration/pattern/Migration";
-import Symbiosis from "../features/visualizations/migration/symbiosis/Symbiosis";
+// import Symbiosis from "../features/visualizations/migration/symbiosis/Symbiosis";
+// import Temperature from "../features/visualizations/climate/temperature/Temperature";
 
 const components = [
   <BubblesVis />,
@@ -19,33 +20,36 @@ const components = [
   <CountryVis />,
   <CountryIncomeVis />,
   <Migration />,
-  <Symbiosis />,
+  // <Symbiosis />,
+  // <Temperature />,
 ];
 
 describe("Visualizations", () => {
   visualizations.forEach((vis, index) => {
-    describe(`${vis.name} visualization`, () => {
-      it("should render a visualization container, title, visualization, and explanation", async () => {
-        const { container, getAllByTestId } = renderWithRedux(
-          components[index],
-          {
-            initialState: {
-              [`${vis.name}Reducer`]: {
-                data: {
-                  ...vis.minTestData,
+    if (vis.name !== "temperature" && vis.name !== "symbiosis") {
+      describe(`${vis.name} visualization`, () => {
+        it("should render a visualization container, title, visualization, and explanation", async () => {
+          const { container, getAllByTestId } = renderWithRedux(
+            components[index],
+            {
+              initialState: {
+                [`${vis.name}Reducer`]: {
+                  data: {
+                    ...vis.minTestData,
+                  },
                 },
               },
-            },
-          }
-        );
+            }
+          );
 
-        await waitFor(() => getAllByTestId("vis-container"));
-        expect(getAllByTestId("vis-title")[0]).toBeInTheDocument();
-        expect(
-          container.querySelector("svg") || container.querySelector("canvas")
-        ).toBeInTheDocument();
-        expect(getAllByTestId("vis-explanation")[0]).toBeInTheDocument();
+          await waitFor(() => getAllByTestId("vis-container"));
+          expect(getAllByTestId("vis-title")[0]).toBeInTheDocument();
+          expect(
+            container.querySelector("svg") || container.querySelector("canvas")
+          ).toBeInTheDocument();
+          expect(getAllByTestId("vis-explanation")[0]).toBeInTheDocument();
+        });
       });
-    });
+    }
   });
 });

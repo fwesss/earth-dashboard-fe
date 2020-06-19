@@ -105,7 +105,7 @@ const fetchingReducers = {
 
   /**
    * @param {InitialState} state - Current visualization state
-   * @param {Action} action - Action to change state
+   * @param {Action} action - Action to temperature state
    * @returns {NewState} - New visualization state
    */
   fetchingDataSuccess(state, action) {
@@ -122,7 +122,7 @@ const fetchingReducers = {
 
   /**
    * @param {InitialState} state - Current visualization state
-   * @param {Action} action - Action to change state
+   * @param {Action} action - Action to temperature state
    * @returns {NewState} - New visualization state
    */
   fetchingDataError(state, action) {
@@ -225,7 +225,6 @@ export const visualizations = [
         },
       ],
     },
-    // component: () => import("./covid/bubbles/BubblesVis"),
   },
   {
     name: "racing",
@@ -246,7 +245,6 @@ export const visualizations = [
         },
       ],
     },
-    // component: () => import("./covid/racing/RacingData"),
   },
   {
     name: "airQuality",
@@ -282,7 +280,6 @@ export const visualizations = [
         },
       ],
     },
-    // component: () => import("./covid/air/AirVis"),
   },
   {
     name: "heatmap",
@@ -324,7 +321,6 @@ export const visualizations = [
         type: "FeatureCollection",
       },
     },
-    // component: () => import("./covid/cases/CasesVis"),
   },
   {
     name: "country",
@@ -345,7 +341,6 @@ export const visualizations = [
         },
       ],
     },
-    // component: () => import("./deforestation/country/CountryVis"),
   },
   {
     name: "countryIncome",
@@ -366,7 +361,6 @@ export const visualizations = [
         },
       ],
     },
-    // component: () => import("./deforestation/income/CountryIncomeVis"),
   },
   {
     name: "pattern",
@@ -392,14 +386,18 @@ export const visualizations = [
         },
       ],
     },
-    // component: () => import("./migration/pattern/Migration"),
+  },
+  {
+    name: "temperature",
+    displayName: "Temperature",
+    topic: "Climate",
+    path: "/climate/temperature/Temperature",
   },
   {
     name: "symbiosis",
     displayName: "Symbiosis",
     topic: "Wildlife",
     path: "/migration/symbiosis/Symbiosis",
-    // component: () => import("./migration/symbiosis/Symbiosis"),
   },
 ];
 

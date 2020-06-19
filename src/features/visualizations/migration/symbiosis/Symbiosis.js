@@ -14,6 +14,7 @@ import {
   drag as d3Drag,
   schemeCategory10,
 } from "d3";
+import { legendColor } from "d3-svg-legend";
 import Box from "@material-ui/core/Box";
 import { useTheme } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -32,11 +33,13 @@ const Symbiosis = () => {
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
 
-  const windowWidth = useWindowSize().width * 0.9;
+  const [windowWidth, windowHeight] = [
+    useWindowSize().width,
+    useWindowSize().height,
+  ];
   const width = mediumScreen ? windowWidth - theme.navBar.width : windowWidth;
-  const height = 800;
+  const height = useWindowSize().height > width ? width + 75 : windowHeight;
 
-  // useVisDataFetch("symbiosis");
   useEffect(() => {
     dispatch(toggleShowSplash());
   }, [dispatch]);
@@ -95,7 +98,7 @@ const Symbiosis = () => {
         "link",
         forceLink(links).id((d) => d.id)
       )
-      .force("charge", forceManyBody().strength(smallScreen ? -100 : -400))
+      .force("charge", forceManyBody().strength(smallScreen ? -50 : -400))
       .force("x", forceX())
       .force("y", forceY());
 
@@ -105,7 +108,7 @@ const Symbiosis = () => {
       .attr("viewBox", [-width / 2, -height / 2, width, height])
       .attr("width", width)
       .attr("height", height)
-      .attr("transform", `translate(-80, 0)`);
+      .attr("transform", `translate(${smallScreen ? -20 : -80}, 0)`);
 
     svg
       .append("defs")
@@ -122,6 +125,20 @@ const Symbiosis = () => {
       .append("path")
       .attr("fill", color)
       .attr("d", "M0,-5L10,0L0,5");
+
+    const ordinal = scaleOrdinal().domain(types).range(schemeCategory10);
+
+    svg
+      .append("g")
+      .attr("class", "legendOrdinal")
+      .attr(
+        "transform",
+        `translate(${smallScreen ? -130 : -350}, ${smallScreen ? -220 : -350})`
+      );
+
+    const legendOrdinal = legendColor().scale(ordinal);
+
+    svg.select(".legendOrdinal").call(legendOrdinal);
 
     const link = svg
       .attr("data-testid", "vis-svg")
@@ -167,7 +184,7 @@ const Symbiosis = () => {
     });
 
     return () => select("#symbiosisSvg").remove();
-  }, [smallScreen, theme.palette.text.primary, width]);
+  }, [height, smallScreen, theme.palette.text.primary, width]);
 
   return (
     <Box
