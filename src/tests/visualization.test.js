@@ -10,6 +10,7 @@ import CountryVis from "../features/visualizations/deforestation/country/Country
 import CountryIncomeVis from "../features/visualizations/deforestation/income/CountryIncomeVis";
 import Migration from "../features/visualizations/migration/pattern/Migration";
 import Symbiosis from "../features/visualizations/migration/symbiosis/Symbiosis";
+import Temperature from "../features/visualizations/climate/temperature/Temperature";
 
 const components = [
   <BubblesVis />,
@@ -20,6 +21,7 @@ const components = [
   <CountryIncomeVis />,
   <Migration />,
   <Symbiosis />,
+  <Temperature />,
 ];
 
 describe("Visualizations", () => {

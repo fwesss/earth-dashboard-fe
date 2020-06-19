@@ -221,11 +221,10 @@ export default withErrorBoundary(() => {
         </Box>
       )}
       <VisExplanation>
-        Using the same prediction model and data source we are also able to see
-        how deforestation trends look based on a countries ‘income’. Here we are
-        able to select between two different visualizations, a line graph, and a
-        bar graph, these visualization types are important because they
-        typically are quick to produce and easy to understand.
+        Using the same prediction model and data source from the previous graph
+        we are able to group countries based on the country&apos;s income size.
+        This allows us see how the forest area (% of land area) predictions
+        trend for high, medium, and low income countries.
       </VisExplanation>
     </Box>
   );

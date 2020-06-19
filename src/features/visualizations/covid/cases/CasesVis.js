@@ -229,7 +229,7 @@ const DateSlider = ({
   // changes. Filter changes are only registered every 25ms.
   const debouncedDateToFilter = useDebounce(dateToFilter, 25);
 
-  // Whenever the dateToFilter changes in state, we change the data we are showing by filtering by date
+  // Whenever the dateToFilter changes in state, we temperature the data we are showing by filtering by date
   // There are separate layers for the circles, labels, and heatmap so we set the filter on each
   useEffect(() => {
     if (dateToFilter.date && mapState) {
