@@ -17,6 +17,7 @@ import VisExplanation from "../../VisExplanation";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
+import BirdPatternQuiz from "../../../quiz/BirdPatternQuiz";
 
 export default withErrorBoundary(() => {
   const dispatch = useDispatch();
@@ -126,12 +127,17 @@ export default withErrorBoundary(() => {
         </Box>
       )}
       <VisExplanation>
-        A density plot allows us to check the distribution of a numeric
-        variable. This is useful when examining a new dataset. A ridgeline plot
-        such as this one lets us check two variables at once: year and bird
-        observations, allowing us to observe the changes occurring over time in
-        migratory bird patterns.
+        The spring migration of birds was at one point in time as predictable as
+        the seasons. Bird migration peaks as the amount of daylight increases,
+        as it suggests to the birds that their destinations will have plentiful
+        food and resources with the arrival of summer. However, as the seasons
+        have become less predictable with the advent of increasing climate
+        change, so too have the patterns of bird migrations become more varied.
+        Bird observations during the peak of the season have decreased between
+        1970 and today, suggesting that the peak of the season is now earlier
+        and that the populations of various species may be decreasing.
       </VisExplanation>
+      <BirdPatternQuiz />
     </Box>
   );
 }, "visualization");

@@ -27,6 +27,7 @@ import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
+import BubblesQuiz from "../../../quiz/BubblesQuiz";
 
 const useStyles = makeStyles((theme) => ({
   factCard: {
@@ -260,6 +261,7 @@ const Bubbles = () => {
         placing the bubbles on an axis. You can quickly get an idea of the
         difference in size for each country.
       </VisExplanation>
+      <BubblesQuiz />
     </Box>
   );
 };

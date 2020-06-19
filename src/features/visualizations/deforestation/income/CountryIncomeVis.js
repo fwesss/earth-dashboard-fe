@@ -21,6 +21,7 @@ import VisExplanation from "../../VisExplanation";
 import LoadingSpinner from "../../LoadingSpinner";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
+import IncomeQuiz from "../../../quiz/IncomeQuiz";
 
 export default withErrorBoundary(() => {
   const dispatch = useDispatch();
@@ -227,6 +228,7 @@ export default withErrorBoundary(() => {
         bar graph, these visualization types are important because they
         typically are quick to produce and easy to understand.
       </VisExplanation>
+      <IncomeQuiz />
     </Box>
   );
 }, "visualization");
