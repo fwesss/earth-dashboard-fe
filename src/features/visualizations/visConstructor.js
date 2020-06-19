@@ -388,16 +388,16 @@ export const visualizations = [
     },
   },
   {
-    name: "symbiosis",
-    displayName: "Symbiosis",
-    topic: "Wildlife",
-    path: "/migration/symbiosis/Symbiosis",
-  },
-  {
     name: "temperature",
     displayName: "Temperature",
     topic: "Climate",
     path: "/climate/temperature/Temperature",
+  },
+  {
+    name: "symbiosis",
+    displayName: "Symbiosis",
+    topic: "Wildlife",
+    path: "/migration/symbiosis/Symbiosis",
   },
 ];
 
