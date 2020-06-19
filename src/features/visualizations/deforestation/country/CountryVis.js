@@ -26,6 +26,7 @@ import VisExplanation from "../../VisExplanation";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
+import CountryQuiz from "../../../quiz/CountryQuiz";
 
 const countries = [
   { name: "Brazil", color: 5 },
@@ -272,6 +273,7 @@ export default withErrorBoundary(() => {
         regression prediction model we are able to predict the ‘forest area (%
         of land area)’ for the next 100 years based on the data collected.
       </VisExplanation>
+      <CountryQuiz />
     </Box>
   );
 }, "visualization");
