@@ -98,7 +98,7 @@ const Symbiosis = () => {
         "link",
         forceLink(links).id((d) => d.id)
       )
-      .force("charge", forceManyBody().strength(smallScreen ? -50 : -400))
+      .force("charge", forceManyBody().strength((width - 222.86) / -3.04))
       .force("x", forceX())
       .force("y", forceY());
 
