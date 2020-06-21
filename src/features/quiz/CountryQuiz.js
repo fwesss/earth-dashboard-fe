@@ -149,7 +149,8 @@ export default function CountryQuiz() {
                       variant="h5"
                       aria-label="bubble-title"
                     >
-                      Which of these countries had the largest increase in %  change?
+                      Which of these countries had the largest increase in %
+                      change?
                     </VisTitle>
                     <h1>Correct</h1>
                     <CheckCircleIcon style={{ color: green[500] }} />
@@ -167,7 +168,8 @@ export default function CountryQuiz() {
                       variant="h5"
                       aria-label="bubble-title"
                     >
-                      Which of these countries had the largest decrease in % change?
+                      Which of these countries had the largest decrease in %
+                      change?
                     </VisTitle>
                     <h1>Correct</h1>
                     <CheckCircleIcon style={{ color: green[500] }} />

@@ -25,7 +25,7 @@ import VisTitle from "../../VisTitle";
 import VisExplanation from "../../VisExplanation";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
-import SymbiosisQuiz from "../../../quiz/SymbiosisQuiz.js";
+import SymbiosisQuiz from "../../../quiz/SymbiosisQuiz";
 
 const Symbiosis = () => {
     const dispatch = useDispatch();
