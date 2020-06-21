@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function BubbleQuiz() {
+export default function TemperatureQuiz() {
     const classes = useStyles();
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [currentAnswer, setCurrentAnswer] = useState("");
@@ -29,12 +29,21 @@ export default function BubbleQuiz() {
     const questions = [
         {
             id: 1,
-            question: "Which country has the largest number of cases?",
-            answer_a: "Brazil",
-            answer_b: "Russias",
-            answer_c: "China",
-            answer_d: "United State of America",
-            correct_answer: "d",
+            question: 'What was the average level of CO2 in the atmosphere from 0-1815 AD?',
+            answer_a: "Between 275 and 285",
+            answer_b: "Between 200 and 215",
+            answer_c: "Between 100 and 185  ",
+            answer_d: "Between 300 and 320 ",
+            correct_answer: "a",
+        },
+        {
+            id: 2,
+            question: 'What was the level of CO2 in the atmosphere in 2013?',
+            answer_a: "Between 380 and 385",
+            answer_b: "Between 373 and 380",
+            answer_c: "Between 398 and 401  ",
+            answer_d: "Between 389 and 391 ",
+            correct_answer: "c",
         },
     ];
 

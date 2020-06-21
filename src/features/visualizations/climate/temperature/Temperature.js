@@ -11,6 +11,7 @@ import VisExplanation from "../../VisExplanation";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import data from "./data.json";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
+import TemperatureQuiz from "../../../quiz/TemperatureQuiz";
 
 const years = data.map((d) => d.year);
 const rawTemps = data.map((d) => d.rawTemp);
@@ -239,6 +240,7 @@ const Temperature = () => {
         Scientists have found when going through this data that over the past
         800,000 years, CO2 levels have never been as high as they are now.
       </VisExplanation>
+      <TemperatureQuiz />
     </Box>
   );
 };

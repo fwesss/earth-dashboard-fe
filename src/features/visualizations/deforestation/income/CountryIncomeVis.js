@@ -224,7 +224,7 @@ export default withErrorBoundary(() => {
       <VisExplanation>
         Using the same prediction model and data source from the previous graph
         we are able to group countries based on the country&apos;s income size.
-        This allows us see how the forest area (% of land area) predictions
+        This allows us see to how the forest area (% of land area) predictions
         trend for high, medium, and low income countries.
       </VisExplanation>
       <IncomeQuiz />

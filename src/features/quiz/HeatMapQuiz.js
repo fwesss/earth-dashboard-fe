@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function BubbleQuiz() {
+export default function HeatMapQuiz() {
     const classes = useStyles();
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [currentAnswer, setCurrentAnswer] = useState("");
@@ -29,12 +29,12 @@ export default function BubbleQuiz() {
     const questions = [
         {
             id: 1,
-            question: "Which country has the largest number of cases?",
-            answer_a: "Brazil",
-            answer_b: "Russias",
-            answer_c: "China",
-            answer_d: "United State of America",
-            correct_answer: "d",
+            question: 'On April 16th which US states contain the top 2 COVID - 19 hot spots?',
+            answer_a: "Arizona, Texas",
+            answer_b: "Michigan, Georgia",
+            answer_c: "New York, Chicago",
+            answer_d: "Virginia, Tennessee",
+            correct_answer: "c",
         },
     ];
 
