@@ -149,10 +149,13 @@ const NavBar = ({ navFixed }) => {
                     .map((vis) => (
                       <ListItem
                         key={vis.name}
-                        selected={pathname === `/${vis.topic}/${vis.name}`}
+                        selected={
+                          pathname ===
+                          `/${vis.topic.toLowerCase()}/${vis.name.toLowerCase()}`
+                        }
                         button
                         component={NavLink}
-                        to={`/${vis.topic}/${vis.name}`}
+                        to={`/${vis.topic.toLowerCase()}/${vis.name.toLowerCase()}`}
                         onClick={() => setOpen(!open)}
                       >
                         <ListItemText

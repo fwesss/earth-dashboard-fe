@@ -157,7 +157,7 @@ export default () => {
                       <Route
                         key={vis.name}
                         exact
-                        path={`/${vis.topic}/${vis.name}`}
+                        path={`/${vis.topic.toLowerCase()}/${vis.name.toLowerCase()}`}
                         component={LazyVisualizations[index]}
                       />
                     ))}
