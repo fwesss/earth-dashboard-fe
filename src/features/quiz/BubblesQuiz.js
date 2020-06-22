@@ -1,181 +1,184 @@
+/* eslint-disable */
+
 import React, { useState } from "react";
-import { Box, TextField, Button } from "@material-ui/core";
+import Progress from "./Progress";
+import Questions from "./questions/Questions";
+import Answers from "./answers/Answers";
 import { makeStyles } from "@material-ui/core/styles";
+import { Box, Typography, Button } from "@material-ui/core";
+import VisTitle from "../visualizations/VisTitle";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
-import VisTitle from "../visualizations/VisTitle";
 
 const useStyles = makeStyles({
-  input: {
-    width: "100%",
-    marginBottom: "2rem",
-    marginTop: "2rem",
-  },
-  form: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    marginLeft: "2rem",
-  },
+    Container: {
+        width: "100%",
+        height: "70vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    ResultsContainer: {
+        width: "100%",
+        height: "50vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    correct: {
+        fontSize: '14px'
+    },
+    fontDisplay: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: "center",
+        alignItems: "center",
+        padding: '0'
+    }
 });
 
-export default function BubblesQuiz() {
-  const classes = useStyles();
-  const [answer, setAnswer] = useState("");
-  const [error, setError] = useState("");
-  const [results, setResults] = useState("");
-  const [showResults, setShowResults] = useState(false);
-  const [correct, setCorrect] = useState();
+export default function BubbleQuiz() {
+    const classes = useStyles();
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [currentAnswer, setCurrentAnswer] = useState("");
+    const [answers, setAnswers] = useState([]);
+    const [showResults, setShowResults] = useState(false);
+    const [error, setError] = useState([]);
 
-  const handleChange = (e) => {
-    setAnswer({ ...answer, [e.target.name]: e.target.value });
-  };
+    const questions = [
+        {
+            id: 1,
+            question: "Which country has the largest number of cases?",
+            answer_a: "Brazil",
+            answer_b: "Russia",
+            answer_c: "China",
+            answer_d: "United States of America",
+            correct_answer: "d",
+        },
+    ];
 
-  const validationSchema = (givenAnswer) => {
-    if (givenAnswer.answer === "") {
-      setError({
-        error: "Required",
-      });
-    } else if (
-      givenAnswer.answer === "USA" ||
-      givenAnswer.answer === "Usa" ||
-      givenAnswer.answer === "usa" ||
-      givenAnswer.answer === "United States of America" ||
-      givenAnswer.answer === "united states of america"
-    ) {
-      setResults({
-        results: "correct answer",
-      });
-      setShowResults(true);
-      setCorrect(true);
-    } else {
-      setError({
-        error: "wrong answer",
-      });
-      setShowResults(true);
-      setCorrect(false);
-    }
-  };
+    const question = questions[currentQuestion];
 
-  const restart = () => {
-    setAnswer("");
-    setResults("");
-    setShowResults(false);
-  };
+    const handleClick = (e) => {
+        console.log("you clicked me", e.target.value);
+        setCurrentAnswer(e.target.value);
+        setError("");
+    };
 
-  const handelSubmit = (e) => {
-    e.preventDefault();
-    // console.log('submitted', answer)
-    validationSchema(answer);
-  };
+    const renderError = () => {
+        if (!error) {
+            return;
+        }
+        return <div className="error">{error}</div>;
+    };
 
-  return (
-    <Box
-      id="bubble-question"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      width="100%"
-      height="30vh"
-      alignItems="center"
-    >
-      {showResults ? (
-        // results page
-        <Box
-          className="container-results"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            width: "12%",
-          }}
-        >
-          <Box className="answer-results">
-            <>
-              {correct ? (
-                <div
-                  className="correct-answer"
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
+    const renderResultsMark = (questions, answer) => {
+        if (questions.correct_answer === answer.answer) {
+            return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span className="correct"><h3>Correct</h3></span>
+                <CheckCircleIcon style={{ color: green[500] }} />
+            </div>;
+        }
+
+        return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span className="Failed"><h3>Failed</h3></span>
+            <HighlightOffIcon style={{ color: red[500] }} />
+        </div>;
+    };
+
+    const renderResultsData = () => {
+        return answers.map((answer) => {
+            const question = questions.find(
+                (question) => question.id === answer.questionId
+            );
+
+            return (
+                <VisTitle
+                    id="bubble-question-title"
+                    variant="h6"
+                    aria-label="bubble-title"
+                    key={question.id}
                 >
-                  <h1>Correct</h1>
-                  <CheckCircleIcon style={{ color: green[500] }} />
-                </div>
-              ) : (
-                <div
-                  className="wrong-answer"
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
+                    <div className={classes.fontDisplay}>
+                        {question.question} {renderResultsMark(question, answer)}
+                    </div>
+                </VisTitle>
+            );
+        });
+    };
+
+    const restart = () => {
+        setAnswers([]);
+        setCurrentAnswer("");
+        setCurrentQuestion(0);
+        setShowResults(false);
+    };
+
+    const next = () => {
+        const answer = { questionId: question.id, answer: currentAnswer };
+
+        if (!currentAnswer) {
+            setError("Please select an option");
+            return;
+        }
+
+        answers.push(answer);
+        setAnswers(answers);
+        setCurrentAnswer("");
+
+        if (currentQuestion + 1 < questions.length) {
+            setCurrentQuestion(currentQuestion + 1);
+            return;
+        }
+
+        setShowResults(true);
+    };
+
+    if (showResults) {
+        return (
+            <Box className={classes.ResultsContainer}>
+                <VisTitle
+                    id="bubble-question-title"
+                    variant="h4"
+                    aria-label="bubble-title"
                 >
-                  <h1>Failed</h1>
-                  <HighlightOffIcon style={{ color: red[500] }} />
-                </div>
-              )}
-            </>
-          </Box>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            onClick={restart}
-          >
-            Retry
-          </Button>
-        </Box>
-      ) : (
-        <Box className="formContainer" style={{ width: "60%" }}>
-          <form
-            className={classes.form}
-            noValidate
-            autoComplete="off"
-            onSubmit={handelSubmit}
-          >
-            <VisTitle
-              id="bubble-question-title"
-              variant="h4"
-              aria-label="bubble-title"
-            >
-              Which country has the largest number of cases?
+                    Results
             </VisTitle>
-
-            <Box style={{ width: "70%" }}>
-              <TextField
-                className={classes.input}
-                id="outlined-error-helper-text"
-                label={results.results ? results.results : null}
-                error={error.error}
-                name="answer"
-                type="text"
-                onChange={handleChange}
-                defaultValue="Answer Question here"
-                value={answer.answer}
-                variant="outlined"
-                // required
-              />
+                <ul style={{ padding: '0' }}>{renderResultsData()}</ul>
+                <Button
+                    style={{ width: "20%" }}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    onClick={restart}
+                >
+                    Retry
+          </Button>
             </Box>
-            <Button
-              className={classes.button}
-              height="20%"
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Submit
-            </Button>
-          </form>
-        </Box>
-      )}
-    </Box>
-  );
+        );
+    } else {
+        return (
+            <Box className={classes.Container}>
+                <Progress total={questions.length} current={currentQuestion + 1} />
+                <Questions questions={question.question} />
+                {renderError()}
+                <Answers
+                    question={question}
+                    currentAnswer={currentAnswer}
+                    handleClick={handleClick}
+                />
+                <Button
+                    className="btn btn-primary"
+                    onClick={next}
+                    variant="contained"
+                    color="primary"
+                >
+                    Confirm
+                </Button>
+            </Box>
+        );
+    }
 }

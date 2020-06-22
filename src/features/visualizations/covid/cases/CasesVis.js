@@ -19,6 +19,7 @@ import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
+import HeatMapQuiz from "../../../quiz/HeatMapQuiz";
 
 mapboxgl.accessToken = process.env.REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN;
 
@@ -139,6 +140,7 @@ const DataProvider = () => {
         general east coast have been affected by the virus compared to
         California and the west coast during this time period.
       </VisExplanation>
+      <HeatMapQuiz />
     </Box>
   );
 };

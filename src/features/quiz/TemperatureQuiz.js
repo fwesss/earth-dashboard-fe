@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function RacingQuiz() {
+export default function TemperatureQuiz() {
     const classes = useStyles();
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [currentAnswer, setCurrentAnswer] = useState("");
@@ -51,12 +51,22 @@ export default function RacingQuiz() {
     const questions = [
         {
             id: 1,
-            question: "When did Italy surpass China in its total count?",
-            answer_a: "Feburary 12, 2020",
-            answer_b: "March 19, 2020",
-            answer_c: "April 6, 2020",
-            answer_d: "May 4, 2020",
-            correct_answer: "b",
+            question:
+                "What was the average level of CO2 in the atmosphere from 0-1815 AD?",
+            answer_a: "Between 275 and 285",
+            answer_b: "Between 200 and 215",
+            answer_c: "Between 100 and 185  ",
+            answer_d: "Between 300 and 320 ",
+            correct_answer: "a",
+        },
+        {
+            id: 2,
+            question: "What was the level of CO2 in the atmosphere in 2013?",
+            answer_a: "Between 380 and 385",
+            answer_b: "Between 373 and 380",
+            answer_c: "Between 398 and 401  ",
+            answer_d: "Between 389 and 391 ",
+            correct_answer: "c",
         },
     ];
 
@@ -77,7 +87,7 @@ export default function RacingQuiz() {
 
     const renderResultsMark = (questions, answer) => {
         if (questions.correct_answer === answer.answer) {
-            return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '5.85rem' }}>
+            return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <span className="correct"><h3>Correct</h3></span>
                 <CheckCircleIcon style={{ color: green[500] }} />
             </div>;
@@ -156,7 +166,7 @@ export default function RacingQuiz() {
                     onClick={restart}
                 >
                     Retry
-          </Button>
+                </Button>
             </Box>
         );
     } else {
@@ -177,7 +187,7 @@ export default function RacingQuiz() {
                     color="primary"
                 >
                     Confirm
-        </Button>
+                </Button>
             </Box>
         );
     }
