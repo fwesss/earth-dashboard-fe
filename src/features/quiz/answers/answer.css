@@ -1,0 +1,38 @@
+ .answer- {
+    color: #7ECECC;
+    width: 20%;
+    height: 10%;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    background: white;
+    border-color: #7ECECC;
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid;
+    outline: none;
+
+  }
+
+  .answer-:hover {
+    color: white;
+    background: #7ECECC;
+  }
+
+   .answer-selected {
+    color: white;
+    width: 20%;
+    height: 10%;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #7ECECC;
+    border-color: #7ECECC;
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid;
+    outline: none;
+
+  }

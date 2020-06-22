@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function RacingQuiz() {
+export default function HeatMapQuiz() {
     const classes = useStyles();
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [currentAnswer, setCurrentAnswer] = useState("");
@@ -51,12 +51,13 @@ export default function RacingQuiz() {
     const questions = [
         {
             id: 1,
-            question: "When did Italy surpass China in its total count?",
-            answer_a: "Feburary 12, 2020",
-            answer_b: "March 19, 2020",
-            answer_c: "April 6, 2020",
-            answer_d: "May 4, 2020",
-            correct_answer: "b",
+            question:
+                "On April 16th which US states contain the top 2 COVID - 19 hot spots?",
+            answer_a: "Arizona, Texas",
+            answer_b: "Michigan, Georgia",
+            answer_c: "New York, Chicago",
+            answer_d: "Virginia, Tennessee",
+            correct_answer: "c",
         },
     ];
 
@@ -77,13 +78,13 @@ export default function RacingQuiz() {
 
     const renderResultsMark = (questions, answer) => {
         if (questions.correct_answer === answer.answer) {
-            return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '5.85rem' }}>
+            return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <span className="correct"><h3>Correct</h3></span>
                 <CheckCircleIcon style={{ color: green[500] }} />
             </div>;
         }
 
-        return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '5.85rem' }}>
             <span className="Failed"><h3>Failed</h3></span>
             <HighlightOffIcon style={{ color: red[500] }} />
         </div>;

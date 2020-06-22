@@ -25,6 +25,7 @@ import VisTitle from "../../VisTitle";
 import VisExplanation from "../../VisExplanation";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
+import SymbiosisQuiz from "../../../quiz/SymbiosisQuiz";
 
 const Symbiosis = () => {
   const dispatch = useDispatch();
@@ -245,6 +246,7 @@ const Symbiosis = () => {
         are both nodes in this visualization; their link is a type of
         relationship called mutualism, thus it is color-coded green.
       </VisExplanation>
+      <SymbiosisQuiz />
     </Box>
   );
 };
