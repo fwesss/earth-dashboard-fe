@@ -20,6 +20,7 @@ const VisExplanation = ({ children }) => {
       data-testid="vis-explanation"
       paragraph
       className={classes.explanation}
+      align="left"
     >
       {children}
     </Typography>

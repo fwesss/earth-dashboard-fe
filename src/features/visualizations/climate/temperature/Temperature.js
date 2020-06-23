@@ -7,11 +7,10 @@ import { schemeSet3 } from "d3";
 import { useDispatch } from "react-redux";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import VisTitle from "../../VisTitle";
-import VisExplanation from "../../VisExplanation";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import data from "./data.json";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
-import TemperatureQuiz from "../../../quiz/TemperatureQuiz";
+import VisExplanation from "../../VisExplanation";
 
 const years = data.map((d) => d.year);
 const rawTemps = data.map((d) => d.rawTemp);
@@ -99,8 +98,8 @@ const Temperature = () => {
                 fontSize: 22,
               },
               grid: {
-                fill: theme.palette.divider,
-                stroke: theme.palette.divider,
+                fill: "none",
+                stroke: "none",
               },
             }}
             tickFormat={(tick) => (tick > 999 ? `${tick / 1000}k` : tick)}
@@ -227,20 +226,27 @@ const Temperature = () => {
         </g>
       </svg>
       <VisExplanation>
-        How do we know the CO2 levels going back over 2000 years? Humans did not
-        start measuring CO2 until 1957.
+        Here we see three indicators of global warming - global mean sea level
+        (GMSL), global temperature aberration, and percent CO2 in the
+        atmosphere. These metrics (along with loss of sea ice at the poles and
+        increasing events of extreme rainfall) are considered the strongest
+        evidence of climate change.
       </VisExplanation>
       <VisExplanation>
-        When ice freezes, tiny bubbles of air become trapped in it. At the
-        Earth&apos;s poles, ancient ice contains bubbles from over 800,000 years
-        ago. By analyzing the chemical composition of these bubbles, we can
-        ascertain the amount of CO2 in the air when the ice froze.
+        Rising sea levels can become catastrophic, because they will affect as
+        many as 670 coastal communities, including Cambridge, Massachusetts;
+        Oakland, California; Miami and St. Petersburg, Florida; and four of the
+        five boroughs of New York City.
       </VisExplanation>
       <VisExplanation>
-        Scientists have found when going through this data that over the past
-        800,000 years, CO2 levels have never been as high as they are now.
+        The global temperature aberration shows a clear upward trend, with
+        soaring temperatures breaking historical records only in the past
+        several years.
       </VisExplanation>
-      <TemperatureQuiz />
+      <VisExplanation>
+        And the increasing levels of CO2 track closely with these phenomena,
+        with levels increasing and breaking records year on year.
+      </VisExplanation>
     </Box>
   );
 };

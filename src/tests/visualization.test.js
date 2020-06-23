@@ -10,6 +10,7 @@ import CountryVis from "../features/visualizations/deforestation/country/Country
 import CountryIncomeVis from "../features/visualizations/deforestation/income/CountryIncomeVis";
 import Migration from "../features/visualizations/migration/pattern/Migration";
 import Temperature from "../features/visualizations/climate/temperature/Temperature";
+import CarbonDioxide from "../features/visualizations/climate/carbonDioxide/CarbonDioxide";
 
 const components = [
   <BubblesVis />,
@@ -20,10 +21,12 @@ const components = [
   <CountryIncomeVis />,
   <Migration />,
   <Temperature />,
+  <CarbonDioxide />,
 ];
 
 describe("Visualizations", () => {
   visualizations.forEach((vis, index) => {
+    // jsdom does not support getBBox which is required for the legend in Symbiosis. We need to exlude it from the visualization test.
     if (vis.name !== "symbiosis") {
       describe(`${vis.name} visualization`, () => {
         it("should render a visualization container, title, visualization, and explanation", async () => {

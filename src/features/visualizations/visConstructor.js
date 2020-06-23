@@ -388,8 +388,14 @@ export const visualizations = [
     },
   },
   {
-    name: "temperature",
-    displayName: "Temperature",
+    name: "carbonDioxide",
+    displayName: "Carbon Dioxide",
+    topic: "Climate",
+    path: "/climate/carbonDioxide/CarbonDioxide",
+  },
+  {
+    name: "summary",
+    displayName: "Summary",
     topic: "Climate",
     path: "/climate/temperature/Temperature",
   },
