@@ -65,7 +65,7 @@ export default withErrorBoundary(() => {
       alignItems="center"
     >
       <VisTitle subtitled variant="h4" component="h2">
-        Deforestation Prediction Trends by Country Income 2019 - 2120
+        Deforestation Prediction Trends by Country Income
       </VisTitle>
       {countryIncome && (
         <Box>

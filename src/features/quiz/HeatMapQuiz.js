@@ -53,10 +53,10 @@ export default function HeatMapQuiz() {
       id: 1,
       question:
         "On April 16th which US states contain the top 2 COVID - 19 hot spots?",
-      answer_a: "Arizona, Texas",
-      answer_b: "Michigan, Georgia",
-      answer_c: "New York, Chicago",
-      answer_d: "Virginia, Tennessee",
+      answer_a: "Arizona & Texas",
+      answer_b: "Michigan & Georgia",
+      answer_c: "New York & Illinois",
+      answer_d: "Virginia & Tennessee",
       correct_answer: "c",
     },
   ];

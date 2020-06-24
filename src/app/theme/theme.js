@@ -136,7 +136,7 @@ export default (prefersDarkMode = false) =>
         height: 56,
       },
       navBar: {
-        width: 265,
+        width: 270,
         background: prefersDarkMode ? "#405454" : "#FFFFFF",
         logoBackground: "#405454",
       },

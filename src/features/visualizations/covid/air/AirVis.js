@@ -255,16 +255,23 @@ const AirVis = () => {
         </svg>
       )}
       <VisExplanation>
-        This is a simple line graph that shows the air quality in Glendora,
-        California superimposed against the number of COVID-19 cases in the
-        whole country. While line graphs are one of the simplest types of
-        visualization to create, they remain one of the most effective ways to
-        convey ideas or demonstrate phenomena. Here we see that as coronavirus
-        cases increase - and especially after the lockdown is ordered - air
-        quality dramatically improves in Glendora. This could be due to a
-        variety of factors, and is probably a result of a combination of reduced
-        land/air travel and reduced production in manufacturing/industrial
-        plants.
+        The term “PM 2.5” refers to atmospheric particulate matter that have a
+        diameter of less than 2.5 micrometers, which is about 3% the diameter of
+        a human hair.
+      </VisExplanation>
+      <VisExplanation>
+        Guidelines from the World Health Organization (WHO) stipulate that the
+        average PM 2.5 should not exceed 10 μg/m³ over the course of a year, and
+        25 μg/m³ over a 24-hour period.
+      </VisExplanation>
+      <VisExplanation>
+        During quarantine in Glendora, CA, the PM 2.5 never exceeded the
+        stipulated level of 25 μg/m³, but it did routinely before the lockdown.
+      </VisExplanation>
+      <VisExplanation>
+        Even during quarantine, the average PM 2.5 was 10.3 μg/m³, making it
+        unlikely that Glendora County will hit their target of less than 10
+        μg/m³ on average over the course of a year.
       </VisExplanation>
       <AirQuiz />
     </Box>

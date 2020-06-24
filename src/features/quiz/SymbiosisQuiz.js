@@ -1,15 +1,16 @@
 /* eslint-disable */
 
 import React, { useState } from "react";
-import Progress from "./Progress";
-import Questions from "./questions/Questions";
-import Answers from "./answers/Answers";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Button } from "@material-ui/core";
-import VisTitle from "../visualizations/VisTitle";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
+import VisTitle from "../visualizations/VisTitle";
+import Answers from "./answers/Answers";
+import Questions from "./questions/Questions";
+import Progress from "./Progress";
+import VisExplanation from "../visualizations/VisExplanation";
 
 const useStyles = makeStyles({
   Container: {
@@ -79,18 +80,27 @@ export default function SymbiosisQuiz() {
   const renderResultsMark = (questions, answer) => {
     if (questions.correct_answer === answer.answer) {
       return (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <span className="correct">
-            <h3>Correct</h3>
-          </span>
-          <CheckCircleIcon style={{ color: green[500] }} />
-        </div>
+        <Box display="flex" flexDirection="column">
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <span className="correct">
+              <h3>Correct</h3>
+            </span>
+            <CheckCircleIcon style={{ color: green[500] }} />
+          </Box>
+
+          <Box display="flex" flexDirection="column">
+            <Typography variant="h4">The Oxpecker bird</Typography>
+            <VisExplanation>
+              While the oxpecker has mutually beneficial relationships with the
+              zebra and water buffalo, recent studies have found that the
+              oxpecker, while picking bugs and parasites off the rhino, also
+              opens and picks at the rhino’s wounds, sometimes even dining on
+              its blood. On the other hand, the rhino has poor eyesight, and the
+              oxpecker sounds the alarm when predators are near. So overall, a
+              bit of zero-sum game for the rhino
+            </VisExplanation>
+          </Box>
+        </Box>
       );
     }
 
@@ -181,26 +191,25 @@ export default function SymbiosisQuiz() {
         </Button>
       </Box>
     );
-  } else {
-    return (
-      <Box className={classes.Container}>
-        <Progress total={questions.length} current={currentQuestion + 1} />
-        <Questions questions={question.question} />
-        {renderError()}
-        <Answers
-          question={question}
-          currentAnswer={currentAnswer}
-          handleClick={handleClick}
-        />
-        <Button
-          className="btn btn-primary"
-          onClick={next}
-          variant="contained"
-          color="primary"
-        >
-          Confirm
-        </Button>
-      </Box>
-    );
   }
+  return (
+    <Box className={classes.Container}>
+      <Progress total={questions.length} current={currentQuestion + 1} />
+      <Questions questions={question.question} />
+      {renderError()}
+      <Answers
+        question={question}
+        currentAnswer={currentAnswer}
+        handleClick={handleClick}
+      />
+      <Button
+        className="btn btn-primary"
+        onClick={next}
+        variant="contained"
+        color="primary"
+      >
+        Confirm
+      </Button>
+    </Box>
+  );
 }
