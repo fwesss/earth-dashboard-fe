@@ -11,6 +11,7 @@ import useWindowSize from "../../../../hooks/useWindowSize";
 import data from "./data.json";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import VisExplanation from "../../VisExplanation";
+import ClimateSummaryQuiz from "../../../quiz/ClimateSummaryQuiz";
 
 const years = data.map((d) => d.year);
 const rawTemps = data.map((d) => d.rawTemp);
@@ -247,6 +248,7 @@ const Temperature = () => {
         And the increasing levels of CO2 track closely with these phenomena,
         with levels increasing and breaking records year on year.
       </VisExplanation>
+      <ClimateSummaryQuiz />
     </Box>
   );
 };

@@ -16,7 +16,7 @@ import useWindowSize from "../../../../hooks/useWindowSize";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import VisTitle from "../../VisTitle";
 import VisExplanation from "../../VisExplanation";
-import TemperatureQuiz from "../../../quiz/TemperatureQuiz";
+import CarbonDioxideQuiz from "../../../quiz/CarbonDioxideQuiz";
 import data from "./data";
 
 const years = [...Array(data.length).keys()];
@@ -139,7 +139,7 @@ export default withErrorBoundary(() => {
         800,000 years, CO<sub>2</sub> levels have never been as high as they are
         now.
       </VisExplanation>
-      <TemperatureQuiz />
+      <CarbonDioxideQuiz />
     </Box>
   );
 }, "visualization");
