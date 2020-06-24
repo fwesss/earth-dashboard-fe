@@ -40,7 +40,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function TemperatureQuiz() {
+export default function CarbonDioxideQuiz() {
   const classes = useStyles();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState("");
