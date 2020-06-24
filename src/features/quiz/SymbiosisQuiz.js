@@ -102,7 +102,7 @@ export default function SymbiosisQuiz() {
               opens and picks at the rhino’s wounds, sometimes even dining on
               its blood. On the other hand, the rhino has poor eyesight, and the
               oxpecker sounds the alarm when predators are near. So overall, a
-              bit of zero-sum game for the rhino
+              bit of a zero-sum game for the rhino.
             </VisExplanation>
           </Box>
         </Box>
