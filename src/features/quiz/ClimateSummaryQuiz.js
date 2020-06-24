@@ -4,10 +4,12 @@ import { Box, Button } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
+import { useDispatch } from "react-redux";
 import VisTitle from "../visualizations/VisTitle";
 import Answers from "./answers/Answers";
 import Questions from "./questions/Questions";
 import Progress from "./Progress";
+import { incrementProgress } from "./quizProgressSlice";
 
 const useStyles = makeStyles({
   Container: {
@@ -39,6 +41,7 @@ const useStyles = makeStyles({
 });
 
 export default function CarbonDioxideQuiz() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState("");
@@ -76,8 +79,10 @@ export default function CarbonDioxideQuiz() {
 
   const renderError = () => error && <div className="error">{error}</div>;
 
-  const renderResultsMark = ({ correctAnswer }, answer) =>
-    correctAnswer === answer.answer ? (
+  const renderResultsMark = ({ correctAnswer }, answer) => {
+    dispatch(incrementProgress("climateSummary"));
+
+    return correctAnswer === answer.answer ? (
       <Box display="flex" justifyContent="center" alignItems="center">
         <span className="correct">
           <h3>Correct</h3>
@@ -92,6 +97,7 @@ export default function CarbonDioxideQuiz() {
         <HighlightOffIcon style={{ color: red[500] }} />
       </Box>
     );
+  };
 
   const renderResultsData = () =>
     answers.map((answer) => (
@@ -162,7 +168,7 @@ export default function CarbonDioxideQuiz() {
     );
   }
   return (
-    <Box className={classes.Container}>
+    <Box className={classes.Container} data-testid="vis-quiz">
       <Progress total={questions.length} current={currentQuestion + 1} />
       <Questions questions={question.question} />
       {renderError()}

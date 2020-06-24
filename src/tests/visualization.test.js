@@ -29,7 +29,7 @@ describe("Visualizations", () => {
     // jsdom does not support getBBox which is required for the legend in Symbiosis. We need to exlude it from the visualization test.
     if (vis.name !== "symbiosis") {
       describe(`${vis.name} visualization`, () => {
-        it("should render a visualization container, title, visualization, and explanation", async () => {
+        it("should render a visualization container, title, visualization, explanation, and quiz", async () => {
           const { container, getAllByTestId } = renderWithRedux(
             components[index],
             {
@@ -49,6 +49,7 @@ describe("Visualizations", () => {
             container.querySelector("svg") || container.querySelector("canvas")
           ).toBeInTheDocument();
           expect(getAllByTestId("vis-explanation")[0]).toBeInTheDocument();
+          expect(getAllByTestId("vis-quiz")[0]).toBeInTheDocument();
         });
       });
     }

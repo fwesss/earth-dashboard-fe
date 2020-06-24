@@ -7,6 +7,8 @@ import VisTitle from "../visualizations/VisTitle";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
+import { incrementProgress } from "./quizProgressSlice";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles({
   input: {
@@ -27,6 +29,7 @@ const useStyles = makeStyles({
 });
 
 export default function CountryQuiz() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState("");
@@ -72,6 +75,7 @@ export default function CountryQuiz() {
       });
       setShowResults(true);
       setCorrect(true);
+      dispatch(incrementProgress("country"));
     } else {
       setShowResults(true);
       setCorrect(false);
@@ -103,6 +107,7 @@ export default function CountryQuiz() {
       width="100%"
       height="60vh"
       alignItems="center"
+      data-testid="vis-quiz"
     >
       {showResults ? (
         // results page

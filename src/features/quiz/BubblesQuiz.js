@@ -10,6 +10,8 @@ import VisTitle from "../visualizations/VisTitle";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
+import { useDispatch } from "react-redux";
+import { incrementProgress } from "./quizProgressSlice";
 
 const useStyles = makeStyles({
   Container: {
@@ -41,6 +43,7 @@ const useStyles = makeStyles({
 });
 
 export default function BubbleQuiz() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState("");
@@ -77,6 +80,7 @@ export default function BubbleQuiz() {
 
   const renderResultsMark = (questions, answer) => {
     if (questions.correct_answer === answer.answer) {
+      dispatch(incrementProgress("bubbles"));
       return (
         <div
           style={{
@@ -181,7 +185,7 @@ export default function BubbleQuiz() {
     );
   } else {
     return (
-      <Box className={classes.Container}>
+      <Box className={classes.Container} data-testid="vis-quiz">
         <Progress total={questions.length} current={currentQuestion + 1} />
         <Questions questions={question.question} />
         {renderError()}

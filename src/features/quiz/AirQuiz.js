@@ -7,6 +7,8 @@ import VisTitle from "../visualizations/VisTitle";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
+import { useDispatch } from "react-redux";
+import { decrementProgress, incrementProgress } from "./quizProgressSlice";
 
 const useStyles = makeStyles({
   input: {
@@ -27,6 +29,7 @@ const useStyles = makeStyles({
 });
 
 export default function AirQuiz() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [answer, setAnswer] = useState({
     answerOne: "",
@@ -80,6 +83,7 @@ export default function AirQuiz() {
     } else if (validateQuestionOne() && validateQuestionTwo()) {
       setShowResults(true);
       setCorrect(true);
+      dispatch(incrementProgress("airQuality"));
     } else {
       setShowResults(true);
       setCorrect(false);
@@ -95,6 +99,7 @@ export default function AirQuiz() {
       width="100%"
       height="70vh"
       alignItems="center"
+      data-testid="vis-quiz"
     >
       {showResults ? (
         // results page

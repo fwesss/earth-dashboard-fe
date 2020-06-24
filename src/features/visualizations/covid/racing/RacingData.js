@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { add, getDayOfYear, parseISO } from "date-fns";
 import { Box, Button, makeStyles } from "@material-ui/core";
 import ReactGa from "react-ga";
@@ -13,11 +13,9 @@ import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
-import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import RacingQuiz from "../../../quiz/RacingQuiz";
 
 const RacingData = () => {
-  const dispatch = useDispatch();
   const {
     data: sliceData,
     data: { deaths },
@@ -81,10 +79,6 @@ const RacingData = () => {
   }, 200);
 
   useVisDataFetch("globalFatalities", sliceData, fetching, error);
-
-  useEffect(() => {
-    dispatch(toggleShowSplash());
-  }, [dispatch]);
 
   if (fetching) {
     return <LoadingSpinner />;
