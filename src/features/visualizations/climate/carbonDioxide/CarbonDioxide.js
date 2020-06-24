@@ -47,7 +47,7 @@ export default withErrorBoundary(() => {
       alignItems="center"
     >
       <VisTitle subtitled variant="h4" component="h2">
-        Mole Fraction of CO<sub>2</sub>
+        Mole Fraction of CO<sub>2</sub> Over 2,014 Years
       </VisTitle>
       <VictoryChart
         domainPadding={{ x: 10, y: 10 }}
