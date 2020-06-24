@@ -47,7 +47,7 @@ const DataProvider = () => {
     data: { cases, dates },
     fetching,
     error,
-  } = useSelector((state) => state.heatmapReducer);
+  } = useSelector((state) => state.usCasesReducer);
   // filterBy() requires the map that was constructed in CasesVis so we need to pass it up to the
   // HOC and store it in local state
   const [mapState, setMapState] = useState(null);
@@ -62,7 +62,7 @@ const DataProvider = () => {
   const windowWidth = useWindowSize().width;
   const width = largeScreen ? windowWidth - theme.navBar.width : windowWidth;
 
-  useVisDataFetch("heatmap", data, fetching, error);
+  useVisDataFetch("usCases", data, fetching, error);
 
   useEffect(() => {
     dispatch(toggleShowSplash());

@@ -99,7 +99,7 @@ const Symbiosis = () => {
         "link",
         forceLink(links).id((d) => d.id)
       )
-      .force("charge", forceManyBody().strength(smallScreen ? -50 : -400))
+      .force("charge", forceManyBody().strength((width - 222.86) / -3.04))
       .force("x", forceX())
       .force("y", forceY());
 
@@ -127,7 +127,9 @@ const Symbiosis = () => {
       .attr("fill", color)
       .attr("d", "M0,-5L10,0L0,5");
 
-    const ordinal = scaleOrdinal().domain(types).range(schemeCategory10);
+    const ordinal = scaleOrdinal()
+      .domain(types.map((d) => d[0].toUpperCase() + d.slice(1)))
+      .range(schemeCategory10);
 
     svg
       .append("g")
@@ -135,7 +137,8 @@ const Symbiosis = () => {
       .attr(
         "transform",
         `translate(${smallScreen ? -130 : -350}, ${smallScreen ? -220 : -350})`
-      );
+      )
+      .attr("fill", theme.palette.text.primary);
 
     const legendOrdinal = legendColor().scale(ordinal);
 

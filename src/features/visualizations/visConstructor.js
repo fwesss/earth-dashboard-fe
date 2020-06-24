@@ -205,8 +205,8 @@ const sliceBuilder = (name, initialData) => ({
  */
 export const visualizations = [
   {
-    name: "bubbles",
-    displayName: "Bubbles",
+    name: "globalCases",
+    displayName: "Global Cases",
     topic: "Pandemic",
     path: "/covid/bubbles/BubblesVis",
     initialData: {
@@ -227,8 +227,8 @@ export const visualizations = [
     },
   },
   {
-    name: "racing",
-    displayName: "Racing",
+    name: "globalFatalities",
+    displayName: "Global Fatalities",
     topic: "Pandemic",
     path: "/covid/racing/RacingData",
     initialData: {
@@ -247,8 +247,8 @@ export const visualizations = [
     },
   },
   {
-    name: "airQuality",
-    displayName: "Air Quality",
+    name: "airQualityEffect",
+    displayName: "Air Quality Effect",
     topic: "Pandemic",
     path: "/covid/air/AirVis",
     initialData: {
@@ -282,8 +282,8 @@ export const visualizations = [
     },
   },
   {
-    name: "heatmap",
-    displayName: "Heatmap",
+    name: "usCases",
+    displayName: "US Cases",
     topic: "Pandemic",
     path: "/covid/cases/CasesVis",
     initialData: {

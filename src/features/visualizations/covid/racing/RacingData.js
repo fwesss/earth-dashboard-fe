@@ -23,7 +23,7 @@ const RacingData = () => {
     data: { deaths },
     fetching,
     error,
-  } = useSelector((state) => state.racingReducer);
+  } = useSelector((state) => state.globalFatalitiesReducer);
   const [start, setStart] = useState(false);
   const [data, setData] = useState(null);
   const [dateToFilter, setDateToFilter] = useState(null);
@@ -80,7 +80,7 @@ const RacingData = () => {
     }
   }, 200);
 
-  useVisDataFetch("racing", sliceData, fetching, error);
+  useVisDataFetch("globalFatalities", sliceData, fetching, error);
 
   useEffect(() => {
     dispatch(toggleShowSplash());

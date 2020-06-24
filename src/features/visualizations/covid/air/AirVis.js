@@ -24,7 +24,7 @@ const AirVis = () => {
     data: { dates, airQuality, cases },
     fetching,
     error,
-  } = useSelector((state) => state.airQualityReducer);
+  } = useSelector((state) => state.airQualityEffectReducer);
   const [formattedDates, setFormattedDates] = useState([new Date()]);
 
   const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -43,7 +43,7 @@ const AirVis = () => {
     }
   }, [dates]);
 
-  useVisDataFetch("airQuality", data, fetching, error);
+  useVisDataFetch("airQualityEffect", data, fetching, error);
 
   useEffect(() => {
     dispatch(toggleShowSplash());

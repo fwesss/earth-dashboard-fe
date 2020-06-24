@@ -55,7 +55,7 @@ const Bubbles = () => {
     data: { summary },
     fetching,
     error,
-  } = useSelector((state) => state.bubblesReducer);
+  } = useSelector((state) => state.globalCasesReducer);
   const [data, setData] = useState(null);
   const [tooltipData, setTooltipData] = useState({
     country: null,
@@ -69,7 +69,7 @@ const Bubbles = () => {
   const width = mediumScreen ? windowWidth - theme.navBar.width : windowWidth;
   const height = 540;
 
-  useVisDataFetch("bubbles", sliceData, fetching, error);
+  useVisDataFetch("globalCases", sliceData, fetching, error);
 
   useEffect(() => {
     dispatch(toggleShowSplash());
