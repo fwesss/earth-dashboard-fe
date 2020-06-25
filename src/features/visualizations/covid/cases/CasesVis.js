@@ -9,7 +9,6 @@ import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import useTheme from "@material-ui/core/styles/useTheme";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import useDebounce from "../../../../hooks/useDebounce";
 import { heatmap, circles, labels } from "./layers.json";
 import VisExplanation from "../../VisExplanation";
 import VisTitle from "../../VisTitle";
@@ -164,13 +163,15 @@ const CasesVis = ({ cases, setMapState, largeScreen, theme }) => {
       minZoom: 3.5,
     });
 
-    map.on("load", () => {
+    map.on("style.load", () => {
       map.resize();
       setMapState(map);
       map
         .addSource("confirmed-cases", {
           type: "geojson",
           data: initialData.current,
+          buffer: 0,
+          tolerance: 3.5,
         })
         .addLayer(heatmap, "waterway-label")
         .addLayer(circles, "waterway-label")
@@ -227,21 +228,23 @@ const DateSlider = ({
   setDateToFilter,
 }) => {
   const classes = useStyles();
-  // The date filter is debounced so dragging the slider quickly will not trigger multiple layer filter
-  // changes. Filter changes are only registered every 25ms.
-  const debouncedDateToFilter = useDebounce(dateToFilter, 25);
 
-  // Whenever the dateToFilter changes in state, we temperature the data we are showing by filtering by date
-  // There are separate layers for the circles, labels, and heatmap so we set the filter on each
+  // Whenever the dateToFilter changes in state, we change the data we are showing by filtering by date
+  // There are separate layers for the circles, labels, and heatmap so we set the filter on each depending
+  // on the zoom level
   useEffect(() => {
     if (dateToFilter.date && mapState) {
-      const filters = ["==", "date", debouncedDateToFilter.date];
-      mapState
-        .setFilter("confirmed-cases-circles", filters)
-        .setFilter("confirmed-cases-heat", filters)
-        .setFilter("confirmed-cases-labels", filters);
+      const filters = ["==", "date", dateToFilter.date];
+
+      if (mapState.getZoom() >= 8) {
+        mapState.setFilter("confirmed-cases-labels", filters);
+      } else if (mapState.getZoom() >= 5 && mapState.getZoom() < 8) {
+        mapState.setFilter("confirmed-cases-circles", filters);
+      } else {
+        mapState.setFilter("confirmed-cases-heat", filters);
+      }
     }
-  }, [mapState, dateToFilter, debouncedDateToFilter]);
+  }, [dateToFilter.date, mapState]);
 
   useEffect(() => {
     setDateToFilter({
@@ -261,7 +264,7 @@ const DateSlider = ({
             date: dates[dateToFilter.sliderValue + 1],
             sliderValue: dateToFilter.sliderValue + 1,
           }),
-        50000 / dates.length
+        25000 / dates.length
       );
     }
     return () => clearInterval(interval);
