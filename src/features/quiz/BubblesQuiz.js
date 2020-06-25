@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Progress from "./Progress";
 import Questions from "./questions/Questions";
 import Answers from "./answers/Answers";
@@ -12,6 +12,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
 import { useDispatch } from "react-redux";
 import { incrementProgress } from "./quizProgressSlice";
+import Confetti from "react-confetti";
 
 const useStyles = makeStyles({
   Container: {
@@ -50,6 +51,19 @@ export default function BubbleQuiz() {
   const [answers, setAnswers] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [error, setError] = useState([]);
+  const [active, setActive] = useState(false);
+  const confettiConfig = {
+    angle: 90,
+    spread: "214",
+    startVelocity: 45,
+    elementCount: "99",
+    dragFriction: 0.1,
+    duration: "5570",
+    stagger: "6",
+    width: "10px",
+    height: "10px",
+    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
+  };
 
   const questions = [
     {
@@ -70,6 +84,10 @@ export default function BubbleQuiz() {
     setError("");
   };
 
+  useEffect(() => {
+    setActive(false);
+  });
+
   const renderError = () => {
     if (!error) {
       return;
@@ -82,12 +100,31 @@ export default function BubbleQuiz() {
       dispatch(incrementProgress("bubbles"));
       return (
         <div
+          className="correct-container"
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            width: "100%",
           }}
         >
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              width: "100%",
+              height: "30%",
+              overflow: "hidden",
+              marginTop: "2rem",
+            }}
+          >
+            <Confetti
+              className="confetti"
+              gravity={0.4}
+              // run={this.state.animationDone}
+              numberOfPieces={200}
+            />
+          </div>
           <span className="correct">
             <h3>Correct</h3>
           </span>
@@ -104,8 +141,8 @@ export default function BubbleQuiz() {
           justifyContent: "center",
         }}
       >
-        <span className="Failed">
-          <h3>Failed</h3>
+        <span className="Incorrect">
+          <h3>Incorrect</h3>
         </span>
         <HighlightOffIcon style={{ color: red[500] }} />
       </div>

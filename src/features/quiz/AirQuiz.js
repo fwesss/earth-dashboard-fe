@@ -5,6 +5,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
 import { useDispatch } from "react-redux";
+import Confetti from "react-confetti";
 import VisTitle from "../visualizations/VisTitle";
 import { incrementProgress } from "./quizProgressSlice";
 
@@ -104,41 +105,82 @@ export default function AirQuiz() {
                   }}
                 >
                   <div
-                    className="correct-answer"
+                    style={{
+                      position: "absolute",
+                      width: "100%",
+                      height: "28%",
+                      overflow: "hidden",
+                      marginTop: "3.5rem",
+                    }}
+                  >
+                    <Confetti
+                      className="confetti"
+                      gravity={0.4}
+                      // run={this.state.animationDone}
+                      numberOfPieces={200}
+                    />
+                  </div>
+                  <VisTitle
+                    id="bubble-question-title"
+                    variant="h4"
+                    aria-label="bubble-title"
+                  >
+                    Results
+                  </VisTitle>
+                  <div
+                    className="correct-answer-one"
                     style={{
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      flexDirection: "column",
                     }}
                   >
                     <VisTitle
                       id="bubble-question-title"
-                      variant="h4"
+                      variant="h6"
                       aria-label="bubble-title"
                     >
                       Where did air pollution peak on January 26th?
                     </VisTitle>
-                    <h1>Correct</h1>
-                    <CheckCircleIcon style={{ color: green[500] }} />
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <h4>Correct</h4>
+                      <CheckCircleIcon style={{ color: green[500] }} />
+                    </div>{" "}
                   </div>
                   <div
-                    className="correct-answer"
+                    className="correct-answer-two"
                     style={{
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      flexDirection: "column",
                     }}
                   >
                     <VisTitle
                       id="bubble-question-title"
-                      variant="h4"
+                      variant="h6"
                       aria-label="bubble-title"
                     >
                       What was the highest level of air pollution during
                       lockdown?
                     </VisTitle>
-                    <h1>Correct</h1>
-                    <CheckCircleIcon style={{ color: green[500] }} />
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <h4>Correct</h4>
+                      <CheckCircleIcon style={{ color: green[500] }} />
+                    </div>{" "}
                   </div>
                 </div>
               ) : (
@@ -157,7 +199,7 @@ export default function AirQuiz() {
             </>
           </Box>
           <Button
-            style={{ width: "20%" }}
+            style={{ width: "20%", marginRight: "1rem" }}
             type="submit"
             variant="contained"
             color="primary"
@@ -176,7 +218,7 @@ export default function AirQuiz() {
             <div>
               <VisTitle
                 id="bubble-question-title"
-                variant="h4"
+                variant="h5"
                 aria-label="bubble-title"
               >
                 Where did air pollution peak on January 26th?
@@ -197,7 +239,7 @@ export default function AirQuiz() {
               <div>
                 <VisTitle
                   id="bubble-question-title"
-                  variant="h4"
+                  variant="h5"
                   aria-label="bubble-title"
                 >
                   What was the highest level of air pollution during lockdown?

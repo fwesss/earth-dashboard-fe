@@ -12,11 +12,12 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
 import { incrementProgress } from "./quizProgressSlice";
 import { useDispatch } from "react-redux";
+import Confetti from "react-confetti";
 
 const useStyles = makeStyles({
   Container: {
     width: "100%",
-    height: "70vh",
+    height: "80vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -98,6 +99,22 @@ export default function CarbonDioxideQuiz() {
             justifyContent: "center",
           }}
         >
+          <div
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "20%",
+              overflow: "hidden",
+              marginTop: "3rem",
+            }}
+          >
+            <Confetti
+              className="confetti"
+              gravity={0.4}
+              // run={this.state.animationDone}
+              numberOfPieces={200}
+            />
+          </div>
           <span className="correct">
             <h3>Correct</h3>
           </span>
@@ -114,8 +131,8 @@ export default function CarbonDioxideQuiz() {
           justifyContent: "center",
         }}
       >
-        <span className="Failed">
-          <h3>Failed</h3>
+        <span className="Incorrect">
+          <h3>Incorrect</h3>
         </span>
         <HighlightOffIcon style={{ color: red[500] }} />
       </div>

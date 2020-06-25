@@ -84,12 +84,29 @@ export default function HeatMapQuiz() {
 
       return (
         <div
+          className="correct-container"
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            width: "100%",
           }}
         >
+          <div
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "25%",
+              overflow: "hidden",
+            }}
+          >
+            <Confetti
+              className="confetti"
+              gravity={0.4}
+              // run={this.state.animationDone}
+              numberOfPieces={200}
+            />
+          </div>
           <span className="correct">
             <h3>Correct</h3>
           </span>
@@ -107,8 +124,8 @@ export default function HeatMapQuiz() {
           height: "5.85rem",
         }}
       >
-        <span className="Failed">
-          <h3>Failed</h3>
+        <span className="Incorrect">
+          <h3>Incorrect</h3>
         </span>
         <HighlightOffIcon style={{ color: red[500] }} />
       </div>
