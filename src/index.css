@@ -23,7 +23,7 @@ html {
 
 * {
     scrollbar-width: thin;
-    scrollbar-color: #587170 #303232;
+    scrollbar-color: #587170 #A4B7B6;
 }
 
 /* Works on Chrome/Edge/Safari */
@@ -31,10 +31,10 @@ html {
     width: 12px;
 }
 *::-webkit-scrollbar-track {
-    background: #303232;
+    background: #A4B7B6;
 }
 *::-webkit-scrollbar-thumb {
     background-color: #587170;
     border-radius: 20px;
-    border: 3px solid #303232;
+    border: 3px solid #A4B7B6;
 }

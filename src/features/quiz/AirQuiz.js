@@ -1,14 +1,12 @@
-/* eslint-disable */
-
 import React, { useState } from "react";
 import { Box, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import VisTitle from "../visualizations/VisTitle";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
 import { useDispatch } from "react-redux";
-import { decrementProgress, incrementProgress } from "./quizProgressSlice";
+import VisTitle from "../visualizations/VisTitle";
+import { incrementProgress } from "./quizProgressSlice";
 
 const useStyles = makeStyles({
   input: {
@@ -36,40 +34,20 @@ export default function AirQuiz() {
     answerTwo: "",
   });
   const [error, setError] = useState("");
-  const [results, setResults] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [correct, setCorrect] = useState();
 
-  const handleChange = (e) => {
-    console.log(e.target.name);
+  const handleChange = (e) =>
     setAnswer({ ...answer, [e.target.name]: e.target.value });
-  };
 
-  const validateQuestionOne = () => {
-    if (answer.answerOne >= 36 || answer.answerOne <= 38) {
-      setResults({
-        results: "correct answer",
-      });
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const validateQuestionOne = () =>
+    answer.answerOne >= 36 || answer.answerOne <= 38;
 
-  const validateQuestionTwo = () => {
-    if (answer.answerTwo === "15" || answer.answerTwo === "16") {
-      setResults({
-        results: "correct answer",
-      });
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const validateQuestionTwo = () =>
+    answer.answerTwo === "15" || answer.answerTwo === "16";
 
   const restart = () => {
     setAnswer("");
-    setResults("");
     setShowResults(false);
   };
 
@@ -192,7 +170,6 @@ export default function AirQuiz() {
         <div>
           <form
             className={classes.form}
-            // noValidate
             autoComplete="off"
             onSubmit={handelSubmit}
           >
@@ -209,11 +186,10 @@ export default function AirQuiz() {
               <TextField
                 className={classes.input}
                 id="outlined-error-helper-text"
-                error={error.error ? error.error : null}
+                error={error.error}
                 name="answerOne"
                 type="text"
                 onChange={handleChange}
-                // defaultValue="Answer Question here"
                 value={answer.answerOne}
                 variant="outlined"
                 required
@@ -231,11 +207,10 @@ export default function AirQuiz() {
               <TextField
                 className={classes.input}
                 id="outlined-error-helper-text"
-                error={error.error ? error.error : null}
+                error={error.error}
                 name="answerTwo"
                 type="text"
                 onChange={handleChange}
-                // defaultValue="Answer Question here"
                 value={answer.answerTwo}
                 variant="outlined"
                 required

@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@material-ui/core/Box";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Logo from "./logo.webp";
+import Logo from "./logo.png";
 
 const useStyles = makeStyles(() => ({
   indeterminate: {

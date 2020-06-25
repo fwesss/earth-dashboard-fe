@@ -8,6 +8,7 @@ import { visualizations } from "../visualizations/visConstructor";
 const numberOfQuestions = visualizations.length;
 
 export default () => {
+  const { darkMode } = useSelector((state) => state.themeReducer);
   const { progress } = useSelector((state) => state.quizProgressReducer);
 
   return (
@@ -18,6 +19,7 @@ export default () => {
       <LinearProgress
         variant="determinate"
         value={(progress * 100) / numberOfQuestions}
+        color={darkMode ? "secondary" : "primary"}
       />
     </Box>
   );

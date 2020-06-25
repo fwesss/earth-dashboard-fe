@@ -1,14 +1,12 @@
-/* eslint-disable */
-
 import React, { useState } from "react";
 import { Box, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import VisTitle from "../visualizations/VisTitle";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
-import { incrementProgress } from "./quizProgressSlice";
 import { useDispatch } from "react-redux";
+import { incrementProgress } from "./quizProgressSlice";
+import VisTitle from "../visualizations/VisTitle";
 
 const useStyles = makeStyles({
   input: {
@@ -31,70 +29,40 @@ const useStyles = makeStyles({
 export default function CountryQuiz() {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState({
+    answerOne: "",
+    answerTwo: "",
+  });
   const [error, setError] = useState("");
-  const [results, setResults] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [correct, setCorrect] = useState();
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setAnswer({ ...answer, [e.target.name]: e.target.value });
+
+  const validateQuestionOne = () => answer.answerOne === "India";
+
+  const validateQuestionTwo = () => answer.answerTwo === "Cambodia";
+
+  const restart = () => {
+    setAnswer("");
+    setShowResults(false);
   };
 
-  const validationSchema = (givenAnswer) => {
-    if (givenAnswer.answer === "") {
+  const handelSubmit = (e) => {
+    e.preventDefault();
+
+    if (answer.answerOne === "" || answer.answerTwo === "") {
       setError({
         error: "Required",
       });
-    } else if (
-      givenAnswer.answer === "India" ||
-      givenAnswer.answer === "india"
-    ) {
-      setResults({
-        results: "correct answer",
-      });
-      setShowResults(true);
-      setCorrect(true);
-    } else {
-      setShowResults(true);
-      setCorrect(false);
-    }
-  };
-
-  const validationSchemaTwo = (givenAnswerTwo) => {
-    if (givenAnswerTwo.answer === "") {
-      setError({
-        error: "Required",
-      });
-    } else if (
-      givenAnswerTwo.answer === "Cambodia" ||
-      givenAnswerTwo.answer === "cambodia"
-    ) {
-      setResults({
-        results: "correct answer",
-      });
+    } else if (validateQuestionOne() && validateQuestionTwo()) {
       setShowResults(true);
       setCorrect(true);
       dispatch(incrementProgress("country"));
     } else {
       setShowResults(true);
       setCorrect(false);
-    }
-  };
-
-  const restart = () => {
-    setAnswer("");
-    setResults("");
-    setShowResults(false);
-  };
-
-  const handelSubmit = (e, question) => {
-    e.preventDefault();
-    // console.log('submitted', answer)
-    if (question === 1) {
-      validationSchema(answer);
-    } else {
-      validationSchemaTwo(answer);
     }
   };
 
@@ -209,7 +177,6 @@ export default function CountryQuiz() {
         <div>
           <form
             className={classes.form}
-            noValidate
             autoComplete="off"
             onSubmit={(e) => handelSubmit(e, 1)}
           >
@@ -227,13 +194,12 @@ export default function CountryQuiz() {
                 className={classes.input}
                 id="outlined-error-helper-text"
                 error={error.error ? error.error : null}
-                name="answer"
+                name="answerOne"
                 type="text"
                 onChange={handleChange}
-                // defaultValue="Answer Question here"
-                value={answer.answer}
+                value={answer.answerOne}
                 variant="outlined"
-                // required
+                required
               />
               <div>
                 <VisTitle
@@ -249,13 +215,12 @@ export default function CountryQuiz() {
                 className={classes.input}
                 id="outlined-error-helper-text"
                 error={error.error ? error.error : null}
-                name="answer-two"
+                name="answerTwo"
                 type="text"
                 onChange={handleChange}
-                // defaultValue="Answer Question here"
-                value={answer.answerTwp}
+                value={answer.answerTwo}
                 variant="outlined"
-                // required
+                required
               />
             </div>
             <Button
