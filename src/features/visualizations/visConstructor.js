@@ -73,7 +73,7 @@ const initialStateBuilder = (initialData) => ({
  */
 
 /**
- * State of the visualization after a fetch has failed
+ * State of the visualization after a fetch has Incorrect
  *
  * @typedef {Function} FetchingDataError
  * @param {InitialState} state

@@ -5,6 +5,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
 import { useDispatch } from "react-redux";
+import Confetti from "react-confetti";
 import { incrementProgress } from "./quizProgressSlice";
 import VisTitle from "../visualizations/VisTitle";
 
@@ -89,6 +90,29 @@ export default function CountryQuiz() {
             width: "82%",
           }}
         >
+          <div
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "32%",
+              overflow: "hidden",
+              marginTop: "2rem",
+            }}
+          >
+            <Confetti
+              className="confetti"
+              gravity={0.4}
+              // run={this.state.animationDone}
+              numberOfPieces={200}
+            />
+          </div>
+          <VisTitle
+            id="bubble-question-title"
+            variant="h5"
+            aria-label="bubble-title"
+          >
+            Results
+          </VisTitle>
           <Box
             className="answer-results"
             style={{
@@ -110,42 +134,60 @@ export default function CountryQuiz() {
                   }}
                 >
                   <div
-                    className="correct-answer"
+                    className="correct-answer-one"
                     style={{
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      flexDirection: "column",
                     }}
                   >
                     <VisTitle
                       id="bubble-question-title"
-                      variant="h5"
+                      variant="h6"
                       aria-label="bubble-title"
                     >
                       Which of these countries had the largest increase in %
                       change?
                     </VisTitle>
-                    <h1>Correct</h1>
-                    <CheckCircleIcon style={{ color: green[500] }} />
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <h4>Correct</h4>
+                      <CheckCircleIcon style={{ color: green[500] }} />
+                    </div>
                   </div>
                   <div
-                    className="correct-answer"
+                    className="correct-answer-two"
                     style={{
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      flexDirection: "column",
                     }}
                   >
                     <VisTitle
                       id="bubble-question-title"
-                      variant="h5"
+                      variant="h6"
                       aria-label="bubble-title"
                     >
                       Which of these countries had the largest decrease in %
                       change?
                     </VisTitle>
-                    <h1>Correct</h1>
-                    <CheckCircleIcon style={{ color: green[500] }} />
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <h4>Correct</h4>
+                      <CheckCircleIcon style={{ color: green[500] }} />
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -157,14 +199,14 @@ export default function CountryQuiz() {
                     alignItems: "center",
                   }}
                 >
-                  <h1>Failed</h1>
+                  <h1>Incorrect</h1>
                   <HighlightOffIcon style={{ color: red[500] }} />
                 </div>
               )}
             </>
           </Box>
           <Button
-            style={{ width: "20%" }}
+            style={{ width: "20%", marginRight: "1rem" }}
             type="submit"
             variant="contained"
             color="primary"
