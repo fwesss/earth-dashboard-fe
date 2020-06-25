@@ -1,34 +1,32 @@
-/* eslint-disable */
-
 import React from "react";
 import Answer from "./Answer";
 
-export default function Answers(props) {
+export default function Answers({ currentAnswer, handleClick, question }) {
   return (
     <>
       <Answer
         letter="a"
-        answer={props.question.answer_a}
-        handleClick={props.handleClick}
-        selected={props.currentAnswer === "a"}
+        answer={question.answer_a}
+        handleClick={handleClick}
+        selected={currentAnswer === "a"}
       />
       <Answer
         letter="b"
-        answer={props.question.answer_b}
-        handleClick={props.handleClick}
-        selected={props.currentAnswer === "b"}
+        answer={question.answer_b}
+        handleClick={handleClick}
+        selected={currentAnswer === "b"}
       />
       <Answer
         letter="c"
-        answer={props.question.answer_c}
-        handleClick={props.handleClick}
-        selected={props.currentAnswer === "c"}
+        answer={question.answer_c}
+        handleClick={handleClick}
+        selected={currentAnswer === "c"}
       />
       <Answer
         letter="d"
-        answer={props.question.answer_d}
-        handleClick={props.handleClick}
-        selected={props.currentAnswer === "d"}
+        answer={question.answer_d}
+        handleClick={handleClick}
+        selected={currentAnswer === "d"}
       />
     </>
   );

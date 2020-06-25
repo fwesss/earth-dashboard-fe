@@ -1,38 +1,24 @@
- .answer- {
-    color: #7ECECC;
-    width: 20%;
-    height: 10%;
+.answer- {
+    color: #7ececc;
+    width: 30%;
     margin-bottom: 1rem;
-    border-radius: 10px;
     cursor: pointer;
     background: white;
-    border-color: #7ECECC;
-    font-size: 20px;
-    padding: 10px;
-    text-align: center;
-    border: 1px solid;
+    border: 1px solid #7ececc;
     outline: none;
+}
 
-  }
-
-  .answer-:hover {
+.answer-:hover {
     color: white;
-    background: #7ECECC;
-  }
+    background: #7ececc;
+}
 
-   .answer-selected {
+.answer-selected {
     color: white;
-    width: 20%;
-    height: 10%;
+    width: 30%;
     margin-bottom: 1rem;
-    border-radius: 10px;
     cursor: pointer;
-    background: #7ECECC;
-    border-color: #7ECECC;
-    font-size: 20px;
-    padding: 10px;
-    text-align: center;
-    border: 1px solid;
+    background: #7ececc;
+    border: 1px solid #7ececc;
     outline: none;
-
-  }
+}

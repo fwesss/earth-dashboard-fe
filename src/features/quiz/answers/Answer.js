@@ -1,21 +1,21 @@
-/* eslint-disable */
-
 import React from "react";
 import "./answer.css";
+import Button from "@material-ui/core/Button";
 
-export default function Answer(props) {
-  let classes = ["answer-"];
+export default function Answer({ answer, handleClick, letter, selected }) {
+  const classes = ["answer-"];
 
-  if (props.selected) {
+  if (selected) {
     classes.push("selected");
   }
+
   return (
-    <button
-      value={props.letter}
+    <Button
       className={classes.join("")}
-      onClick={props.handleClick}
+      onClick={() => handleClick(letter)}
+      size="large"
     >
-      {props.answer}
-    </button>
+      {answer}
+    </Button>
   );
 }
