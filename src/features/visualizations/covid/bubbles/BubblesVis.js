@@ -140,7 +140,6 @@ const Bubbles = () => {
         d.fy = d.y;
 
         setCloseTooltip(true);
-        console.log("change");
       };
       const dragged = (d) => {
         d.fx = event.x;

@@ -54,7 +54,6 @@ export default function BubblesQuiz() {
 
   const handelSubmit = (e) => {
     e.preventDefault();
-    // console.log('submitted', answer)
     validationSchema(answer);
   };
 
