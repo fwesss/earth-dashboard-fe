@@ -28,6 +28,7 @@ import useVisDataFetch from "../../../../hooks/useVisDataFetch";
 import LoadingSpinner from "../../LoadingSpinner";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import BubblesQuiz from "../../../quiz/BubblesQuiz";
+import DragHint from "../../DragHint";
 
 const useStyles = makeStyles((theme) => ({
   factCard: {
@@ -62,6 +63,8 @@ const Bubbles = () => {
     cases: null,
   });
   const [opacity, setOpacity] = useState(0);
+  const [closeTooltip, setCloseTooltip] = useState(false);
+
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
 
@@ -131,6 +134,8 @@ const Bubbles = () => {
         }
         d.fx = d.x;
         d.fy = d.y;
+
+        setCloseTooltip(true);
       };
       const dragged = (d) => {
         d.fx = event.x;
@@ -168,6 +173,13 @@ const Bubbles = () => {
             cases: d.totalconfirmed.toLocaleString(),
           })
         )
+        .on("click touchstart", (d) => {
+          setTooltipData({
+            country: d.country,
+            cases: d.totalconfirmed.toLocaleString(),
+          });
+          setOpacity(1);
+        })
         .on("mouseover", () => setOpacity(1))
         .call(
           drag() // call specific function when circle is dragged
@@ -178,7 +190,6 @@ const Bubbles = () => {
 
       // Apply these forces to the nodes and update their positions.
       // Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
-
       simulation
         .nodes(data)
         .on("tick", () =>
@@ -239,16 +250,18 @@ const Bubbles = () => {
             </Typography>
           </CardContent>
         </Card>
-        <Box
-          display="flex"
-          justifyContent="center"
-          flexDirection="column"
-          id="bubble"
-          width={width}
-          height={height}
-          aria-labelledby="bubbles-title"
-          data-testid="bubbles"
-        />
+        <DragHint elements="bubbles" close={closeTooltip}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            flexDirection="column"
+            id="bubble"
+            width={width}
+            height={height}
+            aria-labelledby="bubbles-title"
+            data-testid="bubbles"
+          />
+        </DragHint>
       </Box>
       <VisExplanation>
         One goal of data visualization is to communicate information that
