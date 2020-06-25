@@ -13,8 +13,7 @@ import Progress from "./Progress";
 import VisExplanation from "../visualizations/VisExplanation";
 import { incrementProgress } from "./quizProgressSlice";
 import { useDispatch } from "react-redux";
-import Confetti from 'react-confetti'
-
+import Confetti from "react-confetti";
 
 const useStyles = makeStyles({
   Container: {
@@ -89,21 +88,22 @@ export default function SymbiosisQuiz() {
       return (
         <Box display="flex" flexDirection="column">
           <Box display="flex" justifyContent="center" alignItems="center">
-                  <div
-                      style={{
-                          position: "absolute",
-                          width: "100%",
-                          height: "27%",
-                          overflow: 'hidden',
-                          marginTop: '8.5rem'
-                      }}
-                  >
-                      <Confetti className="confetti"
-                          gravity={0.4}
-                          // run={this.state.animationDone}
-                          numberOfPieces={200}
-                      />
-                  </div>
+            <div
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "27%",
+                overflow: "hidden",
+                marginTop: "8.5rem",
+              }}
+            >
+              <Confetti
+                className="confetti"
+                gravity={0.4}
+                // run={this.state.animationDone}
+                numberOfPieces={200}
+              />
+            </div>
             <span className="correct">
               <h3>Correct</h3>
             </span>

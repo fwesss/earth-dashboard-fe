@@ -5,14 +5,12 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
 import { useDispatch } from "react-redux";
+import Confetti from "react-confetti";
 import VisTitle from "../visualizations/VisTitle";
 import Answers from "./answers/Answers";
 import Questions from "./questions/Questions";
 import Progress from "./Progress";
 import { incrementProgress } from "./quizProgressSlice";
-import Confetti from 'react-confetti'
-
-
 
 const useStyles = makeStyles({
   Container: {
@@ -87,21 +85,22 @@ export default function CarbonDioxideQuiz() {
 
     return correctAnswer === answer.answer ? (
       <Box display="flex" justifyContent="center" alignItems="center">
-            <div
-                style={{
-                    position: "absolute",
-                    width: "100%",
-                    height: "20%",
-                    overflow: 'hidden',
-                    marginTop: "1rem"
-                }}
-            >
-                <Confetti className="confetti"
-                    gravity={0.4}
-                    // run={this.state.animationDone}
-                    numberOfPieces={200}
-                />
-            </div>
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "20%",
+            overflow: "hidden",
+            marginTop: "1rem",
+          }}
+        >
+          <Confetti
+            className="confetti"
+            gravity={0.4}
+            // run={this.state.animationDone}
+            numberOfPieces={200}
+          />
+        </div>
         <span className="correct">
           <h3>Correct</h3>
         </span>

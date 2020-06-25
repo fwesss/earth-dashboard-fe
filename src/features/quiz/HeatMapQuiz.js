@@ -12,8 +12,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
 import { incrementProgress } from "./quizProgressSlice";
 import { useDispatch } from "react-redux";
-import Confetti from 'react-confetti'
-
+import Confetti from "react-confetti";
 
 const useStyles = makeStyles({
   Container: {
@@ -86,33 +85,35 @@ export default function HeatMapQuiz() {
       dispatch(incrementProgress("heatmap"));
 
       return (
-          <div className='correct-container'
-              style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "100%",
-              }}
+        <div
+          className="correct-container"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "25%",
+              overflow: "hidden",
+            }}
           >
-              <div
-                  style={{
-                      position: "absolute",
-                      width: "100%",
-                      height: "25%",
-                      overflow: 'hidden'
-                  }}
-              >
-                  <Confetti className="confetti"
-                      gravity={0.4}
-                      // run={this.state.animationDone}
-                      numberOfPieces={200}
-                  />
-              </div>
-              <span className="correct">
-                  <h3>Correct</h3>
-              </span>
-              <CheckCircleIcon style={{ color: green[500] }} />
+            <Confetti
+              className="confetti"
+              gravity={0.4}
+              // run={this.state.animationDone}
+              numberOfPieces={200}
+            />
           </div>
+          <span className="correct">
+            <h3>Correct</h3>
+          </span>
+          <CheckCircleIcon style={{ color: green[500] }} />
+        </div>
       );
     }
 
