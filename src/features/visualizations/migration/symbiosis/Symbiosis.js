@@ -16,9 +16,11 @@ import {
 } from "d3";
 import { legendColor } from "d3-svg-legend";
 import Box from "@material-ui/core/Box";
-import { useTheme } from "@material-ui/core";
+import useTheme from "@material-ui/core/styles/useTheme";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useDispatch } from "react-redux";
+import Tooltip from "@material-ui/core/Tooltip";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import dataFile from "./links.json";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import VisTitle from "../../VisTitle";
@@ -27,7 +29,14 @@ import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import SymbiosisQuiz from "../../../quiz/SymbiosisQuiz";
 
+const useStyles = makeStyles(() => ({
+  tooltip: {
+    fontSize: 26,
+  },
+}));
+
 const Symbiosis = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -227,16 +236,21 @@ const Symbiosis = () => {
         host&apos;s insides, saving the vital organs until the end. Finally, the
         wasp is now fully-grown, eats its way out of the roach and flies off.
       </VisExplanation>
-      <Box
-        display="flex"
-        justifyContent="center"
-        flexDirection="column"
-        id="symbiosis"
-        width={width}
-        height={height}
-        aria-labelledby="symbiosis-title"
-        data-testid="symbiosis"
-      />
+      <Tooltip
+        title="Click and drag the links!"
+        classes={{ tooltip: classes.tooltip }}
+      >
+        <Box
+          display="flex"
+          justifyContent="center"
+          flexDirection="column"
+          id="symbiosis"
+          width={width}
+          height={height}
+          aria-labelledby="symbiosis-title"
+          data-testid="symbiosis"
+        />
+      </Tooltip>
       <VisExplanation>
         A network graph allows you to demonstrate the types of relationships
         between different observations. It is useful for dealing with

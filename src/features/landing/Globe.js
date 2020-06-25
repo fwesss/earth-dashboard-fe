@@ -19,10 +19,10 @@ import withErrorBoundary from "../../app/error/ErrorBoundary";
 import pollutionData from "./pollution.json";
 import recycledData from "./wasteRecycled.json";
 import InfoBar from "./InfoBar";
-import nightSky from "./small-night-sky.webp";
-import topology from "./earth-topology.webp";
-import earthNight from "./small-earth-night.webp";
-import earthDay from "./small-earth-blue-marble.webp";
+import nightSky from "./small-night-sky.jpg";
+import topology from "./earth-topology.jpg";
+import earthNight from "./small-earth-night.jpg";
+import earthDay from "./small-earth-blue-marble.jpg";
 import InfoSection from "./InfoSection";
 
 const Globe = ({ infoOpen, setInfoOpen, largeScreen, width }) => {

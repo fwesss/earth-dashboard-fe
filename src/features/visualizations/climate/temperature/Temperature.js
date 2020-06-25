@@ -21,6 +21,7 @@ const meanGlobalCo2 = data.map((d) => d.meanGlobalCo2);
 const Temperature = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
   const [windowWidth, windowHeight] = [
     useWindowSize().width * 0.9,
@@ -46,10 +47,10 @@ const Temperature = () => {
       <VisTitle subtitled variant="h4" component="h2">
         Global Temperature Change, GMSL and CO2 Change (1880 - 2013)
       </VisTitle>
-      <svg width={width + 500} height={height} data-testid="vis-svg">
-        <g transform="translate(300, -20)">
+      <svg width={width} height={height} data-testid="vis-svg">
+        <g transform={`translate(${smallScreen ? 100 : 200}, -20)`}>
           <VictoryAxis
-            width={width}
+            width={width - (smallScreen ? 120 : 300)}
             height={height}
             theme={VictoryTheme.material}
             scale="time"
@@ -81,7 +82,6 @@ const Temperature = () => {
           />
 
           <VictoryAxis
-            width={width}
             height={height}
             theme={VictoryTheme.material}
             dependentAxis
@@ -111,7 +111,7 @@ const Temperature = () => {
           />
 
           <VictoryLine
-            width={width}
+            width={width - (smallScreen ? 120 : 300)}
             height={height}
             theme={VictoryTheme.material}
             data={data}
@@ -130,7 +130,7 @@ const Temperature = () => {
           />
 
           <VictoryAxis
-            width={width}
+            width={width - (smallScreen ? 120 : 300)}
             height={height}
             theme={VictoryTheme.material}
             dependentAxis
@@ -159,7 +159,7 @@ const Temperature = () => {
           />
 
           <VictoryLine
-            width={width}
+            width={width - (smallScreen ? 120 : 300)}
             height={height}
             theme={VictoryTheme.material}
             data={data}
@@ -178,7 +178,7 @@ const Temperature = () => {
           />
 
           <VictoryAxis
-            width={width}
+            width={width - (smallScreen ? 120 : 300)}
             height={height}
             theme={VictoryTheme.material}
             dependentAxis
@@ -207,7 +207,7 @@ const Temperature = () => {
           />
 
           <VictoryLine
-            width={width}
+            width={width - (smallScreen ? 120 : 300)}
             height={height}
             theme={VictoryTheme.material}
             data={data}
@@ -226,6 +226,7 @@ const Temperature = () => {
           />
         </g>
       </svg>
+
       <VisExplanation>
         Here we see three indicators of global warming - global mean sea level
         (GMSL), global temperature aberration, and percent CO2 in the

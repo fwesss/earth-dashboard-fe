@@ -58,7 +58,7 @@ export default function SymbiosisQuiz() {
       question:
         "Which animal has 3 relationships with other animals, including both mutualism and commensalism?",
       answer_a: "Zebra",
-      answer_b: "Algea",
+      answer_b: "Algae",
       answer_c: "Oxpecker bird",
       answer_d: "Sea Anemone",
       correct_answer: "c",
