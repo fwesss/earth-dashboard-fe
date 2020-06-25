@@ -7,11 +7,11 @@ You can find the deployed project at [Planet Data](https://www.planetdata.world)
 
 ## Contributors
 
-|                                                           [Westley Feller](https://github.com/fwesss)                                                           |                                                         [Nicholas Gallucci](https://github.com/NickGallucci)                                                          |                                                          [Stephen Freeman](https://github.com/Stephenfre)                                                           |
-| :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| [<img src="https://avatars1.githubusercontent.com/u/10150898?s=400&u=aa205fcb0741fc11eb9625647d817d8fd298c0a6&v=4" width = "200" />](https://github.com/fwesss) | [<img src="https://avatars2.githubusercontent.com/u/33410359?s=400&u=dfc0c070385a0d252185fef7c1cf13bcaf4f3691&v=4" width = "200" />](https://github.com/NickGallucci) | [<img src="https://avatars2.githubusercontent.com/u/49298939?s=400&u=d95475e4abdb855c09bedbc5a2fded3ec88739b1&v=4" width = "200" />](https://github.com/Stephenfre) |
-|                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/fwesss)                                       |                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/NickGallucci)                                       |                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Stephenfre)                                       |
-|                          [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                          |                             [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                             |                            [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                            |
+|                                                           [Westley Feller](https://github.com/fwesss)                                                           |                                                          [Stephen Freeman](https://github.com/Stephenfre)                                                           |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars1.githubusercontent.com/u/10150898?s=400&u=aa205fcb0741fc11eb9625647d817d8fd298c0a6&v=4" width = "200" />](https://github.com/fwesss) | [<img src="https://avatars2.githubusercontent.com/u/49298939?s=400&u=d95475e4abdb855c09bedbc5a2fded3ec88739b1&v=4" width = "200" />](https://github.com/Stephenfre) |
+|                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/fwesss)                                       |                                       [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Stephenfre)                                       |
+|                          [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                          |                            [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                            |
 
 <br>
 <br>
@@ -44,16 +44,15 @@ A realtime real world dashboard to teach middle school students the fundamentals
 
 #### React
 
-Why did you choose this framework?
-???????????????????????????????????
+#### Mapbox
 
-- Mapbox Js
-- D3 Js
-- Redux with Redux Toolkit
+#### D3
+
+#### Redux with Redux Toolkit
 
 #### Front end deployed to AWS Amplify
 
-#### [Back end](https://github.com/Lambda-School-Labs/earth-dashboard-be) built using NodeJS and Express
+#### [Back end](https://github.com/Lambda-School-Labs/earth-dashboard-ds) built by DS using Flask and AWS lambda functions
 
 # Environment Variables
 
@@ -61,17 +60,11 @@ In order for the app to function correctly, the user must set up their own envir
 
     * REACT_APP_CONFIRMED_CASES_MAPBOX_STYLE - pulls in styling from a saved mapbox
      map
+    * REACT_APP_CONFIRMED_CASES_MAPBOX_STYLE_DARK - Alternative map style
+     used in dark mode
     * REACT_APP_CONFIRMED_CASES_MAPBOX_TOKEN - needed to access mapbox api to serve
      maps
-
-# Content Licenses
-
-| Image Filename | Source / Creator                   | License |
-| -------------- | ---------------------------------- | ------- |
-| earth.webp     | NASA's Goddard Space Flight Center |
-
-Cover image courtesy of NASA/NOAA/GSFC/Suomi NPP/VIIRS/Norman Kuring
-Moonset image courtesy of ISS Expedition 34 crew |
+    * REACT_APP_TRACKING_ID - ID for Google Analytics
 
 # Testing
 
@@ -82,6 +75,8 @@ Moonset image courtesy of ISS Expedition 34 crew |
 
 1.  `yarn install`
 2.  `yarn start`
+3.  Add .env file to local project. See environment variables above. Variables
+    are stored in 1password.
 
 This repo uses git-secrets to prevent to prevent commiting secrets. After
 installing packages, install and configure git-secrets:
@@ -163,6 +158,7 @@ bottom of the file:
 
 ## Other Scripts
 
+    * analyze - generate a visualization of the app's bundles and dependencies
     * build - creates a build of the application
     * eject - copy the configuration files and dependencies into the project so you have full control over them
     * format - runs prettier against all files not in .gitignore
@@ -218,4 +214,5 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Backend Documentation](https://github.com/Lambda-School-Labs/earth-dashboard-be) for details on the backend of our project.
+See [Backend Documentation](https://github.com/Lambda-School-Labs/earth
+-dashboard-ds) for details on the backend of our project.

@@ -1,9 +1,7 @@
- .answer- {
-    color: #7ECECC;
-    width: 20%;
-    height: 10%;
+.answer- {
+    color: #7ececc;
+    width: 30%;
     margin-bottom: 1rem;
-    border-radius: 10px;
     cursor: pointer;
     background: white;
     border-color: #7ECECC;
@@ -12,20 +10,17 @@
     text-align: center;
     border: 1px solid;
     outline: none;
+}
 
-  }
-
-  .answer-:hover {
+.answer-:hover {
     color: white;
-    background: #7ECECC;
-  }
+    background: #7ececc;
+}
 
-   .answer-selected {
+.answer-selected {
     color: white;
-    width: 20%;
-    height: 10%;
+    width: 30%;
     margin-bottom: 1rem;
-    border-radius: 10px;
     cursor: pointer;
     background: #7ECECC;
     border-color: #7ECECC;
@@ -34,5 +29,4 @@
     text-align: center;
     border: 1px solid;
     outline: none;
-
-  }
+}

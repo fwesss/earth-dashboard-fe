@@ -79,9 +79,8 @@ export default function BubbleQuiz() {
 
   const question = questions[currentQuestion];
 
-  const handleClick = (e) => {
-    console.log("you clicked me", e.target.value);
-    setCurrentAnswer(e.target.value);
+  const handleClick = (letter) => {
+    setCurrentAnswer(letter);
     setError("");
   };
 

@@ -1,18 +1,17 @@
 /* eslint-disable */
 
 import React, { useState } from "react";
-import Progress from "./Progress";
-import Questions from "./questions/Questions";
-import Answers from "./answers/Answers";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Typography, Button } from "@material-ui/core";
-import VisTitle from "../visualizations/VisTitle";
+import { Box, Button } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
-import { incrementProgress } from "./quizProgressSlice";
 import { useDispatch } from "react-redux";
-import Confetti from "react-confetti";
+import { incrementProgress } from "./quizProgressSlice";
+import VisTitle from "../visualizations/VisTitle";
+import Answers from "./answers/Answers";
+import Questions from "./questions/Questions";
+import Progress from "./Progress";
 
 const useStyles = makeStyles({
   Container: {
@@ -67,9 +66,8 @@ export default function HeatMapQuiz() {
 
   const question = questions[currentQuestion];
 
-  const handleClick = (e) => {
-    console.log("you clicked me", e.target.value);
-    setCurrentAnswer(e.target.value);
+  const handleClick = (letter) => {
+    setCurrentAnswer(letter);
     setError("");
   };
 
@@ -204,26 +202,25 @@ export default function HeatMapQuiz() {
         </Button>
       </Box>
     );
-  } else {
-    return (
-      <Box className={classes.Container} data-testid="vis-quiz">
-        <Progress total={questions.length} current={currentQuestion + 1} />
-        <Questions questions={question.question} />
-        {renderError()}
-        <Answers
-          question={question}
-          currentAnswer={currentAnswer}
-          handleClick={handleClick}
-        />
-        <Button
-          className="btn btn-primary"
-          onClick={next}
-          variant="contained"
-          color="primary"
-        >
-          Confirm
-        </Button>
-      </Box>
-    );
   }
+  return (
+    <Box className={classes.Container} data-testid="vis-quiz">
+      <Progress total={questions.length} current={currentQuestion + 1} />
+      <Questions questions={question.question} />
+      {renderError()}
+      <Answers
+        question={question}
+        currentAnswer={currentAnswer}
+        handleClick={handleClick}
+      />
+      <Button
+        className="btn btn-primary"
+        onClick={next}
+        variant="contained"
+        color="primary"
+      >
+        Confirm
+      </Button>
+    </Box>
+  );
 }

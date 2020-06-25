@@ -66,8 +66,8 @@ export default function BirdPatternQuiz() {
 
   const question = questions[currentQuestion];
 
-  const handleClick = (e) => {
-    setCurrentAnswer(e.target.value);
+  const handleClick = (letter) => {
+    setCurrentAnswer(letter);
     setError("");
   };
 

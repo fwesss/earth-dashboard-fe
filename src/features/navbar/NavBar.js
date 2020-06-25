@@ -16,9 +16,11 @@ import Drawer from "@material-ui/core/Drawer";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 import IconButton from "@material-ui/core/IconButton";
+import EmailIcon from "@material-ui/icons/Email";
 import MenuIcon from "@material-ui/icons/Menu";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
 import { ReactComponent as Logo } from "./smallLogo.svg";
 import ColorMode from "../../app/theme/ColorMode";
 import { visStates, visualizations } from "../visualizations/visConstructor";
@@ -108,74 +110,92 @@ const NavBar = ({ navFixed }) => {
   };
 
   const drawer = (
-    <>
-      <Box
-        display="flex"
-        alignItems="center"
-        pl={4}
-        py={7}
-        bgcolor={theme.palette.common.black}
-      >
-        <Link
-          className={classes.logo}
-          component={NavLink}
-          to="/"
-          onClick={() => setOpen(!open)}
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      height="100vh"
+    >
+      <Box>
+        <Box
+          display="flex"
+          alignItems="center"
+          pl={4}
+          py={7}
+          bgcolor={theme.palette.common.black}
         >
-          <Logo alt="Planet Data logo" title="Planet Data" />
-        </Link>
-      </Box>
-      <Box display="flex" justifyContent="center">
-        <ColorMode />
-      </Box>
-
-      <Divider variant="middle" />
-
-      <List component="nav">
-        <Typography variant="h5" component="h2" className={classes.title}>
-          What&apos;s Happening?
-        </Typography>
-        <Box display="flex" justifyContent="center" pb={4}>
-          <QuizProgress />
+          <Link
+            className={classes.logo}
+            component={NavLink}
+            to="/"
+            onClick={() => setOpen(!open)}
+          >
+            <Logo alt="Planet Data logo" title="Planet Data" />
+          </Link>
+        </Box>
+        <Box display="flex" justifyContent="center">
+          <ColorMode />
         </Box>
 
-        {[...topics].map((topic) => (
-          <div key={topic}>
-            <List component="div" disablePadding>
-              <ListItem button onClick={() => clickHandler(topic)}>
-                <ListItemText primary={topic} />
-                {openTopic[topic] ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-              <Collapse in={openTopic[topic]} timeout="auto" unmountOnExit>
-                <List component="div">
-                  {visualizations
-                    .filter((vis) => vis.topic === topic)
-                    .map((vis) => (
-                      <ListItem
-                        key={vis.name}
-                        selected={
-                          pathname ===
-                          `/${vis.topic.toLowerCase()}/${vis.name.toLowerCase()}`
-                        }
-                        button
-                        component={NavLink}
-                        to={`/${vis.topic.toLowerCase()}/${vis.name.toLowerCase()}`}
-                        onClick={() => setOpen(!open)}
-                      >
-                        <ListItemText
-                          className={classes.nested}
-                          primary={vis.displayName}
-                        />
-                      </ListItem>
-                    ))}
-                </List>
-              </Collapse>
-              <Divider variant="middle" />
-            </List>
-          </div>
-        ))}
-      </List>
-    </>
+        <Divider variant="middle" />
+
+        <List component="nav">
+          <Typography variant="h5" component="h2" className={classes.title}>
+            What&apos;s Happening?
+          </Typography>
+          <Box display="flex" justifyContent="center" pb={4}>
+            <QuizProgress />
+          </Box>
+
+          {[...topics].map((topic) => (
+            <div key={topic}>
+              <List component="div" disablePadding>
+                <ListItem button onClick={() => clickHandler(topic)}>
+                  <ListItemText primary={topic} />
+                  {openTopic[topic] ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={openTopic[topic]} timeout="auto" unmountOnExit>
+                  <List component="div">
+                    {visualizations
+                      .filter((vis) => vis.topic === topic)
+                      .map((vis) => (
+                        <ListItem
+                          key={vis.name}
+                          selected={
+                            pathname ===
+                            `/${vis.topic.toLowerCase()}/${vis.name.toLowerCase()}`
+                          }
+                          button
+                          component={NavLink}
+                          to={`/${vis.topic.toLowerCase()}/${vis.name.toLowerCase()}`}
+                          onClick={() => setOpen(!open)}
+                        >
+                          <ListItemText
+                            className={classes.nested}
+                            primary={vis.displayName}
+                          />
+                        </ListItem>
+                      ))}
+                  </List>
+                </Collapse>
+                <Divider variant="middle" />
+              </List>
+            </div>
+          ))}
+        </List>
+      </Box>
+      <Box ml={3} mb={2}>
+        <Button
+          target="_blank"
+          rel="noopener noreferrer"
+          href="mailto:earthdashpt9@gmail.com?subject=Feedback"
+          startIcon={<EmailIcon />}
+          size="small"
+        >
+          Feedback
+        </Button>
+      </Box>
+    </Box>
   );
 
   return (

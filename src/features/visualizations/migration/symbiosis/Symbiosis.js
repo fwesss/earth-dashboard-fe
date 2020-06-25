@@ -19,8 +19,6 @@ import Box from "@material-ui/core/Box";
 import useTheme from "@material-ui/core/styles/useTheme";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useDispatch } from "react-redux";
-import Tooltip from "@material-ui/core/Tooltip";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import dataFile from "./links.json";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import VisTitle from "../../VisTitle";
@@ -28,15 +26,10 @@ import VisExplanation from "../../VisExplanation";
 import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import SymbiosisQuiz from "../../../quiz/SymbiosisQuiz";
-
-const useStyles = makeStyles(() => ({
-  tooltip: {
-    fontSize: 26,
-  },
-}));
+import DragHint from "../../DragHint";
+import useLocalStorage from "../../../../hooks/useLocalStorage";
 
 const Symbiosis = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -49,6 +42,11 @@ const Symbiosis = () => {
   ];
   const width = mediumScreen ? windowWidth - theme.navBar.width : windowWidth;
   const height = useWindowSize().height > width ? width + 75 : windowHeight;
+
+  const [closeTooltip, setCloseTooltip] = useLocalStorage(
+    "symbiosisDragHint",
+    false
+  );
 
   useEffect(() => {
     dispatch(toggleShowSplash());
@@ -79,6 +77,8 @@ const Symbiosis = () => {
         }
         d.fx = d.x;
         d.fy = d.y;
+
+        setCloseTooltip(true);
       };
 
       const dragged = (d) => {
@@ -197,6 +197,7 @@ const Symbiosis = () => {
     });
 
     return () => select("#symbiosisSvg").remove();
+    // eslint-disable-next-line
   }, [height, smallScreen, theme.palette.text.primary, width]);
 
   return (
@@ -236,10 +237,7 @@ const Symbiosis = () => {
         host&apos;s insides, saving the vital organs until the end. Finally, the
         wasp is now fully-grown, eats its way out of the roach and flies off.
       </VisExplanation>
-      <Tooltip
-        title="Click and drag the links!"
-        classes={{ tooltip: classes.tooltip }}
-      >
+      <DragHint elements="links" close={closeTooltip}>
         <Box
           display="flex"
           justifyContent="center"
@@ -250,7 +248,7 @@ const Symbiosis = () => {
           aria-labelledby="symbiosis-title"
           data-testid="symbiosis"
         />
-      </Tooltip>
+      </DragHint>
       <VisExplanation>
         A network graph allows you to demonstrate the types of relationships
         between different observations. It is useful for dealing with
