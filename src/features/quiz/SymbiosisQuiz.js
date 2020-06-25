@@ -11,6 +11,8 @@ import Answers from "./answers/Answers";
 import Questions from "./questions/Questions";
 import Progress from "./Progress";
 import VisExplanation from "../visualizations/VisExplanation";
+import { incrementProgress } from "./quizProgressSlice";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles({
   Container: {
@@ -42,6 +44,7 @@ const useStyles = makeStyles({
 });
 
 export default function SymbiosisQuiz() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState("");
@@ -79,6 +82,8 @@ export default function SymbiosisQuiz() {
 
   const renderResultsMark = (questions, answer) => {
     if (questions.correct_answer === answer.answer) {
+      dispatch(incrementProgress("symbiosis"));
+
       return (
         <Box display="flex" flexDirection="column">
           <Box display="flex" justifyContent="center" alignItems="center">
@@ -97,7 +102,7 @@ export default function SymbiosisQuiz() {
               opens and picks at the rhino’s wounds, sometimes even dining on
               its blood. On the other hand, the rhino has poor eyesight, and the
               oxpecker sounds the alarm when predators are near. So overall, a
-              bit of zero-sum game for the rhino
+              bit of a zero-sum game for the rhino.
             </VisExplanation>
           </Box>
         </Box>
@@ -193,7 +198,7 @@ export default function SymbiosisQuiz() {
     );
   }
   return (
-    <Box className={classes.Container}>
+    <Box className={classes.Container} data-testid="vis-quiz">
       <Progress total={questions.length} current={currentQuestion + 1} />
       <Questions questions={question.question} />
       {renderError()}

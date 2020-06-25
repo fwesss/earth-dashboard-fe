@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   VictoryChart,
   VictoryTheme,
@@ -9,10 +9,17 @@ import {
 import { format } from "date-fns";
 import useTheme from "@material-ui/core/styles/useTheme";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useDispatch } from "react-redux";
+import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 
 const RacingBarChart = ({ data, width, height }) => {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  useEffect(() => {
+    dispatch(toggleShowSplash());
+  }, [dispatch]);
 
   return (
     <VictoryChart

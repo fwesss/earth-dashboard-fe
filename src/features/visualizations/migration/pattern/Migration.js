@@ -94,7 +94,7 @@ export default withErrorBoundary(() => {
                 },
               }}
               animate={{ duration: 1000 }}
-              label="Bird Observations at Each Station"
+              label="Bird Observations Per Species"
               axisLabelComponent={<VictoryLabel dy={30} />}
             />
             {migration.map((datum, index) => (

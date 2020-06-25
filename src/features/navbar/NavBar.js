@@ -23,6 +23,7 @@ import { ReactComponent as Logo } from "./smallLogo.svg";
 import ColorMode from "../../app/theme/ColorMode";
 import { visStates, visualizations } from "../visualizations/visConstructor";
 import { checkIfNoData } from "../../hooks/useVisDataFetch";
+import QuizProgress from "../quiz/QuizProgress";
 
 const NavBar = ({ navFixed }) => {
   const theme = useTheme();
@@ -134,6 +135,9 @@ const NavBar = ({ navFixed }) => {
         <Typography variant="h5" component="h2" className={classes.title}>
           What&apos;s Happening?
         </Typography>
+        <Box display="flex" justifyContent="center" pb={4}>
+          <QuizProgress />
+        </Box>
 
         {[...topics].map((topic) => (
           <div key={topic}>

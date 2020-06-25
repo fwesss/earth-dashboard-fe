@@ -1,16 +1,14 @@
-/* eslint-disable */
-
 import React, { useState } from "react";
-import Progress from "./Progress";
-import Questions from "./questions/Questions";
-import Answers from "./answers/Answers";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Typography, Button } from "@material-ui/core";
-import VisTitle from "../visualizations/VisTitle";
+import { Box, Button } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { green, red } from "@material-ui/core/colors";
 import { useDispatch } from "react-redux";
+import VisTitle from "../visualizations/VisTitle";
+import Answers from "./answers/Answers";
+import Questions from "./questions/Questions";
+import Progress from "./Progress";
 import { incrementProgress } from "./quizProgressSlice";
 
 const useStyles = makeStyles({
@@ -42,7 +40,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BubbleQuiz() {
+export default function CarbonDioxideQuiz() {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -54,85 +52,70 @@ export default function BubbleQuiz() {
   const questions = [
     {
       id: 1,
-      question: "Which country has the largest number of cases?",
-      answer_a: "Brazil",
-      answer_b: "Russia",
-      answer_c: "China",
-      answer_d: "United States of America",
-      correct_answer: "d",
+      question: "Where do sea levels start out in 1880?",
+      answer_a: "Between -275 and -285",
+      answer_b: "Between -165 and -150",
+      answer_c: "Between 10 and 100",
+      answer_d: "Between -100 and -50",
+      correctAnswer: "b",
+    },
+    {
+      id: 2,
+      question: "Where were the sea levels in 2013?",
+      answer_a: "Between -50 and 0",
+      answer_b: "Between -20 and 20",
+      answer_c: "Between 55 and 75",
+      answer_d: "Between 100 and 150",
+      correctAnswer: "c",
     },
   ];
 
   const question = questions[currentQuestion];
 
   const handleClick = (e) => {
-    console.log("you clicked me", e.target.value);
     setCurrentAnswer(e.target.value);
     setError("");
   };
 
-  const renderError = () => {
-    if (!error) {
-      return;
-    }
-    return <div className="error">{error}</div>;
-  };
+  const renderError = () => error && <div className="error">{error}</div>;
 
-  const renderResultsMark = (questions, answer) => {
-    if (questions.correct_answer === answer.answer) {
-      dispatch(incrementProgress("bubbles"));
-      return (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <span className="correct">
-            <h3>Correct</h3>
-          </span>
-          <CheckCircleIcon style={{ color: green[500] }} />
-        </div>
-      );
-    }
+  const renderResultsMark = ({ correctAnswer }, answer) => {
+    dispatch(incrementProgress("climateSummary"));
 
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+    return correctAnswer === answer.answer ? (
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <span className="correct">
+          <h3>Correct</h3>
+        </span>
+        <CheckCircleIcon style={{ color: green[500] }} />
+      </Box>
+    ) : (
+      <Box display="flex" justifyContent="center" alignItems="center">
         <span className="Failed">
           <h3>Failed</h3>
         </span>
         <HighlightOffIcon style={{ color: red[500] }} />
-      </div>
+      </Box>
     );
   };
 
-  const renderResultsData = () => {
-    return answers.map((answer) => {
-      const question = questions.find(
-        (question) => question.id === answer.questionId
-      );
-
-      return (
-        <VisTitle
-          id="bubble-question-title"
-          variant="h6"
-          aria-label="bubble-title"
-          key={question.id}
-        >
-          <div className={classes.fontDisplay}>
-            {question.question} {renderResultsMark(question, answer)}
-          </div>
-        </VisTitle>
-      );
-    });
-  };
+  const renderResultsData = () =>
+    answers.map((answer) => (
+      <VisTitle
+        id="bubble-question-title"
+        variant="h6"
+        aria-label="bubble-title"
+        key={question.id}
+      >
+        <div className={classes.fontDisplay}>
+          {question.question}{" "}
+          {renderResultsMark(
+            questions.find(({ id }) => id === answer.questionId),
+            answer
+          )}
+        </div>
+      </VisTitle>
+    ));
 
   const restart = () => {
     setAnswers([]);
@@ -183,26 +166,25 @@ export default function BubbleQuiz() {
         </Button>
       </Box>
     );
-  } else {
-    return (
-      <Box className={classes.Container} data-testid="vis-quiz">
-        <Progress total={questions.length} current={currentQuestion + 1} />
-        <Questions questions={question.question} />
-        {renderError()}
-        <Answers
-          question={question}
-          currentAnswer={currentAnswer}
-          handleClick={handleClick}
-        />
-        <Button
-          className="btn btn-primary"
-          onClick={next}
-          variant="contained"
-          color="primary"
-        >
-          Confirm
-        </Button>
-      </Box>
-    );
   }
+  return (
+    <Box className={classes.Container} data-testid="vis-quiz">
+      <Progress total={questions.length} current={currentQuestion + 1} />
+      <Questions questions={question.question} />
+      {renderError()}
+      <Answers
+        question={question}
+        currentAnswer={currentAnswer}
+        handleClick={handleClick}
+      />
+      <Button
+        className="btn btn-primary"
+        onClick={next}
+        variant="contained"
+        color="primary"
+      >
+        Confirm
+      </Button>
+    </Box>
+  );
 }

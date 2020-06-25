@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { Box, TextField, Button } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import VisTitle from "../visualizations/VisTitle";
+import { useDispatch } from "react-redux";
+import { incrementProgress } from "./quizProgressSlice";
 
 const useStyles = makeStyles({
   input: {
@@ -23,6 +25,7 @@ const useStyles = makeStyles({
 });
 
 export default function BubblesQuiz() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState("");
@@ -45,6 +48,7 @@ export default function BubblesQuiz() {
       });
       setShowResults(true);
       setCorrect(true);
+      dispatch(incrementProgress("income"));
     }
   };
 
@@ -63,6 +67,7 @@ export default function BubblesQuiz() {
       width="100%"
       height="50vh"
       alignItems="center"
+      data-testid="vis-quiz"
     >
       {showResults ? (
         // results page
