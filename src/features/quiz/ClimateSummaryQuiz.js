@@ -10,6 +10,9 @@ import Answers from "./answers/Answers";
 import Questions from "./questions/Questions";
 import Progress from "./Progress";
 import { incrementProgress } from "./quizProgressSlice";
+import Confetti from 'react-confetti'
+
+
 
 const useStyles = makeStyles({
   Container: {
@@ -22,7 +25,7 @@ const useStyles = makeStyles({
   },
   ResultsContainer: {
     width: "100%",
-    height: "50vh",
+    height: "70vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -84,6 +87,21 @@ export default function CarbonDioxideQuiz() {
 
     return correctAnswer === answer.answer ? (
       <Box display="flex" justifyContent="center" alignItems="center">
+            <div
+                style={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "20%",
+                    overflow: 'hidden',
+                    marginTop: "1rem"
+                }}
+            >
+                <Confetti className="confetti"
+                    gravity={0.4}
+                    // run={this.state.animationDone}
+                    numberOfPieces={200}
+                />
+            </div>
         <span className="correct">
           <h3>Correct</h3>
         </span>
@@ -91,8 +109,8 @@ export default function CarbonDioxideQuiz() {
       </Box>
     ) : (
       <Box display="flex" justifyContent="center" alignItems="center">
-        <span className="Failed">
-          <h3>Failed</h3>
+        <span className="Incorrect">
+          <h3>Incorrect</h3>
         </span>
         <HighlightOffIcon style={{ color: red[500] }} />
       </Box>

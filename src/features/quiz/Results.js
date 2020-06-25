@@ -11,7 +11,7 @@
 //         </div>
 //       ) : (
 //         <div className="wrong-answer">
-//           <h1>Failed</h1>
+//           <h1>Incorrect</h1>
 //         </div>
 //       )}
 //     </>
