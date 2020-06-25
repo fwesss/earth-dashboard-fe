@@ -1,7 +1,7 @@
 /* eslint no-return-assign: 0 */
 /* eslint no-param-reassign: 0 */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   forceSimulation,
   forceLink,
@@ -27,6 +27,7 @@ import withErrorBoundary from "../../../../app/error/ErrorBoundary";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import SymbiosisQuiz from "../../../quiz/SymbiosisQuiz";
 import DragHint from "../../DragHint";
+import useLocalStorage from "../../../../hooks/useLocalStorage";
 
 const Symbiosis = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,10 @@ const Symbiosis = () => {
   const width = mediumScreen ? windowWidth - theme.navBar.width : windowWidth;
   const height = useWindowSize().height > width ? width + 75 : windowHeight;
 
-  const [closeTooltip, setCloseTooltip] = useState(false);
+  const [closeTooltip, setCloseTooltip] = useLocalStorage(
+    "symbiosisDragHint",
+    false
+  );
 
   useEffect(() => {
     dispatch(toggleShowSplash());
@@ -193,6 +197,7 @@ const Symbiosis = () => {
     });
 
     return () => select("#symbiosisSvg").remove();
+    // eslint-disable-next-line
   }, [height, smallScreen, theme.palette.text.primary, width]);
 
   return (

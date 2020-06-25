@@ -29,6 +29,7 @@ import LoadingSpinner from "../../LoadingSpinner";
 import { toggleShowSplash } from "../../../../app/theme/themeSlice";
 import BubblesQuiz from "../../../quiz/BubblesQuiz";
 import DragHint from "../../DragHint";
+import useLocalStorage from "../../../../hooks/useLocalStorage";
 
 const useStyles = makeStyles((theme) => ({
   factCard: {
@@ -63,7 +64,10 @@ const Bubbles = () => {
     cases: null,
   });
   const [opacity, setOpacity] = useState(0);
-  const [closeTooltip, setCloseTooltip] = useState(false);
+  const [closeTooltip, setCloseTooltip] = useLocalStorage(
+    "bubblesDragHint",
+    false
+  );
 
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const mediumScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -136,6 +140,7 @@ const Bubbles = () => {
         d.fy = d.y;
 
         setCloseTooltip(true);
+        console.log("change");
       };
       const dragged = (d) => {
         d.fx = event.x;
@@ -214,6 +219,7 @@ const Bubbles = () => {
 
       return () => select("#bubbleSvg").remove();
     }
+    // eslint-disable-next-line
   }, [data, smallScreen, width]);
 
   if (fetching) {
