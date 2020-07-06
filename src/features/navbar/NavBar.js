@@ -188,7 +188,7 @@ const NavBar = ({ navFixed }) => {
         <Button
           target="_blank"
           rel="noopener noreferrer"
-          href="mailto:earthdashpt9@gmail.com?subject=Feedback"
+          href="mailto:planetdatavision@gmail.com?subject=Feedback"
           startIcon={<EmailIcon />}
           size="small"
         >

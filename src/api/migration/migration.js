@@ -24,7 +24,7 @@ import * as d3 from "d3";
  */
 export default async () => {
   const { data, ...rest } = await axios.get(
-    "https://4eo1w5jvy0.execute-api.us-east-1.amazonaws.com/default/migration_density"
+    "https://p4vg4pibx5.execute-api.us-east-1.amazonaws.com/default/migration"
   );
 
   const years = Object.keys(data[0]);

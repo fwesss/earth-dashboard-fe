@@ -24,7 +24,7 @@ import GeoJSON from "geojson";
  */
 export default async () => {
   const { data, ...rest } = await axios.get(
-    "https://ds-backend-planetdata.herokuapp.com/covid/uscounties/query"
+    "https://planetdatavision.herokuapp.com/covid/uscounties/query"
   );
 
   const cases = GeoJSON.parse(data.cases, {
