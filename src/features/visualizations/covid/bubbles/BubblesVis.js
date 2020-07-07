@@ -14,6 +14,7 @@ import {
   forceCenter,
   forceCollide,
   drag,
+  max,
 } from "d3";
 import ReactGa from "react-ga";
 import { Box, Card, CardContent, Typography } from "@material-ui/core";
@@ -112,8 +113,8 @@ const Bubbles = () => {
 
       // Size scale for countries
       const size = scaleLinear()
-        .domain([0, 800000])
-        .range([7, smallScreen ? 35 : 75]); // circle will be between 7 and 75 px wide on a large screen or 35px on small
+        .domain([0, max(data.map((d) => d.totalconfirmed))])
+        .range([8, smallScreen ? 75 : 150]); // circle will be between 7 and 75 px wide on a large screen or 35px on small
 
       // Features of the forces applied to the nodes:
       const simulation = forceSimulation()
