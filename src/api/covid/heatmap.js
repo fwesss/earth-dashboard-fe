@@ -27,7 +27,12 @@ export default async () => {
     "https://planetdatavision.herokuapp.com/covid/uscounties/query"
   );
 
-  const cases = GeoJSON.parse(data.cases, {
+  // All cases in the US are tallied and added to one data point in the middle of country. This filters it out.
+  const withoutTotal = data.cases.filter(
+    (record) => record.lat !== 37.09 && record.lon !== -95.71
+  );
+
+  const cases = GeoJSON.parse(withoutTotal, {
     Point: ["lat", "lon"],
   });
 

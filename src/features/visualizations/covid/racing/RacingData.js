@@ -66,7 +66,13 @@ const RacingData = () => {
           )
           .map((country) => ({ ...country, date: parseISO(country.date) }))
       );
-      setDateToFilter(add(dateToFilter, { days: 1 }));
+      console.log(getDayOfYear(dateToFilter), dateToFilter);
+
+      if (getDayOfYear(dateToFilter) === 175) {
+        setDateToFilter(add(dateToFilter, { days: 2 }));
+      } else {
+        setDateToFilter(add(dateToFilter, { days: 1 }));
+      }
 
       if (
         getDayOfYear(parseISO(deaths[deaths.length - 1].date)) ===
