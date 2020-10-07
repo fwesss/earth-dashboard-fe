@@ -3,7 +3,7 @@
 
 # Planet Data
 
-You can find the deployed project at [Planet Data](https://www.planetdata.vision).
+You can find the deployed project at [Planet Data](https://planetdata.vision).
 
 ## Contributors
 
