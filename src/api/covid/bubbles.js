@@ -16,8 +16,13 @@ import axios, { AxiosResponse } from "axios";
  */
 export default async () => {
   const { data, ...rest } = await axios.get(
-    "https://p4vg4pibx5.execute-api.us-east-1.amazonaws.com/default/bubblesdata"
+    "https://api.covid19api.com/summary"
   );
 
-  return { data: { summary: data }, rest };
+  const cleaned = data.Countries.map((country) => ({
+    country: country.Country,
+    totalconfirmed: country.TotalConfirmed,
+  }));
+
+  return { data: { summary: cleaned }, rest };
 };
