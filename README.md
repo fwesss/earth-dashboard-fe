@@ -2,6 +2,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/66d40f027894d7ee1a93/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/earth-dashboard-fe/test_coverage)
 
 # Planet Data
+
 # [Demo](https://www.youtube.com/watch?v=ge4I4dDznEc)
 
 You can find the deployed project at [Planet Data](https://planetdata.vision).
