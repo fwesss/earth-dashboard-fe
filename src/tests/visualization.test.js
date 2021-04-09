@@ -3,9 +3,9 @@ import { waitFor } from "@testing-library/react";
 import renderWithRedux from "../utils/testingUtils";
 import { visualizations } from "../features/visualizations/visConstructor";
 import BubblesVis from "../features/visualizations/covid/bubbles/BubblesVis";
-import RacingData from "../features/visualizations/covid/racing/RacingData";
+// import RacingData from "../features/visualizations/covid/racing/RacingData";
 import AirVis from "../features/visualizations/covid/air/AirVis";
-import CasesVis from "../features/visualizations/covid/cases/CasesVis";
+// import CasesVis from "../features/visualizations/covid/cases/CasesVis";
 import CountryVis from "../features/visualizations/deforestation/country/CountryVis";
 import CountryIncomeVis from "../features/visualizations/deforestation/income/CountryIncomeVis";
 import Migration from "../features/visualizations/migration/pattern/Migration";
@@ -14,9 +14,9 @@ import CarbonDioxide from "../features/visualizations/climate/carbonDioxide/Carb
 
 const components = [
   <BubblesVis />,
-  <RacingData />,
+  // <RacingData />,
   <AirVis />,
-  <CasesVis />,
+  // <CasesVis />,
   <CountryVis />,
   <CountryIncomeVis />,
   <Migration />,

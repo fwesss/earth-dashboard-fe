@@ -6,9 +6,9 @@ import {
   ThunkDispatch,
 } from "@reduxjs/toolkit";
 import bubbles from "../../api/covid/bubbles";
-import racing from "../../api/covid/racing";
+// import racing from "../../api/covid/racing";
 import airQuality from "../../api/covid/airQuality";
-import heatmap from "../../api/covid/heatmap";
+// import heatmap from "../../api/covid/heatmap";
 import deforestation from "../../api/deforestation/prediction";
 import migration from "../../api/migration/migration";
 
@@ -226,26 +226,26 @@ export const visualizations = [
       ],
     },
   },
-  {
-    name: "globalFatalities",
-    displayName: "Global Fatalities",
-    topic: "Pandemic",
-    path: "/covid/racing/RacingData",
-    initialData: {
-      deaths: null,
-    },
-    fetchMethod: racing,
-    minTestData: {
-      deaths: [
-        {
-          country: "China",
-          date: "2020-01-22T08:00:00.000Z",
-          deaths: 17,
-          color: "#fb8072",
-        },
-      ],
-    },
-  },
+  // {
+  //   name: "globalFatalities",
+  //   displayName: "Global Fatalities",
+  //   topic: "Pandemic",
+  //   path: "/covid/racing/RacingData",
+  //   initialData: {
+  //     deaths: null,
+  //   },
+  //   fetchMethod: racing,
+  //   minTestData: {
+  //     deaths: [
+  //       {
+  //         country: "China",
+  //         date: "2020-01-22T08:00:00.000Z",
+  //         deaths: 17,
+  //         color: "#fb8072",
+  //       },
+  //     ],
+  //   },
+  // },
   {
     name: "airQualityEffect",
     displayName: "Air Quality Effect",
@@ -281,47 +281,47 @@ export const visualizations = [
       ],
     },
   },
-  {
-    name: "usCases",
-    displayName: "US Cases",
-    topic: "Pandemic",
-    path: "/covid/cases/CasesVis",
-    initialData: {
-      cases: null,
-      dates: [null, null],
-    },
-    fetchMethod: heatmap,
-    minTestData: {
-      dates: ["01-22-20", "01-23-20"],
-      cases: {
-        features: [
-          {
-            geometry: {
-              coordinates: [-121.83, 47.49],
-              type: "Point",
-            },
-            properties: {
-              cases: 1,
-              date: "2020-01-22",
-            },
-            type: "Feature",
-          },
-          {
-            geometry: {
-              coordinates: [-121.83, 47.49],
-              type: "Point",
-            },
-            properties: {
-              cases: 1,
-              date: "2020-01-23",
-            },
-            type: "Feature",
-          },
-        ],
-        type: "FeatureCollection",
-      },
-    },
-  },
+  // {
+  //   name: "usCases",
+  //   displayName: "US Cases",
+  //   topic: "Pandemic",
+  //   path: "/covid/cases/CasesVis",
+  //   initialData: {
+  //     cases: null,
+  //     dates: [null, null],
+  //   },
+  //   fetchMethod: heatmap,
+  //   minTestData: {
+  //     dates: ["01-22-20", "01-23-20"],
+  //     cases: {
+  //       features: [
+  //         {
+  //           geometry: {
+  //             coordinates: [-121.83, 47.49],
+  //             type: "Point",
+  //           },
+  //           properties: {
+  //             cases: 1,
+  //             date: "2020-01-22",
+  //           },
+  //           type: "Feature",
+  //         },
+  //         {
+  //           geometry: {
+  //             coordinates: [-121.83, 47.49],
+  //             type: "Point",
+  //           },
+  //           properties: {
+  //             cases: 1,
+  //             date: "2020-01-23",
+  //           },
+  //           type: "Feature",
+  //         },
+  //       ],
+  //       type: "FeatureCollection",
+  //     },
+  //   },
+  // },
   {
     name: "country",
     displayName: "By Country",
